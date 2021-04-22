@@ -72,7 +72,7 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="FuelTypeLabel" HorizontalAlignment="Center" Foreground="White" Content="FuelType" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,8,40,0" Width="120"/>
                         <ComboBox x:Name="FuelTypeComboBox" Margin="0,10,0,0" Padding="0" Foreground="Black" 
-                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" SelectionChanged="FuelTypeComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
                     </Grid>
                     <Label x:Name="FuelTypeNotify" HorizontalAlignment="Right" Content="" Foreground="White" Margin="0 0 92 0" Height="25"/>
@@ -80,7 +80,7 @@
                     <Grid>
                         <Label x:Name="TransmissionTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="Transmis" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,10,0,0" Width="120"/>
                         <ComboBox x:Name="TransmissionTypeComboBox" Margin="0,10,0,0" Padding="0" Foreground="Black" 
-                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14"/>
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" SelectionChanged="TransmissionTypeComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
                     </Grid>
                     <Label x:Name="TansmissionTypeNotify" HorizontalAlignment="Right" Content="" FontFamily="Verdana" Foreground="White" Margin="0 0 92 0" Height="25"/>
@@ -139,7 +139,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="CarAddButton" Content="Add Car" Style="{StaticResource mainButton}" Margin="0,10,15,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click"/>
-                        <Button x:Name="CarDeleteDButton" Content="Delete Car" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarDeleteDButton" Content="Delete Car" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarDeleteButton_Click" Grid.Column="1"/>
                     </Grid>
 
                 </StackPanel>
@@ -147,14 +147,14 @@
 
             <Border Width="468" Height="498" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,64,0,0" Grid.Column="1">
                 <StackPanel Margin="-22,-18,-22,-22">
-                    <DataGrid d:ItemsSource="{d:SampleData ItemCount=3}" Height="416"/>
+                    <DataGrid d:ItemsSource="{d:SampleData ItemCount=3}" x:Name="carsGrid" Height="416" IsReadOnly="True"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="CarEditButton"  Content="Edit Car" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click" Grid.Column="0"/>
-                        <Button x:Name="CarSaveChangesButton" Content="Save Changes" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarEditButton"  Content="Edit Car" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarEditButton_Click" Grid.Column="0"/>
+                        <Button x:Name="CarSaveChangesButton" Content="Save Changes" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarSaveChangesButton_Click" Grid.Column="1"/>
                     </Grid>
                 </StackPanel>
             </Border>

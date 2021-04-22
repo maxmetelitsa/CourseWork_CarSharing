@@ -11,7 +11,8 @@ namespace CourseWork_CarSharing.Enums
         Petrol,
         Diesel,
         Gas,
-        Electricity
+        Electricity,
+        Hybrid
     };
     public enum Transmission
     {

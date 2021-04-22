@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using CourseWork_CarSharing.CarPark;
 using System.Xml.Linq;
+using System;
 
 namespace CourseWork_CarSharing.CarsInfo
 {
@@ -16,18 +17,6 @@ namespace CourseWork_CarSharing.CarsInfo
         public Cars()
         {
             cars = new List<Car>(); 
-        }
-
-        public bool ValidateCar(string name, string colour)
-        {
-            foreach (Car car in cars)
-            {
-                if (car.Name == name && car.Colour == colour)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

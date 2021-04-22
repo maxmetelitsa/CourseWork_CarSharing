@@ -119,6 +119,80 @@ namespace CourseWork_CarSharing.CarPark
 
             return true;
         }
+        public void RemoveCar(Car car)
+        {
+            manager.OpenConnection();
+
+            string deleteQuery = "DELETE FROM Cars WHERE Name = @Name AND FuelType = @FuelType AND TransmissionType = @TransmissionType AND Colour = @Colour AND YearOfManufacture = @YearOfManufacture AND Amount = @Amount AND ImageID = @ImageID";
+
+            using (SQLiteCommand command = new SQLiteCommand(deleteQuery, manager.Connection))
+            {
+                command.Parameters.AddWithValue("@Name", car.Name);
+                command.Parameters.AddWithValue("@FuelType", (int)car.FuelType);
+                command.Parameters.AddWithValue("@TransmissionType", (int)car.TransmissionType);
+                command.Parameters.AddWithValue("@Colour", car.Colour);
+                command.Parameters.AddWithValue("@YearOfManufacture", car.YearOfManufacture);
+                command.Parameters.AddWithValue("@Amount", car.Amount);
+                command.Parameters.AddWithValue("@ImageID", car.ImageID);
+
+                command.ExecuteNonQuery();
+            }
+
+            manager.CloseConnection();
+            //carsList.cars.Remove(car);
+        }
+
+        public bool ValidateDataCar(string name, Fuel fuelType, Transmission transmission, string colour, int yearOfManufacture, int amount, int imageID)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                // Поле name пустое или содержит только пробельные символы
+                return false;
+            }
+
+            // Проверка на корректность поля fuelType
+            if (!Enum.IsDefined(typeof(Fuel), fuelType))
+            {
+                // Значение поля fuelType не является допустимым значением перечисления Fuel
+                return false;
+            }
+
+            // Проверка на корректность поля transmission
+            if (!Enum.IsDefined(typeof(Transmission), transmission))
+            {
+                // Значение поля transmission не является допустимым значением перечисления Transmission
+                return false;
+            }
+
+            // Проверка на корректность поля colour
+            if (string.IsNullOrEmpty(colour))
+            {
+                // Поле colour пустое или содержит только пробельные символы
+                return false;
+            }
+
+            // Проверка на корректность поля yearOfManufacture
+            if (yearOfManufacture < 1900 || yearOfManufacture > DateTime.Now.Year)
+            {
+                // Значение поля yearOfManufacture находится в недопустимом диапазоне
+                return false;
+            }
+
+            // Проверка на корректность поля amount
+            if (amount <= 0)
+            {
+                // Значение поля amount не положительное число
+                return false;
+            }
+
+            if (imageID <= 0)
+            {
+                // Значение поля amount не положительное число
+                return false;
+            }
+
+            return true;
+        }
 
         public void ClearCarsTable()
         {
