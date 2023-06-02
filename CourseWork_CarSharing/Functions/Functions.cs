@@ -23,36 +23,6 @@ namespace CourseWork_CarSharing.Functions
                 return false;
             }
         }
-        public static bool addUser(SQLiteManager manager, string name, string surname, string email, string password)
-        {
-            manager.OpenConnection();
-
-            // Используйте параметры в SQL-запросе, чтобы избежать проблем с безопасностью и экранированием символов
-            string insertQuery = "INSERT INTO Users (Name, Surname, Email, Password) VALUES (@Name, @Surname, @Email, @Password);";
-
-            using (SQLiteCommand command = new SQLiteCommand(insertQuery, manager.Connection))
-            {
-                command.Parameters.AddWithValue("@Name", name);
-                command.Parameters.AddWithValue("@Surname", surname);
-                command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Password", password);
-
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    // Данные успешно внесены
-                    manager.CloseConnection();
-                    return true;
-                }
-                else
-                {
-                    // Не удалось внести данные
-                    manager.CloseConnection();
-                    return false;
-                }
-            }
-
-        }
         public static void ReadUsers(SQLiteManager manager, Label TextBoxNameNotify)
         {
             manager.OpenConnection();
@@ -75,25 +45,6 @@ namespace CourseWork_CarSharing.Functions
             }
 
             manager.CloseConnection();
-        }
-
-        public static bool ValidateUser(SQLiteManager manager, string email, string password)
-        {
-            manager.OpenConnection();
-
-            string selectQuery = "SELECT COUNT(*) FROM Users WHERE Email = @Email AND Password = @Password;";
-
-            using (SQLiteCommand command = new SQLiteCommand(selectQuery, manager.Connection))
-            {
-                command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Password", password);
-
-                int count = Convert.ToInt32(command.ExecuteScalar());
-
-                manager.CloseConnection();
-
-                return count > 0;
-            }
         }
     }
 }

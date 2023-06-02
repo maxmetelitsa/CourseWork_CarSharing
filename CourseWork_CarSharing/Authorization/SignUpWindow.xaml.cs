@@ -12,7 +12,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Linq;
 using static CourseWork_CarSharing.Functions.Functions;
+using CourseWork_CarSharing.UsersInfo;
+using CourseWork_CarSharing.Main;
 
 namespace CourseWork_CarSharing.Authorization
 {
@@ -21,9 +24,11 @@ namespace CourseWork_CarSharing.Authorization
     /// </summary>
     public partial class SignUpWindow : Window
     {
-        SQLiteManager manager = new SQLiteManager("C:\\DataBases\\Stellar");
+        SQLiteManager manager = new SQLiteManager();
+        Users usersList;
         public SignUpWindow()
         {
+            usersList = new Users(manager);
             InitializeComponent();
         }
 
@@ -79,35 +84,33 @@ namespace CourseWork_CarSharing.Authorization
                 /*
                  * Создание Сессии
                 */
-                if (isCorrectRegistratition() == true)
+                if (isCorrectRegistration() == true)
                 {
-                    if (addUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
+                    if (usersList.AddUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
                     {
-                        TextBoxNameNotify.Content = "Done";
-                        ReadUsers(manager, TextBoxSurnameNotify);
-                    }
-                    else
-                    {
-                        TextBoxNameNotify.Content = "Daun";
-                        ReadUsers(manager, TextBoxSurnameNotify);
+                        WelcomeWindow window = new WelcomeWindow();
+                        window.Show();
+                        this.Close();
                     }
                 }
             }
             else
             {
-                if (addUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
+                if (usersList.AddUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
                 {
-                    TextBoxNameNotify.Content = "Done";
+                    WelcomeWindow window = new WelcomeWindow();
+                    window.Show();
+                    this.Close();
                 }
                 else
                 {
-                    TextBoxNameNotify.Content = "Daun";
+
                 }
             }
 
         }
 
-        private bool isCorrectRegistratition()
+        private bool isCorrectRegistration()
         {
             string firstName = TextBoxName.Text;
             string lastName = TextBoxSurname.Text;
@@ -139,15 +142,41 @@ namespace CourseWork_CarSharing.Authorization
                 TextBoxSurnameNotify.Content = clear;
             }
 
-            if (string.IsNullOrEmpty(email))
+            bool isEmailAlreadyUsed = false;
+
+            foreach (User user in usersList.users)
             {
-                TextBoxEmailNotify.Foreground = new SolidColorBrush(Colors.Red);
-                TextBoxEmailNotify.Content = "Поле должно быть заполнено";
-                flag = false;
+                if (user.Email == email)
+                {
+                    TextBoxEmailNotify.Foreground = new SolidColorBrush(Colors.Red);
+                    TextBoxEmailNotify.Content = "Данный email уже используется";
+                    isEmailAlreadyUsed = true;
+                    flag = false;
+                    break;
+                }
             }
-            else
+
+            if (!isEmailAlreadyUsed)
             {
-                TextBoxEmailNotify.Content = clear;
+                if (string.IsNullOrEmpty(email))
+                {
+                    TextBoxEmailNotify.Foreground = new SolidColorBrush(Colors.Red);
+                    TextBoxEmailNotify.Content = "Поле должно быть заполнено";
+                    flag = false;
+                }
+                else
+                {
+                    if (!IsValidEmail(email))
+                    {
+                        TextBoxEmailNotify.Foreground = new SolidColorBrush(Colors.Red);
+                        TextBoxEmailNotify.Content = "Некорректный формат email";
+                        flag = false;
+                    }
+                    else
+                    {
+                        TextBoxEmailNotify.Content = clear;
+                    }
+                }
             }
 
             if (string.IsNullOrEmpty(password))
@@ -167,33 +196,21 @@ namespace CourseWork_CarSharing.Authorization
                 TextBoxPasswordRepeatNotify.Content = "Поле должно быть заполнено";
                 flag = false;
             }
+            else if (password != confirmPassword)
+            {
+                TextBoxPasswordRepeatNotify.Foreground = new SolidColorBrush(Colors.Red);
+                TextBoxPasswordRepeatNotify.Content = "Пароли не совпадают";
+                flag = false;
+            }
             else
             {
                 TextBoxPasswordRepeatNotify.Content = clear;
             }
-            if (!IsValidEmail(email))
-            {
-                TextBoxEmailNotify.Foreground = new SolidColorBrush(Colors.Red);
-                TextBoxEmailNotify.Content = "Некорректный формат email";
-                flag = false;
-            }
-            else
-            {
-                TextBoxEmailNotify.Content = clear;
-            }
 
-            if (password != confirmPassword)
-            {
-                TextBoxPasswordRepeatNotify.Foreground = new SolidColorBrush(Colors.Red);
-                TextBoxPasswordRepeatNotify.Content = "Пароли не свопадают";
-                flag = false;
-            }
-            else
-            {
-                TextBoxPasswordNotify.Content = clear;
-            }
             return flag;
         }
+
+
 
         private void WindowHide_Click(object sender, RoutedEventArgs e)
         {

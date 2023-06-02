@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Height="720" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Icon="/Authorization/StellarIcon.png">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Icon="/Authorization/64385.jpg">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -23,7 +23,7 @@
                     <Button x:Name="WindowClose" Style ="{StaticResource topButtonIcon}" Background="White" Click="WindowClose_Click"/>
                 </StackPanel>
 
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Stellar" Foreground="White" FontFamily="Verdana" FontSize="24"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="24"/>
 
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
                     <Button Style="{StaticResource topButton}" Content="Settings"/>
@@ -34,7 +34,7 @@
         <!--Middle Section-->
         <Grid Grid.Row="1">
             <Grid.Background>
-                <SolidColorBrush Color="WhiteSmoke"/>
+                <SolidColorBrush Color="#212121"/>
             </Grid.Background>
             <Grid>
                 <Grid.Background>
@@ -42,7 +42,7 @@
                 </Grid.Background>
             </Grid>
             <!--Input Form-->
-            <Border Width="429" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#1C1C1C" Height="521">
+            <Border Width="429" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Height="521">
                 <StackPanel Margin="-22,-18,-22,-22">
                     <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Sign Up" HorizontalAlignment="Center"/>
                     <Grid>
@@ -122,7 +122,7 @@
                 <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="Stellar Co. 2023"/>
 
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button Style="{StaticResource bottomButton}" Content="Settings"/>
+                    <TextBlock Margin="15 0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="Car Rental"/>
                 </StackPanel>
             </Grid>
         </Border>

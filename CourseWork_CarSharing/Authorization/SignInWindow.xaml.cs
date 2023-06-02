@@ -1,13 +1,11 @@
-﻿using System;
-using System.Data.SQLite;
-using System.Runtime.ConstrainedExecution;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
 using CourseWork_CarSharing.Main;
-using CourseWork_CarSharing.SQL_Manager;
 using static CourseWork_CarSharing.Functions.Functions;
+using CourseWork_CarSharing.SQL_Manager;
+using System.Windows.Documents;
+using CourseWork_CarSharing.UsersInfo;
 
 namespace CourseWork_CarSharing.Authorization
 {
@@ -16,9 +14,11 @@ namespace CourseWork_CarSharing.Authorization
     /// </summary>
     public partial class SignInWindow : Window
     {
-        SQLiteManager manager = new SQLiteManager("C:\\DataBases\\Stellar");
+        SQLiteManager manager = new SQLiteManager();
+        Users usersList;
         public SignInWindow()
         {
+            usersList = new Users(manager); 
             InitializeComponent();
         }
         private bool isMaximize = false;
@@ -62,7 +62,7 @@ namespace CourseWork_CarSharing.Authorization
                 */
                 if (isCorrectAuthorization() == true)
                 {
-                    if (ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == true)
+                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == true)
                     {
                         WelcomeWindow window = new WelcomeWindow();
                         window.Show();
@@ -79,7 +79,7 @@ namespace CourseWork_CarSharing.Authorization
             {
                 if (isCorrectAuthorization() == true)
                 {
-                    if (ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == true)
+                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == true)
                     {
                         WelcomeWindow window = new WelcomeWindow();
                         window.Show();

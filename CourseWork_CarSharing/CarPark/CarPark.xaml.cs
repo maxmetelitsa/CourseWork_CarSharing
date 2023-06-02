@@ -11,19 +11,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using CourseWork_CarSharing.CarPark;
+using CourseWork_CarSharing.CarsInfo;
+using CourseWork_CarSharing.SQL_Manager;
+using CourseWork_CarSharing.UsersInfo;
 
-namespace CourseWork_CarSharing.Main
+namespace CourseWork_CarSharing.CarPark
 {
     /// <summary>
     /// Логика взаимодействия для TestMainWindow.xaml
     /// </summary>
-    public partial class WelcomeWindow : Window
+    public partial class CarPark : Window
     {
+        SQLiteManager manager = new SQLiteManager();
+        Cars carsList;
         private bool isMaximize = false;
-        public WelcomeWindow()
+        public CarPark()
         {
+            carsList = new Cars(manager);
             InitializeComponent();
+            carsList.Show
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -55,6 +61,26 @@ namespace CourseWork_CarSharing.Main
             {
                 this.DragMove();
             }
+        }
+        private void ShowCars()
+        {
+            foreach(Car car in carsList.cars)
+            {
+                TextBlock carInfo = new TextBlock();
+                carInfo.Text = $"Марка: {car.Name}, Модель: {car.Colour}";
+                carInfo.Foreground = Brushes.White;
+                carGrid.Children.Add(carInfo);
+            }
+        }
+        private void AddCarToGrid(Car car)
+        {
+            // Создаем новый элемент TextBlock для отображения информации об автомобиле
+            TextBlock carInfo = new TextBlock();
+            carInfo.Text = $"Марка: {car.Name}, Модель: {car.Colour}";
+            carInfo.Foreground = Brushes.White;
+
+            // Добавляем элемент в сетку
+            carGrid.Children.Add(carInfo);
         }
 
         private void WindowHide_Click(object sender, RoutedEventArgs e)
@@ -89,27 +115,20 @@ namespace CourseWork_CarSharing.Main
 
         private void NewsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+
         }
 
-        private void CarParkButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            this.Close();
-        }
-
-        private void RentButton_Click(object sender, RoutedEventArgs e)
+        private void Profile_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        private void Rent_Click(object sender, RoutedEventArgs e)
         {
-            
-            this.Close();
+
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void CarPark1_Click(object sender, RoutedEventArgs e)
         {
 
         }

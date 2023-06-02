@@ -11,10 +11,9 @@ namespace CourseWork_CarSharing.SQL_Manager
     {
         private SQLiteConnection connection;
 
-        public SQLiteManager(string databasePath)
+        public SQLiteManager()
         {
             string connectionString = "Data Source='C:\\DataBases\\Stellar';Version=3;";
-
             connection = new SQLiteConnection(connectionString);
         }
         public SQLiteConnection Connection
@@ -39,6 +38,22 @@ namespace CourseWork_CarSharing.SQL_Manager
                 command.ExecuteNonQuery();
             }
         }
+        public int GetRowCount(string tableName)
+        {
+            connection.Open();
+
+            using (SQLiteCommand command = new SQLiteCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = $"SELECT COUNT(*) FROM {tableName}";
+
+                int rowCount = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+                return rowCount;
+            }
+        }
+
     }
 
 }
