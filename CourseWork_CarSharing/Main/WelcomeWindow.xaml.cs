@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using CourseWork_CarSharing.CarPark;
 
 namespace CourseWork_CarSharing.Main
@@ -94,7 +95,8 @@ namespace CourseWork_CarSharing.Main
 
         private void CarParkButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            CarParkWindow window = new CarParkWindow();
+            window.Show();
             this.Close();
         }
 

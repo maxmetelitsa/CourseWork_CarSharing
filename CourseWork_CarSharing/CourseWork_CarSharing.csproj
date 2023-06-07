@@ -75,8 +75,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CarsInfo\Car.cs" />
-    <Compile Include="CarPark\CarPark.xaml.cs">
-      <DependentUpon>CarPark.xaml</DependentUpon>
+    <Compile Include="CarPark\CarParkWindow.xaml.cs">
+      <DependentUpon>CarParkWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CarsInfo\Cars.cs" />
     <Compile Include="Enums\Enums.cs" />
@@ -111,7 +111,7 @@
       <DependentUpon>SignUpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Functions\Functions.cs" />
-    <Page Include="CarPark\CarPark.xaml">
+    <Page Include="CarPark\CarParkWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
