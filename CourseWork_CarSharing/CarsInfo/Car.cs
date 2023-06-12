@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using CourseWork_CarSharing.Enums;
 using CourseWork_CarSharing.UsersInfo;
 
@@ -18,6 +20,7 @@ namespace CourseWork_CarSharing.CarsInfo
         string colour;
         int yearOFManufacture;
         int amount;
+        int imageId;
         public string Name
         {
             get { return name; }
@@ -48,7 +51,12 @@ namespace CourseWork_CarSharing.CarsInfo
             get { return amount; }
             set { amount = value; }
         }
-        public Car(string name, Fuel fuelType, Transmission transmissionType, string colour, int yearOfManufacture, int amount)
+        public int ImageID
+        {
+            get { return imageId; }
+            set { imageId = value; }
+        }
+        public Car(string name, Fuel fuelType, Transmission transmissionType, string colour, int yearOfManufacture, int amount, int imageId)
         {
             ID = ++lastID;
             Name = name;
@@ -57,6 +65,7 @@ namespace CourseWork_CarSharing.CarsInfo
             Colour = colour;
             YearOfManufacture = yearOfManufacture;
             Amount = amount;
+            ImageID = imageId;
         }
         public static List<Car> CreateListOfUsers()
         {

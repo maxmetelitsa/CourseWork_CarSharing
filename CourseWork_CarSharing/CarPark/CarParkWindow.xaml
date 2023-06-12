@@ -22,9 +22,9 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="130 0 20 0">
                 <Button x:Name="NewsButton" Style="{StaticResource topButtonsPanel}" Content="News" Click="NewsButton_Click"/>
-                <Button x:Name="CarPark1" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarPark1_Click"/>
-                <Button x:Name="Rent" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="Rent_Click"/>
-                <Button x:Name="Profile" Style="{StaticResource topButtonsPanel}" Content="Profile" Click="Profile_Click"/>
+                <Button x:Name="CarPark1" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarParkButton_Click"/>
+                <Button x:Name="Rent" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="RentButton_Click"/>
+                <Button x:Name="Profile" Style="{StaticResource topButtonsPanel}" Content="Profile" Click="ProfileButton_Click"/>
             </StackPanel>
 
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="22" Margin="10"/>
@@ -32,12 +32,14 @@
 
 
         <!--Middle Section-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" ShowGridLines = "False">
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
             <ScrollViewer>
-                <WrapPanel x:Name="carGrid" HorizontalAlignment="Center" Margin="20 15"/>
+                <WrapPanel x:Name="carGrid" HorizontalAlignment="Center" Margin="5 60">
+                    
+                </WrapPanel>
             </ScrollViewer>
         </Grid>
         <Border Grid.Row="2" BorderThickness="0 2 0 0" CornerRadius="0 0 5 5" Padding="10" Background="#1C1C1C">

@@ -13,7 +13,7 @@ namespace CourseWork_CarSharing.CarsInfo
     {
         public List<Car> cars;
 
-        public Cars(SQLiteManager manager)
+        public Cars()
         {
             cars = new List<Car>(); 
         }

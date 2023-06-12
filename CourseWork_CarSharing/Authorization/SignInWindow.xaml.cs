@@ -6,6 +6,7 @@ using static CourseWork_CarSharing.Functions.Functions;
 using CourseWork_CarSharing.SQL_Manager;
 using System.Windows.Documents;
 using CourseWork_CarSharing.UsersInfo;
+using CourseWork_CarSharing.Admin;
 
 namespace CourseWork_CarSharing.Authorization
 {
@@ -62,9 +63,15 @@ namespace CourseWork_CarSharing.Authorization
                 */
                 if (isCorrectAuthorization() == true)
                 {
-                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == true)
+                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 1)
                     {
                         WelcomeWindow window = new WelcomeWindow();
+                        window.Show();
+                        this.Close();
+                    }
+                    else if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 2)
+                    {
+                        AdminWindow window = new AdminWindow();
                         window.Show();
                         this.Close();
                     }
@@ -79,9 +86,15 @@ namespace CourseWork_CarSharing.Authorization
             {
                 if (isCorrectAuthorization() == true)
                 {
-                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == true)
+                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 1)
                     {
                         WelcomeWindow window = new WelcomeWindow();
+                        window.Show();
+                        this.Close();
+                    }
+                    else if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 2)
+                    {
+                        AdminWindow window = new AdminWindow();
                         window.Show();
                         this.Close();
                     }

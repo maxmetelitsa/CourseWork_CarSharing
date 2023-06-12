@@ -119,7 +119,7 @@
         <!--Bottom Section-->
         <Border Grid.Row="2" BorderThickness="0 2 0 0" BorderBrush="White" CornerRadius="0 0 5 5" Padding="10" Background="#1C1C1C">
             <Grid>
-                <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="Stellar Co. 2023"/>
+                <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="CarHouse Co. 2023"/>
 
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                     <TextBlock Margin="15 0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="Car Rental"/>

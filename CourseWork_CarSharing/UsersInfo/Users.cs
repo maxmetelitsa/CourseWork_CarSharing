@@ -101,16 +101,21 @@ namespace CourseWork_CarSharing.UsersInfo
 
             manager.CloseConnection();
         }
-        public bool ValidateUser(string email, string password)
+        public int ValidateUser(string email, string password)
         {
             foreach (User user in users)
             {
                 if (user.Email == email && user.Password == password)
                 {
-                    return true;
+                    return 1;
                 }
+                else if (email == "admin@icloud.com" && password == "1234")
+                {
+                    return 2;
+                }
+
             }
-            return false;
+            return 0;
         }
     }
 }

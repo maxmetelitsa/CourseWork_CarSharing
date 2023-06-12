@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,26 +25,96 @@ namespace CourseWork_CarSharing.CarPark
     /// </summary>
     public partial class CarParkWindow : Window
     {
-        private SQLiteManager manager;
-        private Cars carsList;
-        private bool isMaximized = false;
+        private CarParkManager carParkManager;
+        private bool isMaximize = false;
 
         public CarParkWindow()
         {
             InitializeComponent();
 
-            manager = new SQLiteManager();
-            carsList = new Cars(manager);
+            carParkManager = new CarParkManager();
 
-            //AddCar(manager,"Porsche", Fuel.Electricity, Transmission.Automatic, "black", 2022, 2);
-            //AddCar(manager,"BMW", Fuel.Electricity, Transmission.Automatic, "black", 2020, 4);
-            //AddCar(manager,"Mercedes", Fuel.Electricity, Transmission.Automatic, "white", 2020, 2);
-            //AddCar(manager,"Audi", Fuel.Petrol, Transmission.Manual, "black", 2014, 5);
+            carParkManager.GetAllCars();
 
-            GetAllCars(manager);
+            //carParkManager.AddCar("BMw", Fuel.Gas, Transmission.Automatic, "black", 2022, 3, 2);
 
-            ShowCars(carGrid, carsList.cars);
-            //UpdateAllCars(manager);
+            ShowCars(carGrid, carParkManager);
+
+        }
+
+
+        private void CarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button carButton = (Button)sender;
+        }
+        public void ShowCars(WrapPanel carGrid, CarParkManager carParkManager)
+        {
+            carGrid = FindName("carGrid") as WrapPanel;
+            foreach (Car car in carParkManager.carsList.cars)
+            {
+                Button carButton = new Button();
+                carButton.Click += CarButton_Click;
+                carButton.Style = (Style)Application.Current.Resources["NoHoverButtonStyle"];
+                carButton.BorderBrush = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+                carButton.BorderThickness = new Thickness(5);
+                carButton.Height = 300;
+                carButton.Width = 255;
+                carButton.Background = new SolidColorBrush(Color.FromRgb(33, 33, 33));
+
+                StackPanel carPanel = new StackPanel();
+                carPanel.Orientation = Orientation.Vertical;
+                carPanel.Height = 300;
+
+                string imagePath = @"C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\Images\pic" + car.ImageID + ".jpg";
+                Image image = new Image();
+                image.Height = 180;
+                image.Width = 160;
+
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);
+                bitmap.EndInit();
+
+                image.Source = bitmap;
+
+
+                TextBlock carInfo = new TextBlock();
+                carInfo.Text = $"Name: {car.Name}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nAmount: {car.Amount}";
+                carInfo.Foreground = Brushes.White;
+                carInfo.FontSize = 12;
+                carInfo.TextAlignment = TextAlignment.Left;
+                carInfo.Margin = new Thickness(10, 0, 10, 10);
+
+                carPanel.Children.Add(image);
+                carPanel.Children.Add(carInfo);
+
+                carButton.Content = carPanel;
+
+                carGrid.Children.Add(carButton);
+            }
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                if (isMaximize)
+                {
+                    this.WindowState = WindowState.Normal;
+                    this.Width = 1024;
+                    this.Height = 720;
+
+                    isMaximize = false;
+                }
+                else
+                {
+                    this.WindowState = WindowState.Maximized;
+                    this.Width = 1024;
+                    this.Height = 720;
+
+                    isMaximize = true;
+                }
+            }
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -54,131 +125,6 @@ namespace CourseWork_CarSharing.CarPark
             }
         }
 
-        public void AddCarToGrid(string name, Fuel fuelType, Transmission transmission, string colour, int yearOfManufacture, int amount)
-        {
-            Car car = new Car(name, fuelType, transmission, colour, yearOfManufacture, amount);
-            carsList.cars.Add(car);
-
-            TextBlock carInfo = new TextBlock();
-            carInfo.Text = $"Марка: {car.Name}, Модель: {car.Colour}";
-            carInfo.Foreground = Brushes.White;
-
-            //carGrid.Children.Add(carInfo);
-        }
-        public void UpdateAllCars(SQLiteManager manager)
-        {
-            manager.OpenConnection();
-
-            foreach (Car car in carsList.cars)
-            {
-                string updateQuery = $"UPDATE Cars SET Name = @Name, FuelType = @FuelType, TransmissionType = @TransmissionType, Colour = @Colour, YearOfManufacture = @YearOfManufacture, Amount = @Amount WHERE ID = @ID";
-
-                using (SQLiteCommand command = new SQLiteCommand(updateQuery, manager.Connection))
-                {
-                    command.Parameters.AddWithValue("@Name", car.Name);
-                    command.Parameters.AddWithValue("@FuelType", (int)car.FuelType);
-                    command.Parameters.AddWithValue("@TransmissionType", (int)car.TransmissionType);
-                    command.Parameters.AddWithValue("@Colour", car.Colour);
-                    command.Parameters.AddWithValue("@YearOfManufacture", car.YearOfManufacture);
-                    command.Parameters.AddWithValue("@Amount", car.Amount);
-                    command.Parameters.AddWithValue("@ID", car.ID);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-
-            manager.CloseConnection();
-        }
-        public void GetAllCars(SQLiteManager manager)
-        {
-            manager.OpenConnection();
-
-            string selectQuery = "SELECT * FROM Cars";
-
-            using (SQLiteCommand command = new SQLiteCommand(selectQuery, manager.Connection))
-            {
-                using (SQLiteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        string name = reader.GetString(reader.GetOrdinal("Name"));
-                        Fuel fuelType = (Fuel)reader.GetInt32(reader.GetOrdinal("FuelType"));
-                        Transmission transmission = (Transmission)reader.GetInt32(reader.GetOrdinal("TransmissionType"));
-                        string colour = reader.GetString(reader.GetOrdinal("Colour"));
-                        int yearOfManufacture = reader.GetInt32(reader.GetOrdinal("YearOfManufacture"));
-                        int amount = reader.GetInt32(reader.GetOrdinal("Amount"));
-                        carsList.cars.Add(new Car(name, fuelType, transmission, colour, yearOfManufacture, amount));
-                    }
-                }
-            }
-
-            manager.CloseConnection();
-        }
-        public bool AddCar(SQLiteManager manager, string name, Fuel fuelType, Transmission transmission, string colour, int yearOfManufacture, int amount)
-        {
-            manager.OpenConnection();
-
-            // Use parameters in the SQL query to avoid security and character escaping issues
-
-            foreach (Car car in carsList.cars)
-            {
-                if (car.Name == name && car.FuelType == fuelType && car.TransmissionType == transmission && car.Colour == colour && car.YearOfManufacture == yearOfManufacture)
-                {
-                    manager.CloseConnection();
-                    return false;
-                }
-            }
-
-            string insertQuery = "INSERT INTO Cars (Name, FuelType, TransmissionType, Colour, YearOfManufacture, Amount) VALUES (@Name, @FuelType, @TransmissionType, @Colour, @YearOfManufacture, @Amount);";
-
-            using (SQLiteCommand command = new SQLiteCommand(insertQuery, manager.Connection))
-            {
-                command.Parameters.AddWithValue("@Name", name);
-                command.Parameters.AddWithValue("@FuelType", (int)fuelType);
-                command.Parameters.AddWithValue("@TransmissionType", (int)transmission);
-                command.Parameters.AddWithValue("@Colour", colour);
-                command.Parameters.AddWithValue("@YearOfManufacture", yearOfManufacture);
-                command.Parameters.AddWithValue("@Amount", amount);
-
-                int rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    // Data successfully added
-                    carsList.cars.Add(new Car(name, fuelType, transmission, colour, yearOfManufacture, amount));
-                    manager.CloseConnection();
-                    return true;
-                }
-                else
-                {
-                    // Failed to add data
-                    manager.CloseConnection();
-                    return false;
-                }
-            }
-        }
-
-        private void CarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Button carButton = (Button)sender;
-        }
-
-        public void ShowCars(WrapPanel carGrid, List<Car> cars)
-        {
-            foreach (Car car in cars)
-            {
-                Button carButton = new Button();
-                carButton.Click += CarButton_Click;
-
-                TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nAmount: {car.Amount}";
-                carInfo.Foreground = Brushes.White;
-
-                carButton.Content = carInfo;
-
-                carGrid.Children.Add(carButton);
-            }
-        }
-
         private void WindowHide_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -186,39 +132,21 @@ namespace CourseWork_CarSharing.CarPark
 
         private void WindowOpenFull_Click(object sender, RoutedEventArgs e)
         {
-            if (isMaximized)
+            if (isMaximize)
             {
                 this.WindowState = WindowState.Normal;
                 this.Width = 1024;
                 this.Height = 720;
+
+                isMaximize = false;
             }
             else
             {
                 this.WindowState = WindowState.Maximized;
-                this.Width = 1920;
-                this.Height = 1080;
-            }
+                this.Width = 1024;
+                this.Height = 720;
 
-            isMaximized = !isMaximized;
-        }
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount == 2)
-            {
-                if (isMaximized)
-                {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1024;
-                    this.Height = 720;
-                }
-                else
-                {
-                    this.WindowState = WindowState.Maximized;
-                    this.Width = 1920;
-                    this.Height = 1080;
-                }
-
-                isMaximized = !isMaximized;
+                isMaximize = true;
             }
         }
 
@@ -229,22 +157,24 @@ namespace CourseWork_CarSharing.CarPark
 
         private void NewsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
-        private void Profile_Click(object sender, RoutedEventArgs e)
+        private void CarParkButton_Click(object sender, RoutedEventArgs e)
         {
-
+            CarParkWindow window = new CarParkWindow();
+            window.Show();
+            this.Close();
         }
 
-        private void Rent_Click(object sender, RoutedEventArgs e)
+        private void RentButton_Click(object sender, RoutedEventArgs e)
         {
-
+            // Обработка события при нажатии на кнопку аренды
         }
 
-        private void CarPark1_Click(object sender, RoutedEventArgs e)
+        private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
-
+            // Обработка события при нажатии на кнопку профиля
         }
     }
 }

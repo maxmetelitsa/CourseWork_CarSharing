@@ -1,7 +1,7 @@
 ﻿<Application x:Class="CourseWork_CarSharing.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Authorization/SignUpWindow.xaml">
+             StartupUri="Authorization\SignInWindow.xaml">
     <Application.Resources>
         <Style x:Key="topButton" TargetType="Button">
             <Setter Property="FontSize" Value="16"/>
