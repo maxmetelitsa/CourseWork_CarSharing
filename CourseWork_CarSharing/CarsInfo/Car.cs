@@ -17,9 +17,11 @@ namespace CourseWork_CarSharing.CarsInfo
         string name;
         Fuel fuelType;
         Transmission transmissionType;
+        CarType carType;
+        Brand brand;
         string colour;
         int yearOFManufacture;
-        int amount;
+        string number;
         int imageId;
         public string Name
         {
@@ -36,6 +38,16 @@ namespace CourseWork_CarSharing.CarsInfo
             get { return transmissionType; }
             set { transmissionType = value; }
         }
+        public CarType CarType
+        {
+            get { return carType; }
+            set { carType = value; }
+        }
+        public Brand Brand
+        {
+            get { return brand; }
+            set { brand = value; }
+        }
         public string Colour
         {
             get { return colour; }
@@ -46,25 +58,27 @@ namespace CourseWork_CarSharing.CarsInfo
             get { return yearOFManufacture; }
             set { yearOFManufacture = value; }
         }
-        public int Amount
+        public string Number
         {
-            get { return amount; }
-            set { amount = value; }
+            get { return number; }
+            set { number = value; }
         }
         public int ImageID
         {
             get { return imageId; }
             set { imageId = value; }
         }
-        public Car(string name, Fuel fuelType, Transmission transmissionType, string colour, int yearOfManufacture, int amount, int imageId)
+        public Car(string name, Fuel fuelType, Transmission transmissionType, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageId)
         {
             ID = ++lastID;
             Name = name;
             FuelType = fuelType;
             TransmissionType = transmissionType;
+            CarType = carType;
+            Brand = brand;
             Colour = colour;
             YearOfManufacture = yearOfManufacture;
-            Amount = amount;
+            Number = number;
             ImageID = imageId;
         }
         public static List<Car> CreateListOfUsers()

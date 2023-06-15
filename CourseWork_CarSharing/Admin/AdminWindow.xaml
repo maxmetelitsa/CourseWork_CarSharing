@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Height="720" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
+        mc:Ignorable="d" Height="777" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Icon="/img/Stellar.png">
 
     <Grid>
@@ -42,17 +42,8 @@
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
-            <Label Content="Admin Panel" Foreground="White" HorizontalAlignment="Left" FontSize="30" FontFamily="Verdana" Margin="414,0,0,546" Grid.ColumnSpan="2"/>
-            <!--<Border Width="468" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Height="500" Margin="0,64,0,0" Grid.Column="1">
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <StackPanel Margin="-22,-18,-22,-22">
-                        -->
-            <!-- Ваш код для DataGrid и других элементов -->
-            <!--
-                    </StackPanel>
-                </Grid>
-            </Border>-->
-            <Border Width="416" Height="498" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,66,0,0">
+            <Label Content="Admin Panel" Foreground="White" HorizontalAlignment="Center" FontSize="30" FontFamily="Verdana" Margin="0,0,0,546" Grid.ColumnSpan="2"/>
+            <Border Width="416" Height="545" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,66,0,0">
                 <StackPanel Margin="-22,-18,-22,-22">
                     <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Car Adding" HorizontalAlignment="Center"/>
                     <Grid>
@@ -64,97 +55,113 @@
                         <TextBox x:Name="NameTextBox" MaxLength="33" Margin="0,25,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" />
                     </Grid>
-                    <Label x:Name="NameNotify" HorizontalAlignment="Right" Content="" Foreground="White" Height="25" Margin="0 0 92 0" FontFamily="Verdana"/>
+                    <Label x:Name="NameNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Height="27" Margin="0 0 92 0"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="FuelTypeLabel" HorizontalAlignment="Center" Foreground="White" Content="FuelType" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,8,40,0" Width="120"/>
-                        <ComboBox x:Name="FuelTypeComboBox" Margin="0,10,0,0" Padding="0" Foreground="Black" 
+                        <Label x:Name="FuelTypeLabel" HorizontalAlignment="Center" Foreground="White" Content="FuelType" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
+                        <ComboBox x:Name="FuelTypeComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" SelectionChanged="FuelTypeComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
                     </Grid>
-                    <Label x:Name="FuelTypeNotify" HorizontalAlignment="Right" Content="" Foreground="White" Margin="0 0 92 0" Height="25"/>
+                    <Label x:Name="FuelTypeNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
                     <!--Email TextBox-->
                     <Grid>
-                        <Label x:Name="TransmissionTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="Transmis" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,10,0,0" Width="120"/>
-                        <ComboBox x:Name="TransmissionTypeComboBox" Margin="0,10,0,0" Padding="0" Foreground="Black" 
+                        <Label x:Name="TransmissionTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="Transmis" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
+                        <ComboBox x:Name="TransmissionTypeComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" SelectionChanged="TransmissionTypeComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
                     </Grid>
-                    <Label x:Name="TansmissionTypeNotify" HorizontalAlignment="Right" Content="" FontFamily="Verdana" Foreground="White" Margin="0 0 92 0" Height="25"/>
+                    <Label x:Name="TransmissionTypeNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
+                    <Grid>
+                        <Label x:Name="CarTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="CarType" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
+                        <ComboBox x:Name="CarTypeComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" SelectionChanged="CarTypeComboBox_SelectionChanged"/>
+                        <!--<ICon:PackIconMAterial/>-->
+                    </Grid>
+                    <Label x:Name="CarTypeNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
+                    <!--Password TextBox-->
+                    <Grid>
+                        <Label x:Name="BrandLabel" HorizontalAlignment="Left" Foreground="White" Content="Brand" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
+                        <ComboBox x:Name="BrandComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" SelectionChanged="BrandComboBox_SelectionChanged"/>
+                        <!--<ICon:PackIconMAterial/>-->
+                    </Grid>
+                    <Label x:Name="BrandNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
                     <!--Password TextBox-->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="ColourLabel" HorizontalAlignment="Center" Foreground="White" Content="Colour" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,8,40,0" Width="120"/>
+                        <Label x:Name="ColourLabel" HorizontalAlignment="Center" Foreground="White" Content="Colour" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
 
-                        <TextBox x:Name="ColourTextBox" MaxLength="33" Margin="0,10,0,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="ColourTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
-                        <!--<ICon:PackIconMAterial/>-->
                     </Grid>
-                    <Label x:Name="ColourNotify" HorizontalAlignment="Right" Content="" Foreground="White" Margin="0 0 92 0" Height="25"/>
+                    <Label x:Name="ColourNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="YearOfManufactureLabel" HorizontalAlignment="Center" Foreground="White" Content="Year" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,8,40,0" Width="120"/>
+                        <Label x:Name="YearOfManufactureLabel" HorizontalAlignment="Center" Foreground="White" Content="Year" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
 
-                        <TextBox x:Name="YearOfManufactureTextBox" MaxLength="33" Margin="0,10,0,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="YearOfManufactureTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
-                        <!--<ICon:PackIconMAterial/>-->
                     </Grid>
-                    <Label x:Name="YearOfManufactureNotify" HorizontalAlignment="Right" Content="" FontFamily="Verdana" Foreground="White" Margin="0 0 92 0" Height="25"/>
+                    <Label x:Name="YearOfManufactureNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="83*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="AmountLabel" HorizontalAlignment="Left" Foreground="White" Content="Amount" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="19,9,0,0" Width="120" Grid.Column="0"/>
-                        <Label x:Name="ImageIDLabel" HorizontalAlignment="Right" Foreground="White" Content="ImageID" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="0,9,11,0" Width="68" Grid.Column="1"/>
+                        <Label x:Name="NumberLabel" HorizontalAlignment="Left" Foreground="White" Content="Number" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="19,-1,0,0" Width="120" Grid.Column="0"/>
+                        <Label x:Name="ImageIDLabel" HorizontalAlignment="Right" Foreground="White" Content="ImageID" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="0,-1,11,0" Width="68" Grid.Column="1"/>
 
 
-                        <TextBox x:Name="AmountTextBox" MaxLength="33" Margin="81,10,0,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="NumberTextBox" MaxLength="33" Margin="81,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Left" Width="116" Height="24" FontSize="14" VerticalAlignment="Top" BorderBrush="#212121"/>
-                        <TextBox x:Name="ImageIDTextBox" MaxLength="33" Margin="0,10,84,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="ImageIDTextBox" MaxLength="33" Margin="0,0,84,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Right" Width="115" Height="24" FontSize="14" VerticalAlignment="Top" BorderBrush="#212121" Grid.Column="1"/>
-                        <!--<ICon:PackIconMAterial/>-->
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="83*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="AmountNotify" HorizontalAlignment="Left" Content="abc" FontFamily="Verdana" Foreground="White" Margin="162,0,0,0" Height="25" Grid.Column="0"/>
-                        <Label x:Name="ImageNotify" HorizontalAlignment="Left" Content="abc" FontFamily="Verdana" Foreground="White" Margin="77,0,0,0" Height="25" Grid.Column="1"/>
+                        <Label x:Name="NumberNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="8,0,0,-5"/>
+                        <Label x:Name="ImageNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="196,0,0,-5" Grid.ColumnSpan="2"/>
                     </Grid>
 
                     <Grid Margin="0 10 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="CarAddButton" Content="Add Car" Style="{StaticResource mainButton}" Margin="0,10,15,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click"/>
-                        <Button x:Name="CarDeleteDButton" Content="Delete Car" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarDeleteButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarAddButton" Content="Add Car" Style="{StaticResource mainButton}" Margin="0,0,15,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click"/>
+                        <Button x:Name="CarDeleteDButton" Content="Delete Car" Style="{StaticResource mainButton}" Margin="10,0,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarDeleteButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarClearFieldsButton" Content="Clear Fields" Style="{StaticResource mainButton}" Margin="10,0,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarClearFieldsButton_Click" Grid.Column="2"/>
                     </Grid>
 
                 </StackPanel>
             </Border>
 
-            <Border Width="468" Height="498" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,64,0,0" Grid.Column="1">
+            <Border Width="468" Height="547" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,64,0,0" Grid.Column="1">
                 <StackPanel Margin="-22,-18,-22,-22">
-                    <DataGrid d:ItemsSource="{d:SampleData ItemCount=3}" x:Name="carsGrid" Height="416" IsReadOnly="True"/>
-                    <Grid>
+                    <DataGrid d:ItemsSource="{d:SampleData ItemCount=3}" x:Name="carsGrid" Height="458" IsReadOnly="True"/>
+                    <Grid Margin="0 7">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="CarEditButton"  Content="Edit Car" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarEditButton_Click" Grid.Column="0"/>
-                        <Button x:Name="CarSaveChangesButton" Content="Save Changes" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarSaveChangesButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarEditButton" Width = "117" Content="Edit Car" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarEditButton_Click" Grid.Column="0" RenderTransformOrigin="0.483,1.115"/>
+                        <Button x:Name="CarSaveChangesButton" Width = "117" Content="Save Changes" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarSaveChangesButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarClearTableButton" Width ="117" Content="Clear Table" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarClearTableButton_Click" Grid.Column="2"/>
                     </Grid>
                 </StackPanel>
             </Border>

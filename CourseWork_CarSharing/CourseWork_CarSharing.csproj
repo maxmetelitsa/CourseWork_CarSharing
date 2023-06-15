@@ -92,8 +92,8 @@
     </Compile>
     <Compile Include="UsersInfo\User.cs" />
     <Compile Include="UsersInfo\Users.cs" />
-    <Compile Include="Rent\Rent.xaml.cs">
-      <DependentUpon>Rent.xaml</DependentUpon>
+    <Compile Include="Rent\RentWindow.xaml.cs">
+      <DependentUpon>RentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SQL Manager\SQL_Manager.cs" />
     <Page Include="Admin\AdminWindow.xaml">
@@ -131,7 +131,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Rent\Rent.xaml">
+    <Page Include="Rent\RentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

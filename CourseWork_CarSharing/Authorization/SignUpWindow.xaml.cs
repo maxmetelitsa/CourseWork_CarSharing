@@ -210,8 +210,6 @@ namespace CourseWork_CarSharing.Authorization
             return flag;
         }
 
-
-
         private void WindowHide_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;

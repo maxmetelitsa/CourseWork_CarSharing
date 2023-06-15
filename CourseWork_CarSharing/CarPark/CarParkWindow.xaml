@@ -36,9 +36,28 @@
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
-            <ScrollViewer>
-                <WrapPanel x:Name="carGrid" HorizontalAlignment="Center" Margin="5 60">
-                    
+            <StackPanel>
+                <Label Content="Searching" HorizontalAlignment="Center" Foreground="White" FontSize="22"/>
+                <TextBox x:Name="SearchTextBox" Width="200" Height="32" HorizontalAlignment="Center" Background="#212121" Foreground="White" TextChanged="SearchTextBox_TextChanged" BorderBrush="White" Padding="4" FontSize="16">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <EventTrigger RoutedEvent="TextBox.TextChanged">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" 
+                                                                To="White" Duration="0"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </StackPanel>
+            <ScrollViewer Margin="0,84,0,0">
+                <WrapPanel x:Name="carGrid" HorizontalAlignment="Center" Margin="5">
+
                 </WrapPanel>
             </ScrollViewer>
         </Grid>

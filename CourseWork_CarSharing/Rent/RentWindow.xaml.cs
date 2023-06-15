@@ -13,19 +13,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CourseWork_CarSharing.CarPark;
 using CourseWork_CarSharing.CarsInfo;
 using CourseWork_CarSharing.Enums;
 using CourseWork_CarSharing.SQL_Manager;
 using CourseWork_CarSharing.UsersInfo;
 
-namespace CourseWork_CarSharing.CarPark
+namespace CourseWork_CarSharing.Rent
 {
-    public partial class CarParkWindow : Window
+    public partial class RentWindow : Window
     {
         private CarParkManager carParkManager;
         private bool isMaximize = false;
 
-        public CarParkWindow()
+        public RentWindow()
         {
             InitializeComponent();
 
@@ -73,12 +74,11 @@ namespace CourseWork_CarSharing.CarPark
 
 
                 TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}";
+                carInfo.Text = $"Name: {car.Name}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}";
                 carInfo.Foreground = Brushes.White;
                 carInfo.FontSize = 12;
                 carInfo.TextAlignment = TextAlignment.Left;
                 carInfo.Margin = new Thickness(10, 0, 10, 10);
-                //carInfo.Height = 300;
 
                 carPanel.Children.Add(image);
                 carPanel.Children.Add(carInfo);
@@ -89,7 +89,7 @@ namespace CourseWork_CarSharing.CarPark
             }
         }
 
-        public void ShowSearchedCars(WrapPanel carGrid, List <Car> cars)
+        public void ShowSearchedCars(WrapPanel carGrid, List<Car> cars)
         {
             carGrid = FindName("carGrid") as WrapPanel;
             foreach (Car car in cars)
@@ -220,32 +220,9 @@ namespace CourseWork_CarSharing.CarPark
             // Обработка события при нажатии на кнопку профиля
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            string searchText = SearchTextBox.Text;
 
-            // Очистка текущего отображения списка машин
-            carGrid.Children.Clear();
-
-            // Получение списка машин, соответствующих поисковому запросу
-            List<Car> searchedCars = carParkManager.carsList.cars.Where(car => car.Name.ToLower().Contains(searchText.ToLower())).ToList();
-
-            // Отображение найденных машин
-            ShowSearchedCars(carGrid, searchedCars);
-        }
-
-        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string searchText = SearchTextBox.Text;
-
-            // Очистка текущего отображения списка машин
-            carGrid.Children.Clear();
-
-            // Получение списка машин, соответствующих поисковому запросу
-            List<Car> searchedCars = carParkManager.carsList.cars.Where(car => car.Name.ToLower().Contains(searchText.ToLower())).ToList();
-
-            // Отображение найденных машин
-            ShowSearchedCars(carGrid, searchedCars);
         }
     }
 }

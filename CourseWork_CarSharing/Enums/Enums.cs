@@ -19,4 +19,26 @@ namespace CourseWork_CarSharing.Enums
         Automatic,
         Manual,
     };
+    public enum CarType
+    {
+        Economy,
+        Business,
+        SUV,
+        CargoMinibus,
+        Coupe,
+        Limousine,
+        Minibus,
+        Motorcycle
+    }
+    public enum Brand
+    {
+        Toyota,
+        Honda,
+        Ford,
+        BMW,
+        MercedesBenz,
+        Audi,
+        Volkswagen,
+        Tesla
+    }
 }
