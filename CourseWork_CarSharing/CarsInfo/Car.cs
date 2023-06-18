@@ -23,6 +23,7 @@ namespace CourseWork_CarSharing.CarsInfo
         int yearOFManufacture;
         string number;
         int imageId;
+        double hourPrice;
         public string Name
         {
             get { return name; }
@@ -68,7 +69,12 @@ namespace CourseWork_CarSharing.CarsInfo
             get { return imageId; }
             set { imageId = value; }
         }
-        public Car(string name, Fuel fuelType, Transmission transmissionType, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageId)
+        public double HourPrice
+        {
+            get { return hourPrice; }
+            set { hourPrice = value; }
+        }
+        public Car(string name, Fuel fuelType, Transmission transmissionType, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageId, double hourPrice)
         {
             ID = ++lastID;
             Name = name;
@@ -80,6 +86,7 @@ namespace CourseWork_CarSharing.CarsInfo
             YearOfManufacture = yearOfManufacture;
             Number = number;
             ImageID = imageId;
+            HourPrice = hourPrice;
         }
         public static List<Car> CreateListOfUsers()
         {

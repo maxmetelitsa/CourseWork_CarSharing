@@ -16,19 +16,79 @@ using CourseWork_CarSharing.CarPark;
 using CourseWork_CarSharing.Rent;
 using CourseWork_CarSharing.Profile;
 using CourseWork_CarSharing.About;
+using CourseWork_CarSharing.CarsInfo;
 
-namespace CourseWork_CarSharing.Main
+namespace CourseWork_CarSharing.Rent
 {
     /// <summary>
     /// Логика взаимодействия для TestMainWindow.xaml
     /// </summary>
-    public partial class WelcomeWindow : Window
+    public partial class RentCarWindow : Window
     {
+        private CarParkManager carParkManager;
         private bool isMaximize = false;
-        public WelcomeWindow()
+        Car car;
+
+        public Car Car
+        {
+            get { return car; }
+            set { car = value; }
+        }
+        public RentCarWindow(Car car)
         {
             InitializeComponent();
+
+            Car = car;
+
+            carParkManager = new CarParkManager();
+            ShowCar(rentalCar);
+
         }
+        public void ShowCar(WrapPanel carObject)
+        {
+            carObject = FindName("rentalCar") as WrapPanel;
+
+            Button carButton = new Button();
+            carButton.Tag = Car;
+            carButton.Style = (Style)Application.Current.Resources["NoHoverButtonStyle"];
+            carButton.BorderBrush = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+            carButton.BorderThickness = new Thickness(5);
+            carButton.Height = 590;
+            carButton.Width = 600;
+            carButton.Background = new SolidColorBrush(Color.FromRgb(33, 33, 33));
+
+            StackPanel carPanel = new StackPanel();
+            carPanel.Orientation = Orientation.Vertical;
+            carPanel.Height = 590;
+            carPanel.Width = 600;
+
+            string imagePath = @"C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\Images\pic" + Car.ImageID + ".jpg";
+            Image image = new Image();
+            image.Height = 320;
+            image.Width = 300;
+
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);
+            bitmap.EndInit();
+
+            image.Source = bitmap;
+
+            TextBlock carInfo = new TextBlock();
+            carInfo.Text = $"Name: {Car.Name}\nBrand: {Car.Brand}\nCarType: {Car.CarType}\nFuelType: {Car.FuelType}\nTransmissionType: {Car.TransmissionType}\nColour: {Car.Colour}\nYearOfManufacture: {Car.YearOfManufacture}\nNumber: {Car.Number}\nPrice/Hour: {Car.HourPrice} $";
+            carInfo.Foreground = Brushes.White;
+            carInfo.FontSize = 16;
+            carInfo.TextAlignment = TextAlignment.Left;
+            carInfo.Margin = new Thickness(10, 0, 10, 10);
+
+            carPanel.Children.Add(image);
+            carPanel.Children.Add(carInfo);
+
+            carButton.Content = carPanel;
+
+            carObject.Children.Add(carButton);
+        }
+
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

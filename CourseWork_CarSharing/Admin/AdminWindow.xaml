@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Height="777" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
+        mc:Ignorable="d" Height="807" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Icon="/img/Stellar.png">
 
     <Grid>
@@ -13,7 +13,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <!--Top Section-->
-        <Border x:Name="RentButton" BorderThickness="0 0 0 0" BorderBrush="#E2E9E9" Background="#1C1C1C" CornerRadius="5 5 0 0 " Padding="10" MouseDown ="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
+        <Border BorderThickness="0 0 0 0" BorderBrush="#E2E9E9" Background="#1C1C1C" CornerRadius="5 5 0 0 " Padding="10" MouseDown ="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
         <Grid>
             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button x:Name="WindowOpenFull" Style ="{StaticResource topButtonIcon}" Background="White" Click="WindowOpenFull_Click"/>
@@ -22,10 +22,10 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="130 0 20 0">
-                <Button x:Name="NewsButton" Style="{StaticResource topButtonsPanel}" Content="News" Click="NewsButton_Click"/>
                 <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarParkButton_Click"/>
-                <Button Style="{StaticResource topButtonsPanel}" Content="Rent" Click="Button_Click"/>
+                <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="RentButton_Click"/>
                 <Button x:Name="ProfileButton" Style="{StaticResource topButtonsPanel}" Content="Profile" Click="ProfileButton_Click"/>
+                <Button x:Name="About" Style="{StaticResource topButtonsPanel}" Content="About" Click="AboutButton_Click"/>
             </StackPanel>
 
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="22" Margin="10"/>
@@ -34,7 +34,7 @@
 
         <!--Middle Section-->
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Height="667" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -43,7 +43,7 @@
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
             <Label Content="Admin Panel" Foreground="White" HorizontalAlignment="Center" FontSize="30" FontFamily="Verdana" Margin="0,0,0,546" Grid.ColumnSpan="2"/>
-            <Border Width="416" Height="545" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,66,0,0">
+            <Border Width="416" Height="591" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,66,0,0">
                 <StackPanel Margin="-22,-18,-22,-22">
                     <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Car Adding" HorizontalAlignment="Center"/>
                     <Grid>
@@ -135,8 +135,20 @@
                         <Label x:Name="NumberNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="8,0,0,-5"/>
                         <Label x:Name="ImageNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="196,0,0,-5" Grid.ColumnSpan="2"/>
                     </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="79*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="HourPriceLabel" HorizontalAlignment="Left" Foreground="White" Content="HourPrice" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="19,0,0,0" Width="120"/>
 
-                    <Grid Margin="0 10 0 0">
+                        <TextBox x:Name="HourPriceTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
+                    </Grid>
+                    <Label x:Name="HourPriceNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="196,0,0,-5" Grid.ColumnSpan="2"/>
+
+
+                    <Grid Margin="0 5 0 0" Height="48">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -150,10 +162,10 @@
                 </StackPanel>
             </Border>
 
-            <Border Width="468" Height="547" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,64,0,0" Grid.Column="1">
+            <Border Width="468" Height="593" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,64,0,0" Grid.Column="1">
                 <StackPanel Margin="-22,-18,-22,-22">
-                    <DataGrid d:ItemsSource="{d:SampleData ItemCount=3}" x:Name="carsGrid" Height="458" IsReadOnly="True"/>
-                    <Grid Margin="0 7">
+                    <DataGrid d:ItemsSource="{d:SampleData ItemCount=3}" x:Name="carsGrid" Height="508" IsReadOnly="True"/>
+                    <Grid Margin="0 ">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>

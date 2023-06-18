@@ -52,14 +52,14 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Brand" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="10,0,10,0" Grid.Row="0" FontSize="18"/>
-                        <ComboBox x:Name="BrandComboBox" Width="150" Margin="15,3,10,0" Grid.Row="1" ItemsSource="{Binding brands}" />
+                        <ComboBox x:Name="BrandComboBox" Width="150" Margin="15,3,10,0" Grid.Row="1" ItemsSource="{Binding brands}" SelectionChanged="BrandComboBox_SelectionChanged" />
                         <Label Content="Class" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="10,10,10,0" Grid.Row="2" FontSize="18"/>
-                        <ComboBox x:Name="ClassComboBox" Width="150" Margin="15,3,10,0" Grid.Row="3" ItemsSource="{Binding carTypes}" />
+                        <ComboBox x:Name="ClassComboBox" Width="150" Margin="15,3,10,0" Grid.Row="3" ItemsSource="{Binding carTypes}" SelectionChanged="ClassComboBox_SelectionChanged" />
                         <Label Content="Sort by price" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="10,10,10,0" Grid.Row="4" FontSize="18"/>
-                        <ComboBox x:Name="PriceComboBox" Width="150" Margin="15,3,10,0"  Grid.Row="5">
+                        <ComboBox x:Name="PriceComboBox" Width="150" Margin="15,3,10,0"  Grid.Row="5" SelectionChanged="PriceComboBox_SelectionChanged">
                             
                         </ComboBox>
-                        <Button x:Name="ApplyButton" Content="Apply Filter" Width="100" Margin="10,15,10,0" Click="ApplyButton_Click"  Grid.Row="7" FontSize="16" Background="White" Foreground="#212121"/>
+                        <Button x:Name="ClearFilterButton" Content="Clear filter" Width="100" Margin="10,15,10,0" Click="ClearFilterButton_Click"  Grid.Row="7" FontSize="16" Background="White" Foreground="#212121"/>
                     </Grid>
                 </Border>
             </StackPanel>

@@ -21,6 +21,7 @@ namespace CourseWork_CarSharing.Enums
     };
     public enum CarType
     {
+        None,
         Economy,
         Business,
         SUV,
@@ -32,13 +33,6 @@ namespace CourseWork_CarSharing.Enums
     }
     public enum Brand
     {
-        Toyota,
-        Honda,
-        Ford,
-        BMW,
-        MercedesBenz,
-        Audi,
-        Volkswagen,
-        Tesla
+        None, Audi, Bentley, BMW, Chevrolet, Ford, Honda, Hyundai, Jaguar, Kia, Lamborghini, Lexus, Mazda, MercedesBenz, Nissan, Porsche, Subaru, Tesla, Toyota, Volkswagen
     }
 }

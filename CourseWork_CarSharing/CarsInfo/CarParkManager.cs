@@ -38,7 +38,7 @@ namespace CourseWork_CarSharing.CarPark
 
             foreach (Car car in carsList.cars)
             {
-                string updateQuery = $"UPDATE Cars SET Name = @Name, FuelType = @FuelType, TransmissionType = @TransmissionType, CarType = @CarType, Brand = @Brand, Colour = @Colour, YearOfManufacture = @YearOfManufacture, Number = @Number, ImageID = @ImageID WHERE ID = @ID";
+                string updateQuery = $"UPDATE Cars SET Name = @Name, FuelType = @FuelType, TransmissionType = @TransmissionType, CarType = @CarType, Brand = @Brand, Colour = @Colour, YearOfManufacture = @YearOfManufacture, Number = @Number, ImageID = @ImageID HourPrice = @HourPrice WHERE ID = @ID";
 
                 using (SQLiteCommand command = new SQLiteCommand(updateQuery, manager.Connection))
                 {
@@ -52,6 +52,7 @@ namespace CourseWork_CarSharing.CarPark
                     command.Parameters.AddWithValue("@Number", car.Number);
                     command.Parameters.AddWithValue("@ImageID", car.ImageID);
                     command.Parameters.AddWithValue("@ID", car.ID);
+                    command.Parameters.AddWithValue("@HourPrice", car.HourPrice);
 
                     command.ExecuteNonQuery();
                 }
@@ -81,8 +82,9 @@ namespace CourseWork_CarSharing.CarPark
                         int yearOfManufacture = reader.GetInt32(reader.GetOrdinal("YearOfManufacture"));
                         string number = reader.GetString(reader.GetOrdinal("Number"));
                         int imageID = reader.GetInt32(reader.GetOrdinal("ImageID"));
+                        double hourPrice = reader.GetDouble(reader.GetOrdinal("HourPrice"));
 
-                        carsList.cars.Add(new Car(name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID));
+                        carsList.cars.Add(new Car(name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID, hourPrice));
                     }
                 }
             }
@@ -90,20 +92,23 @@ namespace CourseWork_CarSharing.CarPark
             manager.CloseConnection();
         }
 
-        public bool AddCar(string name, Fuel fuelType, Transmission transmission, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageID)
+        public bool AddCar(string name, Fuel fuelType, Transmission transmission, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageID, double hourPrice)
         {
+            GetAllCars();
+
             manager.OpenConnection();
+
 
             foreach (Car car in carsList.cars)
             {
-                if (car.Name == name && car.FuelType == fuelType && car.TransmissionType == transmission && car.CarType == carType  && car.Brand == brand && car.Colour == colour && car.YearOfManufacture == yearOfManufacture)
+                if (car.Number == number)
                 {
                     manager.CloseConnection();
                     return false;
                 }
             }
 
-            string insertQuery = "INSERT INTO Cars (Name, FuelType, TransmissionType, CarType, Brand, Colour, YearOfManufacture, Number, ImageID) VALUES (@Name, @FuelType, @TransmissionType, @CarType, @Brand, @Colour, @YearOfManufacture, @Number, @ImageID)";
+            string insertQuery = "INSERT INTO Cars (Name, FuelType, TransmissionType, CarType, Brand, Colour, YearOfManufacture, Number, ImageID, HourPrice) VALUES (@Name, @FuelType, @TransmissionType, @CarType, @Brand, @Colour, @YearOfManufacture, @Number, @ImageID, @HourPrice)";
 
             using (SQLiteCommand command = new SQLiteCommand(insertQuery, manager.Connection))
             {
@@ -114,15 +119,16 @@ namespace CourseWork_CarSharing.CarPark
                 command.Parameters.AddWithValue("@Brand", (int)brand);
                 command.Parameters.AddWithValue("@Colour", colour);
                 command.Parameters.AddWithValue("@YearOfManufacture", yearOfManufacture);
-                command.Parameters.AddWithValue("@Amount", number);
+                command.Parameters.AddWithValue("@Number", number);
                 command.Parameters.AddWithValue("@ImageID", imageID);
+                command.Parameters.AddWithValue("@HourPrice", hourPrice);
 
                 command.ExecuteNonQuery();
             }
 
             manager.CloseConnection();
 
-            carsList.cars.Add(new Car(name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID));
+            carsList.cars.Add(new Car(name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID, hourPrice));
 
             return true;
         }
@@ -130,7 +136,7 @@ namespace CourseWork_CarSharing.CarPark
         {
             manager.OpenConnection();
 
-            string deleteQuery = "DELETE FROM Cars WHERE Name = @Name AND FuelType = @FuelType AND TransmissionType = @TransmissionType AND CarType = @CarType AND Brand = @Brand AND Colour = @Colour AND YearOfManufacture = @YearOfManufacture AND Number = @Number AND ImageID = @ImageID";
+            string deleteQuery = "DELETE FROM Cars WHERE Name = @Name AND FuelType = @FuelType AND TransmissionType = @TransmissionType AND CarType = @CarType AND Brand = @Brand AND Colour = @Colour AND YearOfManufacture = @YearOfManufacture AND Number = @Number AND ImageID = @ImageID AND HourPrice = @HourPrice";
 
             using (SQLiteCommand command = new SQLiteCommand(deleteQuery, manager.Connection))
             {
@@ -143,72 +149,63 @@ namespace CourseWork_CarSharing.CarPark
                 command.Parameters.AddWithValue("@YearOfManufacture", car.YearOfManufacture);
                 command.Parameters.AddWithValue("@Number", car.Number);
                 command.Parameters.AddWithValue("@ImageID", car.ImageID);
+                command.Parameters.AddWithValue("@HourPrice", car.HourPrice);
 
                 command.ExecuteNonQuery();
             }
 
             manager.CloseConnection();
-            //carsList.cars.Remove(car);
+            carsList.cars.Remove(car);
         }
 
-        public bool ValidateDataCar(string name, Fuel fuelType, Transmission transmission, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageID)
+        public bool ValidateDataCar(string name, Fuel fuelType, Transmission transmission, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageID, double hourPrice)
         {
             if (string.IsNullOrEmpty(name))
             {
-                // Поле name пустое или содержит только пробельные символы
                 return false;
             }
 
-            // Проверка на корректность поля fuelType
             if (!Enum.IsDefined(typeof(Fuel), fuelType))
             {
-                // Значение поля fuelType не является допустимым значением перечисления Fuel
                 return false;
             }
 
-            // Проверка на корректность поля transmission
             if (!Enum.IsDefined(typeof(Transmission), transmission))
             {
-                // Значение поля transmission не является допустимым значением перечисления Transmission
                 return false;
             }
 
             if (!Enum.IsDefined(typeof(CarType), carType))
             {
-                // Значение поля transmission не является допустимым значением перечисления Transmission
                 return false;
             }
 
             if (!Enum.IsDefined(typeof(Brand), brand))
             {
-                // Значение поля transmission не является допустимым значением перечисления Transmission
                 return false;
             }
 
-            // Проверка на корректность поля colour
             if (string.IsNullOrEmpty(colour))
             {
-                // Поле colour пустое или содержит только пробельные символы
                 return false;
             }
 
-            // Проверка на корректность поля yearOfManufacture
             if (yearOfManufacture < 1900 || yearOfManufacture > DateTime.Now.Year)
             {
-                // Значение поля yearOfManufacture находится в недопустимом диапазоне
                 return false;
             }
 
-            // Проверка на корректность поля amount
             if (string.IsNullOrEmpty(number))
             {
-                // Поле name пустое или содержит только пробельные символы
                 return false;
             }
 
             if (imageID <= 0)
             {
-                // Значение поля amount не положительное число
+                return false;
+            }
+            if (hourPrice <= 0)
+            {
                 return false;
             }
 

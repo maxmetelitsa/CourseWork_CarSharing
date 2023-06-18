@@ -17,15 +17,15 @@ using CourseWork_CarSharing.Rent;
 using CourseWork_CarSharing.Profile;
 using CourseWork_CarSharing.About;
 
-namespace CourseWork_CarSharing.Main
+namespace CourseWork_CarSharing.Profile
 {
     /// <summary>
     /// Логика взаимодействия для TestMainWindow.xaml
     /// </summary>
-    public partial class WelcomeWindow : Window
+    public partial class ProfileWindow : Window
     {
         private bool isMaximize = false;
-        public WelcomeWindow()
+        public ProfileWindow()
         {
             InitializeComponent();
         }

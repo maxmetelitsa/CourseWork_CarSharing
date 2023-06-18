@@ -17,6 +17,9 @@ using CourseWork_CarSharing.CarsInfo;
 using CourseWork_CarSharing.Enums;
 using CourseWork_CarSharing.SQL_Manager;
 using CourseWork_CarSharing.UsersInfo;
+using CourseWork_CarSharing.Rent;
+using CourseWork_CarSharing.Profile;
+using CourseWork_CarSharing.About;
 
 namespace CourseWork_CarSharing.CarPark
 {
@@ -51,13 +54,13 @@ namespace CourseWork_CarSharing.CarPark
                 carButton.Style = (Style)Application.Current.Resources["NoHoverButtonStyle"];
                 carButton.BorderBrush = new SolidColorBrush(Color.FromRgb(51, 51, 51));
                 carButton.BorderThickness = new Thickness(5);
-                carButton.Height = 300;
+                carButton.Height = 350;
                 carButton.Width = 255;
                 carButton.Background = new SolidColorBrush(Color.FromRgb(33, 33, 33));
 
                 StackPanel carPanel = new StackPanel();
                 carPanel.Orientation = Orientation.Vertical;
-                carPanel.Height = 300;
+                carPanel.Height = 350;
 
                 string imagePath = @"C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\Images\pic" + car.ImageID + ".jpg";
                 Image image = new Image();
@@ -73,7 +76,7 @@ namespace CourseWork_CarSharing.CarPark
 
 
                 TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}";
+                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}\nPrice/Hour: {car.HourPrice}  $";
                 carInfo.Foreground = Brushes.White;
                 carInfo.FontSize = 12;
                 carInfo.TextAlignment = TextAlignment.Left;
@@ -99,13 +102,13 @@ namespace CourseWork_CarSharing.CarPark
                 carButton.Style = (Style)Application.Current.Resources["NoHoverButtonStyle"];
                 carButton.BorderBrush = new SolidColorBrush(Color.FromRgb(51, 51, 51));
                 carButton.BorderThickness = new Thickness(5);
-                carButton.Height = 300;
+                carButton.Height = 350;
                 carButton.Width = 255;
                 carButton.Background = new SolidColorBrush(Color.FromRgb(33, 33, 33));
 
                 StackPanel carPanel = new StackPanel();
                 carPanel.Orientation = Orientation.Vertical;
-                carPanel.Height = 300;
+                carPanel.Height = 350;
 
                 string imagePath = @"C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\Images\pic" + car.ImageID + ".jpg";
                 Image image = new Image();
@@ -121,7 +124,7 @@ namespace CourseWork_CarSharing.CarPark
 
 
                 TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}";
+                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}\nPrice/Hour: {car.HourPrice}  $";
                 carInfo.Foreground = Brushes.White;
                 carInfo.FontSize = 12;
                 carInfo.TextAlignment = TextAlignment.Left;
@@ -198,11 +201,6 @@ namespace CourseWork_CarSharing.CarPark
             this.Close();
         }
 
-        private void NewsButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void CarParkButton_Click(object sender, RoutedEventArgs e)
         {
             CarParkWindow window = new CarParkWindow();
@@ -212,12 +210,23 @@ namespace CourseWork_CarSharing.CarPark
 
         private void RentButton_Click(object sender, RoutedEventArgs e)
         {
-            // Обработка события при нажатии на кнопку аренды
+            RentWindow window = new RentWindow();
+            window.Show();
+            this.Close();
         }
 
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            // Обработка события при нажатии на кнопку профиля
+            ProfileWindow window = new ProfileWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutWindow window = new AboutWindow();
+            window.Show();
+            this.Close();
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)

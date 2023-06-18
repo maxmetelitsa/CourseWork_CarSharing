@@ -21,10 +21,10 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="130 0 20 0">
-                <Button x:Name="NewsButton" Style="{StaticResource topButtonsPanel}" Content="News" Click="NewsButton_Click"/>
-                <Button x:Name="CarPark1" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarParkButton_Click"/>
-                <Button x:Name="Rent" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="RentButton_Click"/>
-                <Button x:Name="Profile" Style="{StaticResource topButtonsPanel}" Content="Profile" Click="ProfileButton_Click"/>
+                <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarParkButton_Click"/>
+                <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="RentButton_Click"/>
+                <Button x:Name="ProfileButton" Style="{StaticResource topButtonsPanel}" Content="Profile" Click="ProfileButton_Click"/>
+                <Button x:Name="About" Style="{StaticResource topButtonsPanel}" Content="About" Click="AboutButton_Click"/>
             </StackPanel>
 
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="22" Margin="10"/>
