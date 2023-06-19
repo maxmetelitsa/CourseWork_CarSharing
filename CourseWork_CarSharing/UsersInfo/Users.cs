@@ -31,7 +31,7 @@ namespace CourseWork_CarSharing.UsersInfo
             //    }
             //}
 
-            string insertQuery = " INSERT INTO Users (Name, Surname, Email, Password) VALUES (@Name, @Surname, @Email, @Password);";
+            string insertQuery = " INSERT INTO Users (Name, Surname, Email, Password, PassportNumber, IdentificationNumber, LicenseSeries, LicenseNumber) VALUES (@Name, @Surname, @Email, @Password, @PassportNumber, @IdentificationNumber, @LicenseSeries, @LicenseNumber);";
 
             using (SQLiteCommand command = new SQLiteCommand(insertQuery, manager.Connection))
             {
@@ -39,6 +39,10 @@ namespace CourseWork_CarSharing.UsersInfo
                 command.Parameters.AddWithValue("@Surname", surname);
                 command.Parameters.AddWithValue("@Email", email);
                 command.Parameters.AddWithValue("@Password", password);
+                command.Parameters.AddWithValue("@PassportNumber", null);
+                command.Parameters.AddWithValue("@IdentificationNumber", null);
+                command.Parameters.AddWithValue("@LicenseSeries", null);
+                command.Parameters.AddWithValue("@LicenseNumber", null);
 
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)
@@ -173,53 +177,54 @@ namespace CourseWork_CarSharing.UsersInfo
 
         public int ValidateUser(SQLiteManager manager, string email, string password)
         {
-            foreach (User user in users)
+            manager.OpenConnection();
+
+            string selectQuery = "SELECT * FROM Users WHERE Email = @Email AND Password = @Password";
+
+            using (SQLiteCommand command = new SQLiteCommand(selectQuery, manager.Connection))
             {
-                if (user.Email == email && user.Password == password)
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Password", password);
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
                 {
-                    manager.OpenConnection();
-
-                    string selectQuery = $"SELECT * FROM Users WHERE ID = {user.ID}";
-
-                    using (SQLiteCommand command = new SQLiteCommand(selectQuery, manager.Connection))
+                    if (reader.Read())
                     {
-                        using (SQLiteDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                string nameFromDB = reader["Name"].ToString();
-                                string surnameFromDB = reader["Surname"].ToString();
-                                string emailFromDB = reader["Email"].ToString();
-                                string passwordFromDB = reader["Password"].ToString();
-                                string passportNumberFromDB = reader["PassportNumber"].ToString();
-                                string identificationNumberFromDB = reader["IdentificationNumber"].ToString();
-                                string licenseSeriesFromDB = reader["LicenseSeries"].ToString();
-                                string licenseNumberFromDB = reader["LicenseNumber"].ToString();
+                        Int64 id = Convert.ToInt64(reader["ID"].ToString());
+                        string nameFromDB = reader["Name"].ToString();
+                        string surnameFromDB = reader["Surname"].ToString();
+                        string emailFromDB = reader["Email"].ToString();
+                        string passwordFromDB = reader["Password"].ToString();
+                        string passportNumberFromDB = reader["PassportNumber"].ToString();
+                        string identificationNumberFromDB = reader["IdentificationNumber"].ToString();
+                        string licenseSeriesFromDB = reader["LicenseSeries"].ToString();
+                        string licenseNumberFromDB = reader["LicenseNumber"].ToString();
 
-                                CurrentUser currentUser = new CurrentUser(nameFromDB, surnameFromDB, emailFromDB, passwordFromDB,
-                                    passportNumberFromDB, identificationNumberFromDB, licenseSeriesFromDB, licenseNumberFromDB);
-                                CurrentUserManager.CurrentUser = currentUser;
-                            }
-                        }
+                        CurrentUser currentUser = new CurrentUser((int)id,nameFromDB, surnameFromDB, emailFromDB, passwordFromDB,
+                            passportNumberFromDB, identificationNumberFromDB, licenseSeriesFromDB, licenseNumberFromDB);
+                        CurrentUserManager.CurrentUser = currentUser;
+
+                        manager.CloseConnection();
+                        GetAllUsers(manager);
+
+                        return 1;
                     }
-
-                    manager.CloseConnection();
-
-                    // Обновление списка пользователей
-                    GetAllUsers(manager);
-
-                    return 1;
-                }
-                else if (email == "admin@icloud.com" && password == "1234")
-                {
-                    CurrentUser currentUser = new CurrentUser(user.Name, user.Surname, user.Email, user.Password);
-                    CurrentUserManager.CurrentUser = currentUser;
-                    return 2;
                 }
             }
 
+            if (email == "admin@icloud.com" && password == "1234")
+            {
+                CurrentUser currentUser = new CurrentUser("Admin", "Manager", email, password);
+                CurrentUserManager.CurrentUser = currentUser;
+                manager.CloseConnection();
+                return 2;
+            }
+
+            manager.CloseConnection();
+
             return 0;
         }
+
 
 
     }

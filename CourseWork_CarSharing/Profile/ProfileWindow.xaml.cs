@@ -41,7 +41,6 @@ namespace CourseWork_CarSharing.Profile
         }
         private void ShowInfo()
         {
-
             SetReadAbleFields();
 
             CurrentUser currentUserData = CurrentUserManager.CurrentUser;
@@ -80,7 +79,7 @@ namespace CourseWork_CarSharing.Profile
                         SurnameTextBox.Text = surnameFromDB;
                         EmailTextBox.Text = emailFromDB;
                         PasswordTextBox.Text = passwordFromDB;
-                        PasswordRepeatTextBox.Text = passportNumberFromDB;
+                        PasswordRepeatTextBox.Text = passwordFromDB;
                         PassportNumberTextBox.Text = identificationNumberFromDB;
                         IdentificationTextBox.Text = licenseSeriesFromDB;
                         LicenseSeriesTextBox.Text = licenseSeriesFromDB;
@@ -209,40 +208,50 @@ namespace CourseWork_CarSharing.Profile
 
         public void UpdateUserInfo(string name, string surname, string email, string password, string passportNumber, string identificationNumber, string licenseSeries, string licenseNumber)
         {
-            CurrentUser currentUserData = CurrentUserManager.CurrentUser;
-
-            if (ValidateUserFields(name, surname, email, password, passportNumber, identificationNumber, licenseSeries, licenseNumber))
+            if (PasswordTextBox.Text != PasswordRepeatTextBox.Text)
             {
-                manager.OpenConnection();
+                MessageBox.Show("Пароли не совпадают");
+                return;
+            }
+            else
+            {
 
-                string updateQuery = "UPDATE Users SET Name = @Name, Surname = @Surname, Email = @Email, Password = @Password, PassportNumber = @PassportNumber, IdentificationNumber = @IdentificationNumber, LicenseSeries = @LicenseSeries, LicenseNumber = @LicenseNumber WHERE ID = @ID";
+                CurrentUser currentUserData = CurrentUserManager.CurrentUser;
 
-                using (SQLiteCommand command = new SQLiteCommand(updateQuery, manager.Connection))
+
+                if (ValidateUserFields(name, surname, email, password, passportNumber, identificationNumber, licenseSeries, licenseNumber))
                 {
-                    command.Parameters.AddWithValue("@Name", name);
-                    command.Parameters.AddWithValue("@Surname", surname);
-                    command.Parameters.AddWithValue("@Email", email);
-                    command.Parameters.AddWithValue("@Password", password);
-                    command.Parameters.AddWithValue("@PassportNumber", passportNumber);
-                    command.Parameters.AddWithValue("@IdentificationNumber", identificationNumber);
-                    command.Parameters.AddWithValue("@LicenseSeries", licenseSeries);
-                    command.Parameters.AddWithValue("@LicenseNumber", licenseNumber);
-                    command.Parameters.AddWithValue("@ID", currentUserData.ID);
+                    manager.OpenConnection();
 
-                    command.ExecuteNonQuery();
+                    string updateQuery = "UPDATE Users SET Name = @Name, Surname = @Surname, Email = @Email, Password = @Password, PassportNumber = @PassportNumber, IdentificationNumber = @IdentificationNumber, LicenseSeries = @LicenseSeries, LicenseNumber = @LicenseNumber WHERE ID = @ID";
+
+                    using (SQLiteCommand command = new SQLiteCommand(updateQuery, manager.Connection))
+                    {
+                        command.Parameters.AddWithValue("@Name", name);
+                        command.Parameters.AddWithValue("@Surname", surname);
+                        command.Parameters.AddWithValue("@Email", email);
+                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@PassportNumber", passportNumber);
+                        command.Parameters.AddWithValue("@IdentificationNumber", identificationNumber);
+                        command.Parameters.AddWithValue("@LicenseSeries", licenseSeries);
+                        command.Parameters.AddWithValue("@LicenseNumber", licenseNumber);
+                        command.Parameters.AddWithValue("@ID", currentUserData.ID);
+
+                        command.ExecuteNonQuery();
+                    }
+
+                    manager.CloseConnection();
+
+                    // Update the CurrentUser object with the new values
+                    currentUserData.Name = name;
+                    currentUserData.Surname = surname;
+                    currentUserData.Email = email;
+                    currentUserData.Password = password;
+                    currentUserData.PassportNumber = passportNumber;
+                    currentUserData.IdentificationNumber = identificationNumber;
+                    currentUserData.LicenseSeries = licenseSeries;
+                    currentUserData.LicenseNumber = licenseNumber;
                 }
-
-                manager.CloseConnection();
-
-                // Update the CurrentUser object with the new values
-                currentUserData.Name = name;
-                currentUserData.Surname = surname;
-                currentUserData.Email = email;
-                currentUserData.Password = password;
-                currentUserData.PassportNumber = passportNumber;
-                currentUserData.IdentificationNumber = identificationNumber;
-                currentUserData.LicenseSeries = licenseSeries;
-                currentUserData.LicenseNumber = licenseNumber;
             }
         }
 

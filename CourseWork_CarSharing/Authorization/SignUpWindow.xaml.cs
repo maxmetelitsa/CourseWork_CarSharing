@@ -80,22 +80,7 @@ namespace CourseWork_CarSharing.Authorization
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckBoxSession.IsChecked == true)
-            {
-                /*
-                 * Создание Сессии
-                */
-                if (isCorrectRegistration() == true)
-                {
-                    if (usersList.AddUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
-                    {
-                        ProfileWindow window = new ProfileWindow();
-                        window.Show();
-                        this.Close();
-                    }
-                }
-            }
-            else
+            if (isCorrectRegistration() == true)
             {
                 if (usersList.AddUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
                 {
@@ -103,12 +88,7 @@ namespace CourseWork_CarSharing.Authorization
                     window.Show();
                     this.Close();
                 }
-                else
-                {
-
-                }
             }
-
         }
 
         private bool isCorrectRegistration()

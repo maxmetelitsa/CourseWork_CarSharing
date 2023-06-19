@@ -11,8 +11,7 @@ namespace CourseWork_CarSharing.UsersInfo
 {
     public class CurrentUser
     {
-        private static int lastID = 0;
-        public int ID { get; }
+        public int id;
         string name;
         string surname;
         string email;
@@ -21,6 +20,11 @@ namespace CourseWork_CarSharing.UsersInfo
         string identificationNumber;
         string licenseSeries;
         string licenseNumber;
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
         public string Name
         {
             get { return name; }
@@ -62,9 +66,9 @@ namespace CourseWork_CarSharing.UsersInfo
             set { licenseNumber = value; }
         }
 
-        public CurrentUser(string name, string surname, string email, string password, string passportNumber, string identificationNumber, string licenseSeries, string licenseNumber)
+        public CurrentUser(int id, string name, string surname, string email, string password, string passportNumber, string identificationNumber, string licenseSeries, string licenseNumber)
         {
-            ID = ++lastID;
+            ID = id;
             Name = name;
             Surname = surname;
             Email = email;
@@ -76,7 +80,6 @@ namespace CourseWork_CarSharing.UsersInfo
         }
         public CurrentUser(string name, string surname, string email, string password)
         {
-            ID = ++lastID;
             Name = name;
             Surname = surname;
             Email = email;
