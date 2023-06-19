@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using CourseWork_CarSharing.SQL_Manager;
 
@@ -45,6 +47,21 @@ namespace CourseWork_CarSharing.Functions
             }
 
             manager.CloseConnection();
+        }
+        public static void TerminateProcess(string processName)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+
+            if (processes.Length > 0)
+            {
+                Process process = processes[0];
+                process.Kill();
+                MessageBox.Show($"Процесс {processName} успешно завершен.");
+            }
+            else
+            {
+                MessageBox.Show($"Процесс {processName} не найден.");
+            }
         }
     }
 }

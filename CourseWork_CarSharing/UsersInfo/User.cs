@@ -10,6 +10,10 @@ namespace CourseWork_CarSharing.UsersInfo
         string surname;
         string email;
         string password;
+        string passportNumber;
+        string identificationNumber;
+        string licenseSeries;
+        string licenseNumber;
         public string Name
         {
             get { return name; }
@@ -30,6 +34,27 @@ namespace CourseWork_CarSharing.UsersInfo
             get { return password; }
             set { password = value; }
         }
+        public string PassportNumber
+        {
+            get { return passportNumber;}
+            set { passportNumber = value; }
+        }
+        public string IdentificationNumber
+        {
+            get { return identificationNumber; }
+            set { identificationNumber = value; }
+        }
+        public string LicenseSeries
+        {
+            get { return licenseSeries; }
+            set { licenseSeries = value; }
+        }
+        public string LicenseNumber
+        {
+            get { return licenseNumber; }
+            set { licenseNumber = value; }
+        }
+
 
         public User(string name, string surname, string email, string password)
         {
@@ -38,6 +63,10 @@ namespace CourseWork_CarSharing.UsersInfo
             Surname = surname;
             Email = email;
             Password = password;
+            PassportNumber = null;
+            IdentificationNumber = null;
+            LicenseSeries = null;
+            LicenseNumber = null;
         }
         public static List<User> CreateListOfUsers()
         {

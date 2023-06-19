@@ -7,6 +7,7 @@ using CourseWork_CarSharing.SQL_Manager;
 using System.Windows.Documents;
 using CourseWork_CarSharing.UsersInfo;
 using CourseWork_CarSharing.Admin;
+using CourseWork_CarSharing.Profile;
 
 namespace CourseWork_CarSharing.Authorization
 {
@@ -63,13 +64,14 @@ namespace CourseWork_CarSharing.Authorization
                 */
                 if (isCorrectAuthorization() == true)
                 {
-                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 1)
+                    if (usersList.ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == 1)
                     {
-                        WelcomeWindow window = new WelcomeWindow();
+                        ProfileWindow window = new ProfileWindow();
                         window.Show();
                         this.Close();
+
                     }
-                    else if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 2)
+                    else if (usersList.ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == 2)
                     {
                         AdminWindow window = new AdminWindow();
                         window.Show();
@@ -86,13 +88,13 @@ namespace CourseWork_CarSharing.Authorization
             {
                 if (isCorrectAuthorization() == true)
                 {
-                    if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 1)
+                    if (usersList.ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == 1)
                     {
                         WelcomeWindow window = new WelcomeWindow();
                         window.Show();
                         this.Close();
                     }
-                    else if (usersList.ValidateUser(TextBoxEmail.Text, TextBoxPassword.Text) == 2)
+                    else if (usersList.ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == 2)
                     {
                         AdminWindow window = new AdminWindow();
                         window.Show();

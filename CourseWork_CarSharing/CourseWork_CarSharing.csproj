@@ -100,6 +100,8 @@
     <Compile Include="Rent\RentCarWindow.xaml.cs">
       <DependentUpon>RentCarWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UsersInfo\CurrentUser.cs" />
+    <Compile Include="UsersInfo\CurrentUserManager.cs" />
     <Compile Include="UsersInfo\User.cs" />
     <Compile Include="UsersInfo\Users.cs" />
     <Compile Include="Rent\RentWindow.xaml.cs">

@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using static CourseWork_CarSharing.Functions.Functions;
 using CourseWork_CarSharing.UsersInfo;
 using CourseWork_CarSharing.Main;
+using CourseWork_CarSharing.Profile;
 
 namespace CourseWork_CarSharing.Authorization
 {
@@ -88,7 +89,7 @@ namespace CourseWork_CarSharing.Authorization
                 {
                     if (usersList.AddUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
                     {
-                        WelcomeWindow window = new WelcomeWindow();
+                        ProfileWindow window = new ProfileWindow();
                         window.Show();
                         this.Close();
                     }
@@ -98,7 +99,7 @@ namespace CourseWork_CarSharing.Authorization
             {
                 if (usersList.AddUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
                 {
-                    WelcomeWindow window = new WelcomeWindow();
+                    ProfileWindow window = new ProfileWindow();
                     window.Show();
                     this.Close();
                 }

@@ -38,7 +38,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
-            <Image Source="C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\img\Pic1.jpg" Margin="544,34,52,294" />
+            <Image Source="C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\img\Pic1.jpg" Margin="137,79,459,249" />
         </Grid>
         <!--Bottom Section-->
         <Border Grid.Row="2" BorderThickness="0 2 0 0" BorderBrush="White" CornerRadius="0 0 5 5" Padding="10" Background="#1C1C1C">

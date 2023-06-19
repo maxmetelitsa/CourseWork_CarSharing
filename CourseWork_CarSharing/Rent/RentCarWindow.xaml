@@ -38,7 +38,97 @@
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
-            <WrapPanel x:Name="rentalCar" Width="600" Height="590" HorizontalAlignment="Right"/>
+
+            <WrapPanel x:Name="rentalCar" Width="512" Height="590" HorizontalAlignment="Right"/>
+            <Border Width="400" Height="514" VerticalAlignment="Center" HorizontalAlignment="Left" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="52,0,0,0">
+                <StackPanel Margin="-22,-18,-22,-22">
+                    <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Personal Data" HorizontalAlignment="Center"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="79*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="NameLabel" HorizontalAlignment="Left" Foreground="White" Content="Name" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="20,23,40,0" Width="120"/>
+                        <TextBox x:Name="NameTextBox" MaxLength="33" Margin="1,25,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" IsReadOnly="True"/>
+                    </Grid>
+                    <Label x:Name="NameNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Height="27" Margin="0 0 92 0"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="79*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="SurnameLabel" HorizontalAlignment="Left" Foreground="White" Content="Surname" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="20,-2,40,0" Width="120"/>
+                        <TextBox x:Name="SurnameTextBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" IsReadOnly="True"/>
+                        <!--<ICon:PackIconMAterial/>-->
+                    </Grid>
+                    <Label x:Name="SurnameNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
+                    <!--Email TextBox-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="79*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="EmailLabel" HorizontalAlignment="Left" Foreground="White" Content="Email" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="20,-2,40,0" Width="120"/>
+                        <TextBox x:Name="EmailTextBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" IsReadOnly="True"/>
+                        <!--<ICon:PackIconMAterial/>-->
+                    </Grid>
+                    <Label x:Name="EmailNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
+                    <Grid>
+                        <Label x:Name="PassportNumberLabel" HorizontalAlignment="Left" Foreground="White" Content="Passport Number" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
+                        <TextBox x:Name="PassportNumberTextBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" IsReadOnly="True"/>
+                        <!--<ICon:PackIconMAterial/>-->
+                    </Grid>
+                    <Label x:Name="PassportNumberNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
+                    <!--Password TextBox-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="79*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="IdentificationLabel" HorizontalAlignment="Left" Foreground="White" Content="ID Number" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="20,0,0,0" Width="143"/>
+
+                        <TextBox x:Name="IdentificationTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" IsReadOnly="True"/>
+                    </Grid>
+                    <Label x:Name="IdentificationNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="79*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="LicenseSeriesLabel" HorizontalAlignment="Left" Foreground="White" Content="License Series" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="20,-2,40,0" Width="120"/>
+
+                        <TextBox x:Name="LicenseSeriesTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" IsReadOnly="True"/>
+                    </Grid>
+                    <Label x:Name="LicenseSeriesNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="83*"/>
+                            <ColumnDefinition Width="79*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="LicenseNumberLabel" HorizontalAlignment="Left" Foreground="White" Content="License Number" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="19,0,0,0" Width="120"/>
+
+                        <TextBox x:Name="LicenseNumberTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" IsReadOnly="True"/>
+                    </Grid>
+                    <Label x:Name="LicenseNumberNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="196,0,0,-5" Grid.ColumnSpan="2"/>
+
+                    <Grid Margin="0 5 0 0" Height="48">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="AcceptButton" Content="Accept" Style="{StaticResource mainButton}" Margin="0,0,15,0" BorderBrush="White" Background="White" Foreground="Black" Click="AcceptButton_Click"/>
+                        <Button x:Name="EditButton" Content="Edit" Style="{StaticResource mainButton}" Margin="10,0,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="EditButton_Click" Grid.Column="1"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
         </Grid>
         <!--Bottom Section-->
         <Border Grid.Row="2" BorderThickness="0 2 0 0" BorderBrush="White" CornerRadius="0 0 5 5" Padding="10" Background="#1C1C1C">
