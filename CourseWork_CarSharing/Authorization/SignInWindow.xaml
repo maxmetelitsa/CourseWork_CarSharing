@@ -26,7 +26,7 @@
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="24"/>
 
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0 0 0">
-                    <Button Style="{StaticResource topButton}" Content="Settings"/>
+                    <Button x:Name="Settings" Style="{StaticResource topButton}" Content="Settings"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -44,7 +44,7 @@
             <!--Input Form-->
             <Border Width="404" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="10" Padding="30" Background="#212121" Height="316">
                 <StackPanel Margin="-22,-18,-22,-22">
-                    <TextBlock Foreground="White" FontFamily="Verdana" FontSize="20" Margin="0 0 0 10" Text="Sign In" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="White" FontFamily="Verdana" FontSize="20" Margin="0 0 0 10" Text="Вход" HorizontalAlignment="Center"/>
 
                     <!--Email TextBox-->
                     <Grid>
@@ -62,7 +62,7 @@
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="LabelPassword" HorizontalAlignment="Center" Foreground="White" FontFamily="Verdana" Content="Password" VerticalAlignment="Center" Height="24" Margin="0,17,50,0" Width="120"/>
+                        <Label x:Name="LabelPassword" HorizontalAlignment="Center" Foreground="White" FontFamily="Verdana" Content="Пароль" VerticalAlignment="Center" Height="24" Margin="0,17,50,0" Width="120"/>
 
                         <TextBox x:Name="TextBoxPassword" Margin="0,20,0,0" Padding="0" Foreground="Black" 
                                    Panel.ZIndex="1"  HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
@@ -79,8 +79,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="SignInButton" Content="Sign In" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="SignInButton_Click"/>
-                        <Button x:Name="SignUpButton" Content="Sign Up" Style="{StaticResource mainButton}" Grid.Column ="1" Margin="5,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="SignUpButton_Click"/>
+                        <Button x:Name="SignInButton" Content="Войти" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="SignInButton_Click"/>
+                        <Button x:Name="SignUpButton" Content="Регистрация" Style="{StaticResource mainButton}" Grid.Column ="1" Margin="5,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="SignUpButton_Click"/>
                     </Grid>
 
                 </StackPanel>
@@ -90,7 +90,7 @@
         <!--Bottom Section-->
         <Border Grid.Row="2" BorderThickness="0 2 0 0" BorderBrush="White" CornerRadius="0 0 5 5" Padding="10" Background="#1C1C1C">
             <Grid>
-                <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="CarHouse Co. 2023"/>
+                <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="Car House Co. 2023"/>
 
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                     <TextBlock Margin="15 0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="Car Rental"/>

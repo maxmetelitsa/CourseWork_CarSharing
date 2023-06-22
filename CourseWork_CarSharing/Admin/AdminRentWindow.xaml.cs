@@ -14,29 +14,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-using CourseWork_CarSharing.About;
 using CourseWork_CarSharing.Authorization;
 using CourseWork_CarSharing.CarPark;
 using CourseWork_CarSharing.CarsInfo;
 using CourseWork_CarSharing.Enums;
-using CourseWork_CarSharing.Profile;
 using CourseWork_CarSharing.SQL_Manager;
 using CourseWork_CarSharing.UsersInfo;
 
-namespace CourseWork_CarSharing.Rent
+namespace CourseWork_CarSharing.Admin
 {
-    public partial class RentWindow : Window
+    public partial class AdminRentWindow : Window
     {
         private CarParkManager carParkManager;
         private bool isMaximize = false;
-        public RentWindow()
+
+        public AdminRentWindow()
         {
             InitializeComponent();
 
             carParkManager = new CarParkManager();
 
             carParkManager.GetAllCars();
-
 
             ShowCars(carGrid, carParkManager);
 
@@ -60,14 +58,13 @@ namespace CourseWork_CarSharing.Rent
         {
             Button carButton = (Button)sender;
             Car car = (Car)carButton.Tag;
-            RentCarWindow window = new RentCarWindow(car);
+            AdminRentCarWindow window = new AdminRentCarWindow(car);
             window.Show();
             this.Hide();
         }
         public void ShowCars(WrapPanel carGrid, CarParkManager carParkManager)
         {
             carGrid = FindName("carGrid") as WrapPanel;
-
             foreach (Car car in carParkManager.availableCarsList.cars)
             {
                 Button carButton = new Button();
@@ -116,7 +113,6 @@ namespace CourseWork_CarSharing.Rent
         public void ShowSearchedCars(WrapPanel carGrid, List<Car> cars)
         {
             carGrid = FindName("carGrid") as WrapPanel;
-
             foreach (Car car in cars)
             {
                 Button carButton = new Button();
@@ -176,7 +172,7 @@ namespace CourseWork_CarSharing.Rent
             bool isPriceSelected = PriceComboBox.SelectedValue != null && !string.IsNullOrEmpty(PriceComboBox.SelectedValue.ToString());
 
             selectedBrand = Enum.TryParse<Brand>(BrandComboBox.SelectedValue?.ToString(), out selectedBrand) ? selectedBrand : Brand.Audi;
-            selectedClass = Enum.TryParse<CarType>(BrandComboBox.SelectedValue?.ToString(), out selectedClass) ? selectedClass : CarType.Economy;
+            selectedClass = Enum.TryParse<CarType>(ClassComboBox.SelectedValue?.ToString(), out selectedClass) ? selectedClass : CarType.Economy;
             selectedPrice = PriceComboBox.SelectedValue?.ToString();
 
             carGrid.Children.Clear();
@@ -186,6 +182,7 @@ namespace CourseWork_CarSharing.Rent
                 List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.Brand == selectedBrand).ToList();
                 ShowSearchedCars(carGrid, searchedCars);
             }
+
             else if (!isBrandSelected && isCarTypeSelected && !isPriceSelected)
             {
                 List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.CarType == selectedClass).ToList();
@@ -331,9 +328,11 @@ namespace CourseWork_CarSharing.Rent
             Functions.Functions.TerminateProcess("CourseWork_CarSharing");
         }
 
+        //bar
+
         private void CarParkButton_Click(object sender, RoutedEventArgs e)
         {
-            CarParkWindow window = new CarParkWindow();
+            AdminCarParkWindow window = new AdminCarParkWindow();
             window.Show();
             this.Close();
         }
@@ -343,16 +342,16 @@ namespace CourseWork_CarSharing.Rent
            
         }
 
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        private void CarParkEditingButton_Click(object sender, RoutedEventArgs e)
         {
-            ProfileWindow window = new ProfileWindow();
+            AdminWindow window = new AdminWindow();
             window.Show();
-            this.Close();
+            this.Hide();
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        private void RentalTrackingButton_Click(object sender, RoutedEventArgs e)
         {
-            AboutWindow window = new AboutWindow();
+            AdminRentalTracking window = new AdminRentalTracking();
             window.Show();
             this.Close();
         }

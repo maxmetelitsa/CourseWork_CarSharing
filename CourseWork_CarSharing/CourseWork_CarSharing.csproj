@@ -77,6 +77,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Admin\AdminCarParkWindow.xaml.cs">
+      <DependentUpon>AdminCarParkWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AdminRentalTracking.xaml.cs">
+      <DependentUpon>AdminRentalTracking.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AdminRentCarWindow.xaml.cs">
+      <DependentUpon>AdminRentCarWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AdminRentWindow.xaml.cs">
+      <DependentUpon>AdminRentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Admin\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
@@ -94,6 +106,9 @@
     <Compile Include="About\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OrdersInfo\Order.cs" />
+    <Compile Include="OrdersInfo\Orders.cs" />
+    <Compile Include="OrdersInfo\OrdersManager.cs" />
     <Compile Include="Profile\ProfileWindow.xaml.cs">
       <DependentUpon>ProfileWindow.xaml</DependentUpon>
     </Compile>
@@ -108,6 +123,22 @@
       <DependentUpon>RentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SQL Manager\SQL_Manager.cs" />
+    <Page Include="Admin\AdminCarParkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\AdminRentalTracking.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\AdminRentCarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\AdminRentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Admin\AdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -13,7 +13,7 @@ namespace CourseWork_CarSharing.CarsInfo
     public class Car
     {
         private static int lastID = 0;
-        public int ID { get; }
+        public int ID { get; set; }
         string name;
         Fuel fuelType;
         Transmission transmissionType;

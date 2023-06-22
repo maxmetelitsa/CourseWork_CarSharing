@@ -25,13 +25,60 @@ namespace CourseWork_CarSharing.CarPark
     {
         public SQLiteManager manager;
         public Cars carsList;
+        public Cars availableCarsList;
 
         public CarParkManager()
         {
             manager = new SQLiteManager();
             carsList = new Cars();
+            availableCarsList = new Cars();
+            GetAvailableCars();
         }
+        public void GetAvailableCars()
+        {
+            manager.OpenConnection();
 
+            string selectQuery = "SELECT * FROM Cars WHERE NOT EXISTS (SELECT 1 FROM [Order] WHERE Cars.ID = [Order].CarID)";
+
+            using (SQLiteCommand command = new SQLiteCommand(selectQuery, manager.Connection))
+            {
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    //int lastId = 0;
+
+                    while (reader.Read())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("Name"));
+                        Fuel fuelType = (Fuel)reader.GetInt32(reader.GetOrdinal("FuelType"));
+                        Transmission transmission = (Transmission)reader.GetInt32(reader.GetOrdinal("TransmissionType"));
+                        CarType carType = (CarType)reader.GetInt32(reader.GetOrdinal("CarType"));
+                        Brand brand = (Brand)reader.GetInt32(reader.GetOrdinal("Brand"));
+                        string colour = reader.GetString(reader.GetOrdinal("Colour"));
+                        int yearOfManufacture = reader.GetInt32(reader.GetOrdinal("YearOfManufacture"));
+                        string number = reader.GetString(reader.GetOrdinal("Number"));
+                        int imageID = reader.GetInt32(reader.GetOrdinal("ImageID"));
+                        double hourPrice = reader.GetDouble(reader.GetOrdinal("HourPrice"));
+
+                        Car car = new Car(name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID, hourPrice);
+
+                        //if (lastId == 0)
+                        //{
+                        //    lastId = reader.GetInt32(reader.GetOrdinal("ID"));
+                        //}
+                        //else
+                        //{
+                        //    // Assign the same last ID to each car object in the list
+                        //    car.ID = ++lastId;
+                        //}
+
+                        availableCarsList.cars.Add(car);
+                    }
+                }
+            }
+
+            manager.CloseConnection();
+
+        }
         public void UpdateAllCars()
         {
             manager.OpenConnection();
@@ -227,5 +274,6 @@ namespace CourseWork_CarSharing.CarPark
 
             carsList.cars.Clear();
         }
+
     }
 }

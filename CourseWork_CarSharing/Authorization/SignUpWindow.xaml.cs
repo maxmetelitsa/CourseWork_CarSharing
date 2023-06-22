@@ -84,7 +84,7 @@ namespace CourseWork_CarSharing.Authorization
             {
                 if (usersList.AddUser(manager, TextBoxName.Text, TextBoxSurname.Text, TextBoxEmail.Text, TextBoxPassword.Text) == true)
                 {
-                    ProfileWindow window = new ProfileWindow();
+                    SignInWindow window = new SignInWindow();
                     window.Show();
                     this.Close();
                 }
@@ -219,6 +219,7 @@ namespace CourseWork_CarSharing.Authorization
         private void WindowClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            Functions.Functions.TerminateProcess("CourseWork_CarSharing");
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Documents;
 using CourseWork_CarSharing.UsersInfo;
 using CourseWork_CarSharing.Admin;
 using CourseWork_CarSharing.Profile;
+using CourseWork_CarSharing.CarPark;
 
 namespace CourseWork_CarSharing.Authorization
 {
@@ -66,7 +67,7 @@ namespace CourseWork_CarSharing.Authorization
                 {
                     if (usersList.ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == 1)
                     {
-                        ProfileWindow window = new ProfileWindow();
+                        CarParkWindow window = new CarParkWindow();
                         window.Show();
                         this.Close();
 
@@ -183,6 +184,7 @@ namespace CourseWork_CarSharing.Authorization
         private void WindowClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            Functions.Functions.TerminateProcess("CourseWork_CarSharing");
         }
     }
 }

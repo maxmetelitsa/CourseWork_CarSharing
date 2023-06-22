@@ -17,21 +17,19 @@ using CourseWork_CarSharing.Rent;
 using CourseWork_CarSharing.Profile;
 using CourseWork_CarSharing.About;
 using CourseWork_CarSharing.CarsInfo;
+using CourseWork_CarSharing.Functions;
+using DocumentFormat.OpenXml.ExtendedProperties;
 using CourseWork_CarSharing.UsersInfo;
 using System.Data.SQLite;
-using DocumentFormat.OpenXml.Vml;
-using CourseWork_CarSharing.Enums;
 using CourseWork_CarSharing.OrdersInfo;
-using CourseWork_CarSharing.CompanyInfo;
-using DocumentFormat.OpenXml.ExtendedProperties;
 using CourseWork_CarSharing.Authorization;
 
-namespace CourseWork_CarSharing.Rent
+namespace CourseWork_CarSharing.Admin
 {
     /// <summary>
     /// Логика взаимодействия для TestMainWindow.xaml
     /// </summary>
-    public partial class RentCarWindow : Window
+    public partial class AdminRentCarWindow : Window
     {
         private CarParkManager carParkManager;
         private OrdersManager ordersManager;
@@ -45,9 +43,8 @@ namespace CourseWork_CarSharing.Rent
             get { return car; }
             set { car = value; }
         }
-        public RentCarWindow(Car car)
+        public AdminRentCarWindow(Car car)
         {
-            InitializeComponent();
             Car = car;
             carParkManager = new CarParkManager();
             ordersManager = new OrdersManager();
@@ -58,6 +55,8 @@ namespace CourseWork_CarSharing.Rent
         {
 
             SetReadAbleFields();
+
+            CurrentUser currentUserData = CurrentUserManager.CurrentUser;
 
             carParkManager.manager.OpenConnection();
 
@@ -107,30 +106,23 @@ namespace CourseWork_CarSharing.Rent
 
             Button carButton = new Button();
             carButton.Tag = Car;
+            //carButton.Style = (Style)System.Windows.Application.Current.Resources["NoHoverButtonStyle"];
             carButton.BorderBrush = new SolidColorBrush(Color.FromRgb(51, 51, 51));
-            carButton.BorderThickness = new Thickness(2);
-            carButton.Height = 355;
+            carButton.BorderThickness = new Thickness(5);
+            carButton.Height = 590;
             carButton.Width = 512;
             carButton.Background = new SolidColorBrush(Color.FromRgb(33, 33, 33));
 
             StackPanel carPanel = new StackPanel();
-            carPanel.Orientation = Orientation.Horizontal;
-            carPanel.Height = 355;
+            carPanel.Orientation = Orientation.Vertical;
+            carPanel.Height = 590;
             carPanel.Width = 512;
-
-            TextBlock carInfo = new TextBlock();
-            carInfo.Text = $"Name: {Car.Name}\nBrand: {Car.Brand}\nCarType: {Car.CarType}\nFuelType: {Car.FuelType}\nTransmissionType: {Car.TransmissionType}\nColour: {Car.Colour}\nYearOfManufacture: {Car.YearOfManufacture}\nNumber: {Car.Number}\nPrice/Day: {Car.HourPrice} $";
-            carInfo.Foreground = Brushes.White;
-            carInfo.FontSize = 14;
-            carInfo.TextAlignment = TextAlignment.Left;
-            carInfo.Margin = new Thickness(30, 55, 10, 10);
 
             string imagePath = @"C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\Images\pic" + Car.ImageID + ".jpg";
             Image image = new Image();
-            image.Height = 355;
-            image.Width = 250;
-            image.Margin = new Thickness(20, 0, 0, 0);
-            image.HorizontalAlignment = HorizontalAlignment.Left;
+            image.Height = 320;
+            image.Width = 512;
+            image.Margin = new Thickness(0, 30, 0, 0);
 
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
@@ -139,109 +131,41 @@ namespace CourseWork_CarSharing.Rent
 
             image.Source = bitmap;
 
-            carPanel.Children.Add(image);
+            TextBlock carInfo = new TextBlock();
+            carInfo.Text = $"Name: {Car.Name}\nBrand: {Car.Brand}\nCarType: {Car.CarType}\nFuelType: {Car.FuelType}\nTransmissionType: {Car.TransmissionType}\nColour: {Car.Colour}\nYearOfManufacture: {Car.YearOfManufacture}\nNumber: {Car.Number}\nPrice/Day: {Car.HourPrice} $";
+            carInfo.Foreground = Brushes.White;
+            carInfo.FontSize = 16;
+            carInfo.TextAlignment = TextAlignment.Left;
+            carInfo.Margin = new Thickness(98, 10, 10, 10);
 
+            carPanel.Children.Add(image);
             carPanel.Children.Add(carInfo);
 
             carButton.Content = carPanel;
 
             carObject.Children.Add(carButton);
         }
-        public void GetAmountOfOrders()
+
+
+        private void SetReadAbleFields()
         {
-            ordersManager.manager.OpenConnection();
-            string selectQuery = "SELECT * FROM [Order]";
-
-            using (SQLiteCommand command = new SQLiteCommand(selectQuery, ordersManager.manager.Connection))
-            {
-                using (SQLiteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        ordersCounter++;
-                    }
-                }
-            }
-
-            ordersManager.manager.CloseConnection();
+            NameTextBox.IsReadOnly = true;
+            SurnameTextBox.IsReadOnly = true;
+            EmailTextBox.IsReadOnly = true;
+            PassportNumberTextBox.IsReadOnly = true;
+            IdentificationTextBox.IsReadOnly = true;
+            LicenseSeriesTextBox.IsReadOnly = true;
+            LicenseNumberTextBox.IsReadOnly = true;
         }
-
-        private void AcceptButton_Click(object sender, RoutedEventArgs e)
+        private void SetWriteAbleFields()
         {
-            if (ValidateFields() == true)
-            {
-                CompanyInfo.Company company = new CompanyInfo.Company("Car House", "в Минске 220036, Беларусь, Минск, ул. Карла Либкнехта 129",
-                        "+375 44 547 22 52 ", "carhouse_minsk@info.by", "Альфа-Банк", "BY51ALPHA301840GHB70010290000", "BY51ALPHA2873197VTB40020130000", "153001550", "790110246");
-                string name = NameTextBox.Text;
-                string surname = SurnameTextBox.Text;
-                string email = EmailTextBox.Text;
-                string passportNumber = PassportNumberTextBox.Text;
-                string identificationNumber = IdentificationTextBox.Text;
-                string licenseSeries = LicenseSeriesTextBox.Text;
-                string licenseNumber = LicenseNumberTextBox.Text;
-                DateTime startDate = DateTime.Parse(StartDatePicker.Text);
-                DateTime endDate = DateTime.Parse(EndDatePicker.Text);
-                int days = int.Parse(DaysTextBox.Text);
-                double total = double.Parse(TotalTextBox.Text);
-                ordersManager.AddOrder(currentUserData.ID, Car.ID, startDate, endDate, total);
-                GetAmountOfOrders();
-                string path = $"C:\\Rentals\\rental_order{++ordersCounter}.docx";
-                company.GenerateRentalDocument(path, Car,name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
-                MessageBox.Show("Автомобиль успешно забронирован");
-                ProfileWindow window = new ProfileWindow();
-                window.Show();
-                this.Hide();
-            }
-        }
-
-        private void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetWriteAbleFields();
-        }
-
-        private void StartDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ShowPrice();
-        }
-
-        private void EndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ShowPrice();
-        }
-        private void ShowPrice()
-        {
-            int maxRentalDays = 31, minRentalDays = 1;
-            if (StartDatePicker.SelectedDate != null && EndDatePicker.SelectedDate != null)
-            {
-                DateTime selectedStartDate = StartDatePicker.SelectedDate.GetValueOrDefault();
-                DateTime selectedEndDate = EndDatePicker.SelectedDate.GetValueOrDefault();
-
-                int days = selectedEndDate.DayOfYear - selectedStartDate.DayOfYear;
-                if (days >= maxRentalDays)
-                {
-                    MessageBox.Show($"Количество дней аренды не должно превышать {maxRentalDays}");
-                    TotalTextBox.Text = null;
-                    DaysTextBox.Text = null;
-
-                }
-                else if (days < minRentalDays)
-                {
-                    MessageBox.Show($"Минимальное количество дней для аренды - {minRentalDays}");
-                    TotalTextBox.Text = null;
-                    DaysTextBox.Text = null;
-                }
-                else
-                {
-                    double total = days * Car.HourPrice;
-                    TotalTextBox.Text = total.ToString();
-                    DaysTextBox.Text = days.ToString();
-                }
-            }
-            else
-            {
-                TotalTextBox.Text = null;
-                DaysTextBox.Text = null;
-            }
+            NameTextBox.IsReadOnly = false;
+            SurnameTextBox.IsReadOnly = false;
+            EmailTextBox.IsReadOnly = true;
+            PassportNumberTextBox.IsReadOnly = false;
+            IdentificationTextBox.IsReadOnly = false;
+            LicenseSeriesTextBox.IsReadOnly = false;
+            LicenseNumberTextBox.IsReadOnly = false;
         }
         private bool ValidateFields()
         {
@@ -350,7 +274,103 @@ namespace CourseWork_CarSharing.Rent
 
             return isValid;
         }
+        public void GetAmountOfOrders()
+        {
+            ordersManager.manager.OpenConnection();
+            string selectQuery = "SELECT * FROM [Order]";
 
+            using (SQLiteCommand command = new SQLiteCommand(selectQuery, ordersManager.manager.Connection))
+            {
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ordersCounter++;
+                    }
+                }
+            }
+
+            ordersManager.manager.CloseConnection();
+        }
+
+        private void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ValidateFields() == true)
+            {
+                CompanyInfo.Company company = new CompanyInfo.Company("Car House", "в Минске 220036, Беларусь, Минск, ул. Карла Либкнехта 129",
+                        "+375 44 547 22 52 ", "carhouse_minsk@info.by", "Альфа-Банк", "BY51ALPHA301840GHB70010290000", "BY51ALPHA2873197VTB40020130000", "153001550", "790110246");
+                string name = NameTextBox.Text;
+                string surname = SurnameTextBox.Text;
+                string email = EmailTextBox.Text;
+                string passportNumber = PassportNumberTextBox.Text;
+                string identificationNumber = IdentificationTextBox.Text;
+                string licenseSeries = LicenseSeriesTextBox.Text;
+                string licenseNumber = LicenseNumberTextBox.Text;
+                DateTime startDate = DateTime.Parse(StartDatePicker.Text);
+                DateTime endDate = DateTime.Parse(EndDatePicker.Text);
+                int days = int.Parse(DaysTextBox.Text);
+                double total = double.Parse(TotalTextBox.Text);
+                ordersManager.AddOrder(currentUserData.ID, Car.ID, startDate, endDate, total);
+                GetAmountOfOrders();
+                string path = $"C:\\Rentals\\rental_order{++ordersCounter}.docx";
+                company.GenerateRentalDocument(path, Car, name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
+                MessageBox.Show("Автомобиль успешно забронирован");
+                ProfileWindow window = new ProfileWindow();
+                window.Show();
+                this.Hide();
+            }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetWriteAbleFields();
+        }
+
+        //bar
+        private void CarParkButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminCarParkWindow window = new AdminCarParkWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void RentButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminRentWindow window = new AdminRentWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void CarParkEditingButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminWindow window = new AdminWindow();
+            window.Show();
+            this.Hide();
+        }
+
+        private void RentalTrackingButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminRentalTracking window = new AdminRentalTracking();
+            window.Show();
+            this.Close();
+        }
+
+        private void EndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void StartDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            SignInWindow window = new SignInWindow();
+            window.Show();
+            this.Hide();
+        }
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
@@ -413,59 +433,5 @@ namespace CourseWork_CarSharing.Rent
             Functions.Functions.TerminateProcess("CourseWork_CarSharing");
         }
 
-        private void SetReadAbleFields()
-        {
-            NameTextBox.IsReadOnly = true;
-            SurnameTextBox.IsReadOnly = true;
-            EmailTextBox.IsReadOnly = true;
-            PassportNumberTextBox.IsReadOnly = true;
-            IdentificationTextBox.IsReadOnly = true;
-            LicenseSeriesTextBox.IsReadOnly = true;
-            LicenseNumberTextBox.IsReadOnly = true;
-        }
-        private void SetWriteAbleFields()
-        {
-            NameTextBox.IsReadOnly = false;
-            SurnameTextBox.IsReadOnly = false;
-            EmailTextBox.IsReadOnly = true;
-            PassportNumberTextBox.IsReadOnly = false;
-            IdentificationTextBox.IsReadOnly = false;
-            LicenseSeriesTextBox.IsReadOnly = false;
-            LicenseNumberTextBox.IsReadOnly = false;
-        }
-        private void CarParkButton_Click(object sender, RoutedEventArgs e)
-        {
-            CarParkWindow window = new CarParkWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void RentButton_Click(object sender, RoutedEventArgs e)
-        {
-            RentWindow window = new RentWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            ProfileWindow window = new ProfileWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            AboutWindow window = new AboutWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            SignInWindow window = new SignInWindow();
-            window.Show();
-            this.Hide();
-        }
     }
 }

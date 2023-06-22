@@ -23,9 +23,9 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="130 0 20 0">
                 <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarParkButton_Click"/>
+                <Button x:Name="CarParkEditingButton" Style="{StaticResource topButtonsPanel}" Content="Car Park Editing" Click="CarParkEditingButton_Click" Width="135"/>
                 <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="RentButton_Click"/>
-                <Button x:Name="ProfileButton" Style="{StaticResource topButtonsPanel}" Content="Profile" Click="ProfileButton_Click"/>
-                <Button x:Name="About" Style="{StaticResource topButtonsPanel}" Content="About" Click="AboutButton_Click"/>
+                <Button x:Name="RentalTrackingButton" Style="{StaticResource topButtonsPanel}" Content="Rental Tracking" Click="RentalTrackingButton_Click" Width="127"/>
             </StackPanel>
 
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="22" Margin="10"/>
@@ -42,16 +42,16 @@
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
-            <Label Content="Admin Panel" Foreground="White" HorizontalAlignment="Center" FontSize="30" FontFamily="Verdana" Margin="0,0,0,546" Grid.ColumnSpan="2"/>
+            <Label Content="Учет автомобилей" Foreground="White" HorizontalAlignment="Center" FontSize="30" FontFamily="Verdana" Margin="0,0,0,546" Grid.ColumnSpan="2"/>
             <Border Width="416" Height="591" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,66,0,0">
                 <StackPanel Margin="-22,-18,-22,-22">
-                    <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Car Adding" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Добавление автомобиля" HorizontalAlignment="Center"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="NameLabel" HorizontalAlignment="Center" Foreground="White" Content="Name" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,23,40,0" Width="120"/>
+                        <Label x:Name="NameLabel" HorizontalAlignment="Center" Foreground="White" Content="Модель" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,23,40,0" Width="120"/>
                         <TextBox x:Name="NameTextBox" MaxLength="33" Margin="0,25,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" />
                     </Grid>
@@ -61,7 +61,7 @@
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="FuelTypeLabel" HorizontalAlignment="Center" Foreground="White" Content="FuelType" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
+                        <Label x:Name="FuelTypeLabel" HorizontalAlignment="Center" Foreground="White" Content="Топливо" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
                         <ComboBox x:Name="FuelTypeComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" SelectionChanged="FuelTypeComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
@@ -69,14 +69,14 @@
                     <Label x:Name="FuelTypeNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
                     <!--Email TextBox-->
                     <Grid>
-                        <Label x:Name="TransmissionTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="Transmis" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
+                        <Label x:Name="TransmissionTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="Коробка" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
                         <ComboBox x:Name="TransmissionTypeComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" SelectionChanged="TransmissionTypeComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
                     </Grid>
                     <Label x:Name="TransmissionTypeNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
                     <Grid>
-                        <Label x:Name="CarTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="CarType" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
+                        <Label x:Name="CarTypeLabel" HorizontalAlignment="Left" Foreground="White" Content="Класс" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
                         <ComboBox x:Name="CarTypeComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" SelectionChanged="CarTypeComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
@@ -84,7 +84,7 @@
                     <Label x:Name="CarTypeNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
                     <!--Password TextBox-->
                     <Grid>
-                        <Label x:Name="BrandLabel" HorizontalAlignment="Left" Foreground="White" Content="Brand" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
+                        <Label x:Name="BrandLabel" HorizontalAlignment="Left" Foreground="White" Content="Марка" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="21,-2,0,0" Width="120"/>
                         <ComboBox x:Name="BrandComboBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" SelectionChanged="BrandComboBox_SelectionChanged"/>
                         <!--<ICon:PackIconMAterial/>-->
@@ -96,7 +96,7 @@
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="ColourLabel" HorizontalAlignment="Center" Foreground="White" Content="Colour" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
+                        <Label x:Name="ColourLabel" HorizontalAlignment="Center" Foreground="White" Content="Цвет" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
 
                         <TextBox x:Name="ColourTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
@@ -107,7 +107,7 @@
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="YearOfManufactureLabel" HorizontalAlignment="Center" Foreground="White" Content="Year" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
+                        <Label x:Name="YearOfManufactureLabel" HorizontalAlignment="Center" Foreground="White" Content="Год" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="0,-2,40,0" Width="120"/>
 
                         <TextBox x:Name="YearOfManufactureTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
@@ -118,7 +118,7 @@
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="83*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="NumberLabel" HorizontalAlignment="Left" Foreground="White" Content="Number" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="19,-1,0,0" Width="120" Grid.Column="0"/>
+                        <Label x:Name="NumberLabel" HorizontalAlignment="Left" Foreground="White" Content="Номер" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="19,-1,0,0" Width="120" Grid.Column="0"/>
                         <Label x:Name="ImageIDLabel" HorizontalAlignment="Right" Foreground="White" Content="ImageID" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="0,-1,11,0" Width="68" Grid.Column="1"/>
 
 
@@ -140,10 +140,10 @@
                             <ColumnDefinition Width="83*"/>
                             <ColumnDefinition Width="79*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="HourPriceLabel" HorizontalAlignment="Left" Foreground="White" Content="HourPrice" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="19,0,0,0" Width="120"/>
+                        <Label x:Name="HourPriceLabel" HorizontalAlignment="Left" Foreground="White" Content="Дневная стоимость" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="19,0,0,0" Width="129"/>
 
-                        <TextBox x:Name="HourPriceTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
-                            Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
+                        <TextBox x:Name="HourPriceTextBox" MaxLength="33" Margin="153,0,85,0" Padding="0" Foreground="Black" 
+                            Panel.ZIndex="1" Height="24" FontSize="14" Grid.ColumnSpan="2"/>
                     </Grid>
                     <Label x:Name="HourPriceNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="196,0,0,-5" Grid.ColumnSpan="2"/>
 
@@ -154,9 +154,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="CarAddButton" Content="Add Car" Style="{StaticResource mainButton}" Margin="0,0,15,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click"/>
-                        <Button x:Name="CarDeleteDButton" Content="Delete Car" Style="{StaticResource mainButton}" Margin="10,0,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarDeleteButton_Click" Grid.Column="1"/>
-                        <Button x:Name="CarClearFieldsButton" Content="Clear Fields" Style="{StaticResource mainButton}" Margin="10,0,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarClearFieldsButton_Click" Grid.Column="2"/>
+                        <Button x:Name="CarAddButton" Content="Добавить" Style="{StaticResource mainButton}" Margin="0,0,15,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarAddButton_Click"/>
+                        <Button x:Name="CarDeleteDButton" Content="Удалить" Style="{StaticResource mainButton}" Margin="10,0,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarDeleteButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarClearFieldsButton" Content="Очистить поля" Style="{StaticResource mainButton}" Margin="10,0,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarClearFieldsButton_Click" Grid.Column="2"/>
                     </Grid>
 
                 </StackPanel>
@@ -171,9 +171,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="CarEditButton" Width = "117" Content="Edit Car" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarEditButton_Click" Grid.Column="0" RenderTransformOrigin="0.483,1.115"/>
-                        <Button x:Name="CarSaveChangesButton" Width = "117" Content="Save Changes" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarSaveChangesButton_Click" Grid.Column="1"/>
-                        <Button x:Name="CarClearTableButton" Width ="117" Content="Clear Table" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarClearTableButton_Click" Grid.Column="2"/>
+                        <Button x:Name="CarEditButton" Width = "117" Content="Изменить" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarEditButton_Click" Grid.Column="0" RenderTransformOrigin="0.483,1.115"/>
+                        <Button x:Name="CarSaveChangesButton" Width = "117" Content="Сохранить изменения" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarSaveChangesButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarClearTableButton" Width ="117" Content="Очистить таблицу" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarClearTableButton_Click" Grid.Column="2"/>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -181,10 +181,10 @@
         <!--Bottom Section-->
         <Border Grid.Row="2" BorderThickness="0 2 0 0" BorderBrush="White" CornerRadius="0 0 5 5" Padding="10" Background="#1C1C1C">
             <Grid>
-                <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="CarHouse Co. 2023"/>
+                <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="Car House Co. 2023"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button Style="{StaticResource bottomButton}" Content="Settings"/>
+                    <Button x:Name="Exit" Style="{StaticResource bottomButton}" Content="Выйти" Click="Exit_Click"/>
                 </StackPanel>
             </Grid>
         </Border>

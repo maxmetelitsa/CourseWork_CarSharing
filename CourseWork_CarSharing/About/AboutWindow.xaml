@@ -39,6 +39,7 @@
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
             <Image Source="C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\img\Pic1.jpg" Margin="544,34,52,294" />
+            <TextBlock x:Name="AboutCompanyTextBlock" Text="" Foreground="White" FontSize="16" Loaded="AboutCompany_Loaded"/>
         </Grid>
         <!--Bottom Section-->
         <Border Grid.Row="2" BorderThickness="0 2 0 0" BorderBrush="White" CornerRadius="0 0 5 5" Padding="10" Background="#1C1C1C">
@@ -46,7 +47,7 @@
                 <TextBlock Margin="15 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Foreground="White" Text="CarHouse Co. 2023"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button Style="{StaticResource bottomButton}" Content="Settings"/>
+                    <Button Style="{StaticResource bottomButton}" Content="Выйти"/>
                 </StackPanel>
             </Grid>
         </Border>

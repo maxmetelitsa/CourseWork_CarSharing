@@ -22,15 +22,6 @@ namespace CourseWork_CarSharing.UsersInfo
         {
             manager.OpenConnection();
 
-            // Используйте параметры в SQL-запросе, чтобы избежать проблем с безопасностью и экранированием символов
-            //foreach (User user in users)
-            //{
-            //    if (user.Email == email)
-            //    {
-            //        return false;
-            //    }
-            //}
-
             string insertQuery = " INSERT INTO Users (Name, Surname, Email, Password, PassportNumber, IdentificationNumber, LicenseSeries, LicenseNumber) VALUES (@Name, @Surname, @Email, @Password, @PassportNumber, @IdentificationNumber, @LicenseSeries, @LicenseNumber);";
 
             using (SQLiteCommand command = new SQLiteCommand(insertQuery, manager.Connection))
@@ -47,14 +38,12 @@ namespace CourseWork_CarSharing.UsersInfo
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)
                 {
-                    // Данные успешно внесены
                     users.Add(new User(name, surname, email, password));
                     manager.CloseConnection();
                     return true;
                 }
                 else
                 {
-                    // Не удалось внести данные
                     manager.CloseConnection();
                     return false;
                 }
@@ -106,75 +95,7 @@ namespace CourseWork_CarSharing.UsersInfo
 
             manager.CloseConnection();
         }
-        //public void AddExtraInfo(SQLiteManager manager, string passportNumber, string identificationNumber, string licenseSeries, string licenseNumber)
-        //{
-        //    manager.OpenConnection();
-
-        //    foreach (User user in users)
-        //    {
-        //        string updateQuery = $"UPDATE Users SET PassportNumber = @PassportNumber, IdentificationNumber = @IdentificationNumber, LicenseSeries = @LicenseSeries, LicenseNumber = @LicenseNumber WHERE ID = @{user.ID}";
-
-        //        using (SQLiteCommand command = new SQLiteCommand(updateQuery, manager.Connection))
-        //        {
-        //            command.Parameters.AddWithValue("@PassportNumber", user.PassportNumber);
-        //            command.Parameters.AddWithValue("@IdentificationNumber", user.IdentificationNumber);
-        //            command.Parameters.AddWithValue("@LicenseSeries", user.LicenseSeries);
-        //            command.Parameters.AddWithValue("@LicenseNumber", user.LicenseNumber);
-
-        //            command.ExecuteNonQuery();
-        //        }
-        //    }
-
-        //    manager.CloseConnection();
-        //}
-        //public int ValidateUser(SQLiteManager manager, string email, string password)
-        //{
-        //    manager.OpenConnection();
-
-        //    foreach (User user in users)
-        //    {
-        //        if (user.Email == email && user.Password == password)
-        //        {
-        //            string selectQuery = $"SELECT * FROM Users WHERE ID = @{user.ID}";
-
-        //            using (SQLiteCommand command = new SQLiteCommand(selectQuery, manager.Connection))
-        //            {
-        //                using (SQLiteDataReader reader = command.ExecuteReader())
-        //                {
-        //                    while (reader.Read())
-        //                    {
-        //                        string nameFromDB = reader["Name"].ToString();
-        //                        string surnameFromDB = reader["Surname"].ToString();
-        //                        string emailFromDB = reader["Email"].ToString();
-        //                        string passwordFromDB = reader["Password"].ToString();
-        //                        string passportNumberFromDB = reader["PassportNumber"].ToString();
-        //                        string identificationNumberFromDB = reader["IdentificationNumber"].ToString();
-        //                        string licenseSeriesFromDB = reader["LicenseSeries"].ToString();
-        //                        string licenseNumberFromDB = reader["LicenseNumber"].ToString();
-
-        //                        CurrentUser currentUser = new CurrentUser(nameFromDB, surnameFromDB, emailFromDB, passwordFromDB,
-        //                            passportNumberFromDB, identificationNumberFromDB, licenseSeriesFromDB, licenseNumberFromDB);
-        //                        CurrentUserManager.CurrentUser = currentUser;
-        //                    }
-        //                }
-        //            }
-        //            manager.CloseConnection();
-        //            return 1;
-        //        }
-        //        else if (email == "admin@icloud.com" && password == "1234")
-        //        {
-        //            CurrentUser currentUser = new CurrentUser(user.Name, user.Surname, user.Email, user.Password);
-        //            CurrentUserManager.CurrentUser = currentUser;
-        //            manager.CloseConnection();
-        //            return 2;
-        //        }
-        //    }
-
-        //    manager.CloseConnection();
-        //    return 0;
-        //}
-
-
+       
         public int ValidateUser(SQLiteManager manager, string email, string password)
         {
             manager.OpenConnection();
@@ -224,8 +145,5 @@ namespace CourseWork_CarSharing.UsersInfo
 
             return 0;
         }
-
-
-
     }
 }

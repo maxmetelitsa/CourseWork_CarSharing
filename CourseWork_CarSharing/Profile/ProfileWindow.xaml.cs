@@ -23,6 +23,7 @@ using System.Data.SQLite;
 using CourseWork_CarSharing.SQL_Manager;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
+using CourseWork_CarSharing.Authorization;
 
 namespace CourseWork_CarSharing.Profile
 {
@@ -149,6 +150,7 @@ namespace CourseWork_CarSharing.Profile
         private void WindowClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            Functions.Functions.TerminateProcess("CourseWork_CarSharing");
         }
 
         private void CarParkButton_Click(object sender, RoutedEventArgs e)
@@ -190,8 +192,8 @@ namespace CourseWork_CarSharing.Profile
         }
         private void SetWriteAbleFields()
         {
-            NameTextBox.IsReadOnly = false;
-            SurnameTextBox.IsReadOnly = false;
+            NameTextBox.IsReadOnly = true;
+            SurnameTextBox.IsReadOnly = true;
             EmailTextBox.IsReadOnly = true;
             PasswordTextBox.IsReadOnly = false;
             PasswordRepeatTextBox.IsReadOnly = false;
@@ -219,7 +221,7 @@ namespace CourseWork_CarSharing.Profile
                 CurrentUser currentUserData = CurrentUserManager.CurrentUser;
 
 
-                if (ValidateUserFields(name, surname, email, password, passportNumber, identificationNumber, licenseSeries, licenseNumber))
+                if (ValidateUserFields(name, surname, email, password))
                 {
                     manager.OpenConnection();
 
@@ -272,9 +274,6 @@ namespace CourseWork_CarSharing.Profile
 
         private void ClearFields()
         {
-            NameTextBox.Text = null;
-            SurnameTextBox.Text = null;
-            EmailTextBox.Text = null;
             PasswordTextBox.Text = null;
             PasswordRepeatTextBox.Text = null;
             PassportNumberTextBox.Text = null;
@@ -282,13 +281,11 @@ namespace CourseWork_CarSharing.Profile
             LicenseSeriesTextBox.Text = null;
             LicenseNumberTextBox.Text = null;
         }
-        public bool ValidateUserFields(string name, string surname, string email, string password, string passportNumber, string identificationNumber, string licenseSeries, string licenseNumber)
+        public bool ValidateUserFields(string name, string surname, string email, string password)
         {
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(email) ||
-                string.IsNullOrEmpty(password) || string.IsNullOrEmpty(passportNumber) ||
-                string.IsNullOrEmpty(identificationNumber) || string.IsNullOrEmpty(licenseSeries) ||
-                string.IsNullOrEmpty(licenseNumber))
+                string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
@@ -299,6 +296,18 @@ namespace CourseWork_CarSharing.Profile
         private void ClearFieldsButton_Click(object sender, RoutedEventArgs e)
         {
             ClearFields();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            SignInWindow window = new SignInWindow();
+            window.Show();
+            this.Hide();
+        }
+
+        private void richTextDocument_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -20,16 +20,17 @@ using CourseWork_CarSharing.UsersInfo;
 using CourseWork_CarSharing.Rent;
 using CourseWork_CarSharing.Profile;
 using CourseWork_CarSharing.About;
+using CourseWork_CarSharing.CarPark;
 using CourseWork_CarSharing.Authorization;
 
-namespace CourseWork_CarSharing.CarPark
+namespace CourseWork_CarSharing.Admin
 {
-    public partial class CarParkWindow : Window
+    public partial class AdminCarParkWindow : Window
     {
         private CarParkManager carParkManager;
         private bool isMaximize = false;
 
-        public CarParkWindow()
+        public AdminCarParkWindow()
         {
             InitializeComponent();
 
@@ -93,7 +94,7 @@ namespace CourseWork_CarSharing.CarPark
             }
         }
 
-        public void ShowSearchedCars(WrapPanel carGrid, List <Car> cars)
+        public void ShowSearchedCars(WrapPanel carGrid, List<Car> cars)
         {
             carGrid = FindName("carGrid") as WrapPanel;
             foreach (Car car in cars)
@@ -201,7 +202,6 @@ namespace CourseWork_CarSharing.CarPark
         {
             this.Close();
             Functions.Functions.TerminateProcess("CourseWork_CarSharing");
-
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -233,28 +233,26 @@ namespace CourseWork_CarSharing.CarPark
         }
         private void CarParkButton_Click(object sender, RoutedEventArgs e)
         {
-            CarParkWindow window = new CarParkWindow();
-            window.Show();
-            this.Close();
+            
         }
 
         private void RentButton_Click(object sender, RoutedEventArgs e)
         {
-            RentWindow window = new RentWindow();
+            AdminRentWindow window = new AdminRentWindow();
             window.Show();
             this.Close();
         }
 
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        private void CarParkEditingButton_Click(object sender, RoutedEventArgs e)
         {
-            ProfileWindow window = new ProfileWindow();
+            AdminWindow window = new AdminWindow();
             window.Show();
-            this.Close();
+            this.Hide();
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        private void RentalTrackingButton_Click(object sender, RoutedEventArgs e)
         {
-            AboutWindow window = new AboutWindow();
+            AdminRentalTracking window = new AdminRentalTracking();
             window.Show();
             this.Close();
         }

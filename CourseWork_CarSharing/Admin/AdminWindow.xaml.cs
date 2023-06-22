@@ -26,6 +26,7 @@ using CourseWork_CarSharing.Rent;
 using CourseWork_CarSharing.Profile;
 using CourseWork_CarSharing.About;
 using System.Globalization;
+using CourseWork_CarSharing.Authorization;
 
 namespace CourseWork_CarSharing.Admin
 {
@@ -112,6 +113,7 @@ namespace CourseWork_CarSharing.Admin
                     {
                         carParkManager.AddCar(name, selectedFuel, selectedTransmission, selectedCarType, selectedBrand, colour, yearOfManufacture, number, imageID, hourPrice);
                         ShowCarsInDataGrid(carsGrid, carParkManager);
+                        ClearFieldsAndNotifies();
                     }
                 }
                 else
@@ -230,11 +232,6 @@ namespace CourseWork_CarSharing.Admin
             var rowView = carsGrid.SelectedItem as DataRowView;
             if (isEditMode == true && lastEditableCarID == rowView["Number"] as string)
             {
-                //if (carsGrid.SelectedItem == null)
-                //{
-                //    MessageBox.Show("No item selected in the DataGrid.");
-                //    return;
-                //}
                 if (!ValidateFields())
                 {
                     return;
@@ -546,39 +543,42 @@ namespace CourseWork_CarSharing.Admin
         private void WindowClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            Functions.Functions.TerminateProcess("CourseWork_CarSharing");
         }
 
-        private void NewsButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        //bar
 
         private void CarParkButton_Click(object sender, RoutedEventArgs e)
         {
-            CarParkWindow window = new CarParkWindow();
+            AdminCarParkWindow window = new AdminCarParkWindow();
             window.Show();
             this.Close();
         }
 
         private void RentButton_Click(object sender, RoutedEventArgs e)
         {
-            RentWindow window = new RentWindow();
+            AdminRentWindow window = new AdminRentWindow();
             window.Show();
             this.Close();
         }
 
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        private void CarParkEditingButton_Click(object sender, RoutedEventArgs e)
         {
-            ProfileWindow window = new ProfileWindow();
+
+        }
+
+        private void RentalTrackingButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminRentalTracking window = new AdminRentalTracking();
             window.Show();
             this.Close();
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            AboutWindow window = new AboutWindow();
+            SignInWindow window = new SignInWindow();
             window.Show();
-            this.Close();
+            this.Hide();
         }
     }
 }
