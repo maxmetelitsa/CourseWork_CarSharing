@@ -122,9 +122,9 @@
                         <Label x:Name="ImageIDLabel" HorizontalAlignment="Right" Foreground="White" Content="ImageID" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="0,-1,11,0" Width="68" Grid.Column="1"/>
 
 
-                        <TextBox x:Name="NumberTextBox" MaxLength="33" Margin="81,0,0,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="NumberTextBox" MaxLength="6" Margin="81,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Left" Width="116" Height="24" FontSize="14" VerticalAlignment="Top" BorderBrush="#212121"/>
-                        <TextBox x:Name="ImageIDTextBox" MaxLength="33" Margin="0,0,84,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="ImageIDTextBox" Margin="0,0,84,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Right" Width="115" Height="24" FontSize="14" VerticalAlignment="Top" BorderBrush="#212121" Grid.Column="1"/>
                     </Grid>
                     <Grid>
@@ -172,7 +172,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="CarEditButton" Width = "117" Content="Изменить" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarEditButton_Click" Grid.Column="0" RenderTransformOrigin="0.483,1.115"/>
-                        <Button x:Name="CarSaveChangesButton" Width = "117" Content="Сохранить изменения" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarSaveChangesButton_Click" Grid.Column="1"/>
+                        <Button x:Name="CarSaveChangesButton" Content="Сохранить изменения" Style="{StaticResource mainButton}" Margin="3,10,3,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarSaveChangesButton_Click" Grid.Column="1"/>
                         <Button x:Name="CarClearTableButton" Width ="117" Content="Очистить таблицу" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="CarClearTableButton_Click" Grid.Column="2"/>
                     </Grid>
                 </StackPanel>

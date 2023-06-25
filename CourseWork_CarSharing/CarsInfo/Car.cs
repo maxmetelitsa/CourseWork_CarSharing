@@ -14,16 +14,16 @@ namespace CourseWork_CarSharing.CarsInfo
     {
         private static int lastID = 0;
         public int ID { get; set; }
-        string name;
-        Fuel fuelType;
-        Transmission transmissionType;
-        CarType carType;
-        Brand brand;
-        string colour;
-        int yearOFManufacture;
-        string number;
-        int imageId;
-        double hourPrice;
+        private string name;
+        private Fuel fuelType;
+        private Transmission transmissionType;
+        private CarType carType;
+        private Brand brand;
+        private string colour;
+        private int yearOFManufacture;
+        private string number;
+        private int imageId;
+        private double hourPrice;
         public string Name
         {
             get { return name; }
@@ -88,6 +88,20 @@ namespace CourseWork_CarSharing.CarsInfo
             ImageID = imageId;
             HourPrice = hourPrice;
         }
+        public Car(int id, string name, Fuel fuelType, Transmission transmissionType, CarType carType, Brand brand, string colour, int yearOfManufacture, string number, int imageId, double hourPrice)
+        {
+            ID = id;
+            Name = name;
+            FuelType = fuelType;
+            TransmissionType = transmissionType;
+            CarType = carType;
+            Brand = brand;
+            Colour = colour;
+            YearOfManufacture = yearOfManufacture;
+            Number = number;
+            ImageID = imageId;
+            HourPrice = hourPrice;
+        }
         public static List<Car> CreateListOfUsers()
         {
             List<Car> users = new List<Car>();
@@ -107,35 +121,6 @@ namespace CourseWork_CarSharing.CarsInfo
             {
                 cars.Remove(user);
             }
-        }
-
-        public Car GetCarByID(List<Car> cars, int id)
-        {
-            return cars.Find(u => u.ID == id);
-        }
-
-        public List<Car> GetCarsByName(List<Car> cars, string name)
-        {
-            return cars.FindAll(u => u.Name == name);
-        }
-
-        public List<Car> GetCarsByFuelType(List<Car> cars, Fuel fuelType)
-        {
-            return cars.FindAll(u => u.FuelType == fuelType);
-        }
-
-        public List<Car> GetCarsByTransmissionType(List<Car> cars, Transmission transmissionType)
-        {
-            return cars.FindAll(u => u.TransmissionType == transmissionType);
-        }
-
-        public List<Car> GetCarsByColour(List<Car> cars, string colour)
-        {
-            return cars.FindAll(u => u.Colour == colour);
-        }
-        public List<Car> GetCarsByYearOfManufacture(List<Car> cars, int yearOfManufacture)
-        {
-            return cars.FindAll(u => u.YearOfManufacture == yearOfManufacture);
         }
     }
 }

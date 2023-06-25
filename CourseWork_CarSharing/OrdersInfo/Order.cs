@@ -10,11 +10,11 @@ namespace CourseWork_CarSharing.OrdersInfo
     {
         private static int lastID = 0;
         public int ID { get; }
-        int userID;
-        int carID;
-        DateTime startDate;
-        DateTime endDate;
-        double totalPrice;
+        private int userID;
+        private int carID;
+        private DateTime startDate;
+        private DateTime endDate;
+        private double totalPrice;
         public int UserID
         {
             get { return userID; }
@@ -43,7 +43,7 @@ namespace CourseWork_CarSharing.OrdersInfo
 
         public Order(int userID, int carID, DateTime startDate, DateTime endDate, double totalPrice)
         {
-            ID = ++lastID;
+            ID = lastID;
             UserID = userID;
             CarID = carID;
             StartDate = startDate;

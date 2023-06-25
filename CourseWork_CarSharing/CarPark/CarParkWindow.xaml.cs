@@ -77,7 +77,7 @@ namespace CourseWork_CarSharing.CarPark
 
 
                 TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}\nPrice/Day: {car.HourPrice}  $";
+                carInfo.Text = $"Название: {car.Name}\nМарка: {car.Brand}\nКласс: {car.CarType}\nТопливо: {car.FuelType}\nКоробка: {car.TransmissionType}\nЦвет: {car.Colour}\nГод выпуска: {car.YearOfManufacture}\nНомер: {car.Number}\nСтоимость/День: {car.HourPrice} р";
                 carInfo.Foreground = Brushes.White;
                 carInfo.FontSize = 12;
                 carInfo.TextAlignment = TextAlignment.Left;
@@ -125,7 +125,7 @@ namespace CourseWork_CarSharing.CarPark
 
 
                 TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}\nPrice/Day: {car.HourPrice}  $";
+                carInfo.Text = $"Название: {car.Name}\nМарка: {car.Brand}\nКласс: {car.CarType}\nТопливо: {car.FuelType}\nКоробка: {car.TransmissionType}\nЦвет: {car.Colour}\nГод выпуска: {car.YearOfManufacture}\nНомер: {car.Number}\nСтоимость/День: {car.HourPrice} р";
                 carInfo.Foreground = Brushes.White;
                 carInfo.FontSize = 12;
                 carInfo.TextAlignment = TextAlignment.Left;

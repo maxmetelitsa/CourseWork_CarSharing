@@ -25,7 +25,9 @@ using CourseWork_CarSharing.OrdersInfo;
 using CourseWork_CarSharing.CompanyInfo;
 using DocumentFormat.OpenXml.ExtendedProperties;
 using CourseWork_CarSharing.Authorization;
+using CourseWork_CarSharing.UserOrders;
 
+    
 namespace CourseWork_CarSharing.Rent
 {
     /// <summary>
@@ -35,6 +37,7 @@ namespace CourseWork_CarSharing.Rent
     {
         private CarParkManager carParkManager;
         private OrdersManager ordersManager;
+        private UserOrderManager userOrdersManager;
         private bool isMaximize = false;
         Car car;
         CurrentUser currentUserData = CurrentUserManager.CurrentUser;
@@ -51,6 +54,7 @@ namespace CourseWork_CarSharing.Rent
             Car = car;
             carParkManager = new CarParkManager();
             ordersManager = new OrdersManager();
+            userOrdersManager = new UserOrderManager();
             ShowCar(rentalCar);
             ShowInfo();
         }
@@ -119,7 +123,7 @@ namespace CourseWork_CarSharing.Rent
             carPanel.Width = 512;
 
             TextBlock carInfo = new TextBlock();
-            carInfo.Text = $"Name: {Car.Name}\nBrand: {Car.Brand}\nCarType: {Car.CarType}\nFuelType: {Car.FuelType}\nTransmissionType: {Car.TransmissionType}\nColour: {Car.Colour}\nYearOfManufacture: {Car.YearOfManufacture}\nNumber: {Car.Number}\nPrice/Day: {Car.HourPrice} $";
+            carInfo.Text = $"Название: {car.Name}\nМарка: {car.Brand}\nКласс: {car.CarType}\nТопливо: {car.FuelType}\nКоробка: {car.TransmissionType}\nЦвет: {car.Colour}\nГод выпуска: {car.YearOfManufacture}\nНомер: {car.Number}\nСтоимость/День: {car.HourPrice} р";
             carInfo.Foreground = Brushes.White;
             carInfo.FontSize = 14;
             carInfo.TextAlignment = TextAlignment.Left;
@@ -150,20 +154,18 @@ namespace CourseWork_CarSharing.Rent
         public void GetAmountOfOrders()
         {
             ordersManager.manager.OpenConnection();
-            string selectQuery = "SELECT * FROM [Order]";
+
+            string selectQuery = "SELECT COUNT(*) FROM [Order]";
+            int rowCount = 0;
 
             using (SQLiteCommand command = new SQLiteCommand(selectQuery, ordersManager.manager.Connection))
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        ordersCounter++;
-                    }
-                }
+                rowCount = Convert.ToInt32(command.ExecuteScalar());
             }
 
             ordersManager.manager.CloseConnection();
+
+            ordersCounter = rowCount;
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
@@ -183,10 +185,24 @@ namespace CourseWork_CarSharing.Rent
                 DateTime endDate = DateTime.Parse(EndDatePicker.Text);
                 int days = int.Parse(DaysTextBox.Text);
                 double total = double.Parse(TotalTextBox.Text);
-                ordersManager.AddOrder(currentUserData.ID, Car.ID, startDate, endDate, total);
                 GetAmountOfOrders();
-                string path = $"C:\\Rentals\\rental_order{++ordersCounter}.docx";
-                company.GenerateRentalDocument(path, Car,name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
+                string companyRentals = $"C:\\Rentals\\rental_order{++ordersCounter}.docx";
+                company.GenerateRentalDocument(companyRentals, Car,name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
+                string personRentals = $"C:\\Лабораторные работы C#\\CourseWork_CarSharing\\CourseWork_CarSharing\\UserRentals\\user_order{ordersCounter}.docx";
+                company.GenerateRentalDocument(personRentals, Car, name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
+
+                string directoryCompanyPath = System.IO.Path.GetDirectoryName(companyRentals);
+                System.IO.DirectoryInfo directoryInfo1 = new System.IO.DirectoryInfo(directoryCompanyPath);
+
+                string directoryuserPath = System.IO.Path.GetDirectoryName(personRentals);
+                System.IO.DirectoryInfo directoryInfo2 = new System.IO.DirectoryInfo(directoryuserPath);
+
+                // Обновить содержимое каталога
+                directoryInfo1.Refresh();
+                directoryInfo2.Refresh();
+
+                ordersManager.AddOrder(currentUserData.ID, Car.ID, startDate, endDate, total);
+                userOrdersManager.userOrdersList.AddUserOrder(--ordersCounter, currentUserData.ID, ++ordersCounter);
                 MessageBox.Show("Автомобиль успешно забронирован");
                 ProfileWindow window = new ProfileWindow();
                 window.Show();
@@ -333,6 +349,12 @@ namespace CourseWork_CarSharing.Rent
             if (!DateTime.TryParse(EndDatePicker.Text, out endDate))
             {
                 // Обработка неверного формата даты
+                isValid = false;
+            }
+            if ((int)DateTime.Parse(StartDatePicker.Text).DayOfYear < (int)DateTime.Now.DayOfYear - 1)
+            {
+                // Обработка неверного формата даты
+                MessageBox.Show($"Неверное значение начальной даты");
                 isValid = false;
             }
 

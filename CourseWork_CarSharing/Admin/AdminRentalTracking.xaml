@@ -135,7 +135,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="OrderEditButton" Width = "117" Content="Изменить бронь" Style="{StaticResource mainButton}" Margin="10,10,10,0" BorderBrush="White" Background="White" Foreground="Black" Click="OrderEditButton_Click" Grid.Column="0" RenderTransformOrigin="0.483,1.115"/>
-                        <Button x:Name="OrderSaveChangesButton" Width = "117" Content="Сохранить изменения" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="OrderSaveChangesButton_Click" Grid.Column="1"/>
+                        <Button x:Name="OrderSaveChangesButton" Content="Сохранить изменения" Style="{StaticResource mainButton}" Margin="6,10,149,0" BorderBrush="White" Background="White" Foreground="Black" Click="OrderSaveChangesButton_Click" Grid.Column="1" Grid.ColumnSpan="2"/>
                         <Button x:Name="OrderClearTableButton" Width ="117" Content="Очистить таблицу" Style="{StaticResource mainButton}" Margin="10,10,5,0" BorderBrush="White" Background="White" Foreground="Black" Click="OrderClearTableButton_Click" Grid.Column="2"/>
                     </Grid>
                 </StackPanel>

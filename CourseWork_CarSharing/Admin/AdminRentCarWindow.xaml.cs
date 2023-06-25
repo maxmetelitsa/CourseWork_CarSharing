@@ -23,6 +23,7 @@ using CourseWork_CarSharing.UsersInfo;
 using System.Data.SQLite;
 using CourseWork_CarSharing.OrdersInfo;
 using CourseWork_CarSharing.Authorization;
+using CourseWork_CarSharing.UserOrders;
 
 namespace CourseWork_CarSharing.Admin
 {
@@ -33,6 +34,7 @@ namespace CourseWork_CarSharing.Admin
     {
         private CarParkManager carParkManager;
         private OrdersManager ordersManager;
+        private UserOrderManager userOrdersManager;
         private bool isMaximize = false;
         Car car;
         CurrentUser currentUserData = CurrentUserManager.CurrentUser;
@@ -48,6 +50,7 @@ namespace CourseWork_CarSharing.Admin
             Car = car;
             carParkManager = new CarParkManager();
             ordersManager = new OrdersManager();
+            userOrdersManager = new UserOrderManager();
             ShowCar(rentalCar);
             ShowInfo();
         }
@@ -132,7 +135,7 @@ namespace CourseWork_CarSharing.Admin
             image.Source = bitmap;
 
             TextBlock carInfo = new TextBlock();
-            carInfo.Text = $"Name: {Car.Name}\nBrand: {Car.Brand}\nCarType: {Car.CarType}\nFuelType: {Car.FuelType}\nTransmissionType: {Car.TransmissionType}\nColour: {Car.Colour}\nYearOfManufacture: {Car.YearOfManufacture}\nNumber: {Car.Number}\nPrice/Day: {Car.HourPrice} $";
+            carInfo.Text = $"Название: {car.Name}\nМарка: {car.Brand}\nКласс: {car.CarType}\nТопливо: {car.FuelType}\nКоробка: {car.TransmissionType}\nЦвет: {car.Colour}\nГод выпуска: {car.YearOfManufacture}\nНомер: {car.Number}\nСтоимость/День: {car.HourPrice} р";
             carInfo.Foreground = Brushes.White;
             carInfo.FontSize = 16;
             carInfo.TextAlignment = TextAlignment.Left;
@@ -259,6 +262,12 @@ namespace CourseWork_CarSharing.Admin
                 // Обработка неверного формата даты
                 isValid = false;
             }
+            if ((int)DateTime.Parse(StartDatePicker.Text).DayOfYear < (int)DateTime.Now.DayOfYear - 1)
+            {
+                // Обработка неверного формата даты
+                MessageBox.Show($"Неверное значение начальной даты");
+                isValid = false;
+            }
 
             if (!int.TryParse(DaysTextBox.Text, out days))
             {
@@ -310,16 +319,20 @@ namespace CourseWork_CarSharing.Admin
                 DateTime endDate = DateTime.Parse(EndDatePicker.Text);
                 int days = int.Parse(DaysTextBox.Text);
                 double total = double.Parse(TotalTextBox.Text);
-                ordersManager.AddOrder(currentUserData.ID, Car.ID, startDate, endDate, total);
                 GetAmountOfOrders();
-                string path = $"C:\\Rentals\\rental_order{++ordersCounter}.docx";
-                company.GenerateRentalDocument(path, Car, name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
+                string companyRentals = $"C:\\Rentals\\rental_order{++ordersCounter}.docx";
+                company.GenerateRentalDocument(companyRentals, Car, name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
+                string personRentals = $"C:\\Лабораторные работы C#\\CourseWork_CarSharing\\CourseWork_CarSharing\\UserRentals\\user_order{ordersCounter}.docx";
+                company.GenerateRentalDocument(personRentals, Car, name, surname, email, passportNumber, identificationNumber, licenseSeries, licenseNumber, startDate, endDate, days, total);
+                ordersManager.AddOrder(currentUserData.ID, Car.ID, startDate, endDate, total);
+                userOrdersManager.userOrdersList.AddUserOrder(--ordersCounter, currentUserData.ID, ++ordersCounter);
                 MessageBox.Show("Автомобиль успешно забронирован");
                 ProfileWindow window = new ProfileWindow();
                 window.Show();
                 this.Hide();
             }
         }
+
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {

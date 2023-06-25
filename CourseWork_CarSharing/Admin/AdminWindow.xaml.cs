@@ -27,6 +27,7 @@ using CourseWork_CarSharing.Profile;
 using CourseWork_CarSharing.About;
 using System.Globalization;
 using CourseWork_CarSharing.Authorization;
+using DocumentFormat.OpenXml.ExtendedProperties;
 
 namespace CourseWork_CarSharing.Admin
 {
@@ -49,11 +50,11 @@ namespace CourseWork_CarSharing.Admin
 
             ShowCarsInDataGrid(carsGrid, carParkManager);
 
-            List<Fuel> fuelTypes = new List<Fuel> { Fuel.Petrol, Fuel.Diesel, Fuel.Gas, Fuel.Electricity, Fuel.Hybrid};
+            List<Fuel> fuelTypes = new List<Fuel> { Fuel.Petrol, Fuel.Diesel, Fuel.Gas, Fuel.Electricity, Fuel.Hybrid };
             FuelTypeComboBox.ItemsSource = fuelTypes;
-            List<Transmission> transmissionTypes = new List<Transmission> { Transmission.Automatic, Transmission.Manual};
+            List<Transmission> transmissionTypes = new List<Transmission> { Transmission.Automatic, Transmission.Manual };
             TransmissionTypeComboBox.ItemsSource = transmissionTypes;
-            List<CarType> carTypes = new List<CarType> { CarType.Economy, CarType.Business, CarType.SUV, CarType.CargoMinibus, CarType.Coupe, CarType.Limousine, CarType.Minibus, CarType.Motorcycle };
+            List<CarType> carTypes = new List<CarType> { CarType.Economy, CarType.Business, CarType.Coupe, CarType.Limousine };
             CarTypeComboBox.ItemsSource = carTypes;
             List<Brand> brands = new List<Brand> { Brand.Audi, Brand.Bentley, Brand.BMW, Brand.Chevrolet, Brand.Ford, Brand.Honda, Brand.Hyundai, Brand.Jaguar, Brand.Kia, Brand.Lamborghini, Brand.Lexus, Brand.Mazda, Brand.MercedesBenz, Brand.Nissan, Brand.Porsche, Brand.Subaru, Brand.Tesla, Brand.Toyota, Brand.Volkswagen };
             BrandComboBox.ItemsSource = brands;
@@ -98,7 +99,7 @@ namespace CourseWork_CarSharing.Admin
             CarType selectedCarType;
             Brand selectedBrand;
 
-            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(number) 
+            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(number)
                 && Enum.TryParse<Fuel>(FuelTypeComboBox.SelectedValue?.ToString(), out selectedFuel) && Enum.TryParse<Transmission>(TransmissionTypeComboBox.SelectedValue?.ToString(), out selectedTransmission)
                 && Enum.TryParse<CarType>(CarTypeComboBox.SelectedValue?.ToString(), out selectedCarType) && Enum.TryParse<Brand>(BrandComboBox.SelectedValue?.ToString(), out selectedBrand))
             {
@@ -285,25 +286,87 @@ namespace CourseWork_CarSharing.Admin
 
                             command.ExecuteNonQuery();
                         }
+                        string selectQuery = "SELECT ID FROM Cars WHERE Name = @Name AND FuelType = @FuelType AND TransmissionType = @TransmissionType AND CarType = @CarType AND Brand = @Brand AND Colour = @Colour AND YearOfManufacture = @YearOfManufacture AND Number = @Number AND ImageID = @ImageID AND HourPrice = @HourPrice";
+                        int carId;
 
-                        carParkManager.manager.CloseConnection();
+                        using (SQLiteCommand selectCommand = new SQLiteCommand(selectQuery, carParkManager.manager.Connection))
+                        {
+                            selectCommand.Parameters.AddWithValue("@Name", name);
+                            selectCommand.Parameters.AddWithValue("@FuelType", (int)selectedFuel);
+                            selectCommand.Parameters.AddWithValue("@TransmissionType", (int)selectedTransmission);
+                            selectCommand.Parameters.AddWithValue("@CarType", (int)selectedCarType);
+                            selectCommand.Parameters.AddWithValue("@Brand", (int)brand);
+                            selectCommand.Parameters.AddWithValue("@Colour", colour);
+                            selectCommand.Parameters.AddWithValue("@YearOfManufacture", yearOfManufacture);
+                            selectCommand.Parameters.AddWithValue("@Number", number);
+                            selectCommand.Parameters.AddWithValue("@ImageID", imageID);
+                            selectCommand.Parameters.AddWithValue("@HourPrice", hourPrice);
+
+                            using (SQLiteDataReader reader = selectCommand.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    carId = reader.GetInt32(0);
+                                }
+                                else
+                                {
+                                    // Обработка ситуации, если в таблице "cars" нет записей
+                                    // Например, выбрать значение по умолчанию или сгенерировать ошибку
+                                    carId = 0; // Пример значения по умолчанию
+                                }
+                            }
+                        }
+
+                        string carClass = "";
+
+                        if (selectedCarType == CarType.Economy)
+                        {
+                            carClass = "EconomyClass";
+                        }
+                        else if (selectedCarType == CarType.Business)
+                        {
+                            carClass = "BusinessClass";
+                        }
+                        else if (selectedCarType == CarType.Coupe)
+                        {
+                            carClass = "CoupeClass";
+                        }
+                        else if (selectedCarType == CarType.Limousine)
+                        {
+                            carClass = "LimousineClass";
+                        }
+
+                        string updateCarFromClass = $"UPDATE {carClass} SET FuelType = @FuelType, TransmissionType = @TransmissionType, Brand = @Brand, Colour = @Colour, Number = @Number WHERE CarID = @CarID";
+
+                        using (SQLiteCommand commandCarClass = new SQLiteCommand(updateCarFromClass, carParkManager.manager.Connection))
+                        {
+                            commandCarClass.Parameters.AddWithValue("@FuelType", (int)selectedFuel);
+                            commandCarClass.Parameters.AddWithValue("@TransmissionType", (int)selectedTransmission);
+                            commandCarClass.Parameters.AddWithValue("@Brand", (int)brand);
+                            commandCarClass.Parameters.AddWithValue("@Colour", colour);
+                            commandCarClass.Parameters.AddWithValue("@Number", number);
+                            commandCarClass.Parameters.AddWithValue("@CarID", carId);
+                            commandCarClass.ExecuteNonQuery();
+                        }
                     }
-                    else
-                    {
-                        // Обработка ошибок при некорректном вводе числовых значений
-                        MessageBox.Show("Invalid numeric values entered.");
-                    }
+
+                    carParkManager.manager.CloseConnection();
                 }
                 else
                 {
-                    // Обработка ошибок при некорректном выборе типов топлива или трансмиссии или пустом значении имени
-                    MessageBox.Show("Invalid fuel type or transmission selected, or empty name field.");
+                    // Обработка ошибок при некорректном вводе числовых значений
+                    MessageBox.Show("Invalid numeric values entered.");
                 }
-                isEditMode = false;
-                ClearFields();
-                ShowCarsInDataGrid(carsGrid, carParkManager);
-                ClearFields();
             }
+            else
+            {
+                // Обработка ошибок при некорректном выборе типов топлива или трансмиссии или пустом значении имени
+                MessageBox.Show("Invalid fuel type or transmission selected, or empty name field.");
+            }
+            isEditMode = false;
+            ClearFields();
+            ShowCarsInDataGrid(carsGrid, carParkManager);
+            ClearFields();
         }
         private bool ValidateFields()
         {
@@ -452,12 +515,8 @@ namespace CourseWork_CarSharing.Admin
         {
             List<string> carTypes = new List<string> { "Economy",
             "Business",
-            "SUVs",
-            "CargoMinibus",
             "Coupe",
-            "Limousine",
-            "Minibus",
-            "Motorcycle"};
+            "Limousine"};
             CarTypeComboBox.ItemsSource = carTypes;
         }
         private void BrandComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

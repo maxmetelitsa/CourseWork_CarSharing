@@ -18,6 +18,7 @@ namespace CourseWork_CarSharing.OrdersInfo
         public Orders()
         {
             orders = new List<Order>();
+            manager = new SQLiteManager();
         }
         public void AddOrder(int userID, int carID, DateTime startDate, DateTime endDate, double totalPrice)
         {

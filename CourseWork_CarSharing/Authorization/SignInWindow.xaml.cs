@@ -58,11 +58,11 @@ namespace CourseWork_CarSharing.Authorization
         }
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckBoxSession.IsChecked == true)
-            {
-                /*
-                 * Создание Сессии
-                */
+            //if (CheckBoxSession.IsChecked == true)
+            //{
+            //    /*
+            //     * Создание Сессии
+            //    */
                 if (isCorrectAuthorization() == true)
                 {
                     if (usersList.ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == 1)
@@ -84,7 +84,7 @@ namespace CourseWork_CarSharing.Authorization
                         TextBoxPasswordNotify.Content = "Неверный email или пароль";
                     }
                 }
-            }
+            //}
             else
             {
                 if (isCorrectAuthorization() == true)
@@ -139,6 +139,7 @@ namespace CourseWork_CarSharing.Authorization
                 else
                 {
                     TextBoxEmailNotify.Content = clear;
+                    flag = true;
                 }
 
             }

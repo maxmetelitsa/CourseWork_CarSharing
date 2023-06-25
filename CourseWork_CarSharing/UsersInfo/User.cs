@@ -6,14 +6,14 @@ namespace CourseWork_CarSharing.UsersInfo
     {
         private static int lastID = 0;
         public int ID { get; }
-        string name;
-        string surname;
-        string email;
-        string password;
-        string passportNumber;
-        string identificationNumber;
-        string licenseSeries;
-        string licenseNumber;
+        private string name;
+        private string surname;
+        private string email;
+        private string password;
+        private string passportNumber;
+        private string identificationNumber;
+        private string licenseSeries;
+        private string licenseNumber;
         public string Name
         {
             get { return name; }

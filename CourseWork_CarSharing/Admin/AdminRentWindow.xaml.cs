@@ -38,11 +38,11 @@ namespace CourseWork_CarSharing.Admin
 
             ShowCars(carGrid, carParkManager);
 
-            List<CarType> carTypes = new List<CarType> { CarType.Economy, CarType.Business, CarType.SUV, CarType.CargoMinibus, CarType.Coupe, CarType.Limousine, CarType.Minibus, CarType.Motorcycle };
+            List<CarType> carTypes = new List<CarType> { CarType.Economy, CarType.Business, CarType.Coupe, CarType.Limousine};
             ClassComboBox.ItemsSource = carTypes;
             List<Brand> brands = new List<Brand> { Brand.Audi, Brand.Bentley, Brand.BMW, Brand.Chevrolet, Brand.Ford, Brand.Honda, Brand.Hyundai, Brand.Jaguar, Brand.Kia, Brand.Lamborghini, Brand.Lexus, Brand.Mazda, Brand.MercedesBenz, Brand.Nissan, Brand.Porsche, Brand.Subaru, Brand.Tesla, Brand.Toyota, Brand.Volkswagen };
             BrandComboBox.ItemsSource = brands;
-            List<string> sortBy = new List<string> { "Cheap first", "Expensive fisrt" };
+            List<string> sortBy = new List<string> { "Дешевые сначала", "Дорогие сначала" };
             PriceComboBox.ItemsSource = sortBy;
             ClassComboBox.SelectedIndex = 0;
             BrandComboBox.SelectedIndex = 0;
@@ -95,7 +95,7 @@ namespace CourseWork_CarSharing.Admin
 
 
                 TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}\nPrice/Day: {car.HourPrice} $";
+                carInfo.Text = $"Название: {car.Name}\nМарка: {car.Brand}\nКласс: {car.CarType}\nТопливо: {car.FuelType}\nКоробка: {car.TransmissionType}\nЦвет: {car.Colour}\nГод выпуска: {car.YearOfManufacture}\nНомер: {car.Number}\nСтоимость/День: {car.HourPrice} р";
                 carInfo.Foreground = Brushes.White;
                 carInfo.FontSize = 12;
                 carInfo.TextAlignment = TextAlignment.Left;
@@ -143,7 +143,7 @@ namespace CourseWork_CarSharing.Admin
 
 
                 TextBlock carInfo = new TextBlock();
-                carInfo.Text = $"Name: {car.Name}\nBrand: {car.Brand}\nCarType: {car.CarType}\nFuelType: {car.FuelType}\nTransmissionType: {car.TransmissionType}\nColour: {car.Colour}\nYearOfManufacture: {car.YearOfManufacture}\nNumber: {car.Number}\nPrice/Day: {car.HourPrice} $";
+                carInfo.Text = $"Название: {car.Name}\nМарка: {car.Brand}\nКласс: {car.CarType}\nТопливо: {car.FuelType}\nКоробка: {car.TransmissionType}\nЦвет: {car.Colour}\nГод выпуска: {car.YearOfManufacture}\nНомер: {car.Number}\nСтоимость/День: {car.HourPrice} р";
                 carInfo.Foreground = Brushes.White;
                 carInfo.FontSize = 12;
                 carInfo.TextAlignment = TextAlignment.Left;
@@ -171,92 +171,37 @@ namespace CourseWork_CarSharing.Admin
             bool isCarTypeSelected = Enum.TryParse<CarType>(ClassComboBox.SelectedValue?.ToString(), out selectedClass);
             bool isPriceSelected = PriceComboBox.SelectedValue != null && !string.IsNullOrEmpty(PriceComboBox.SelectedValue.ToString());
 
-            selectedBrand = Enum.TryParse<Brand>(BrandComboBox.SelectedValue?.ToString(), out selectedBrand) ? selectedBrand : Brand.Audi;
-            selectedClass = Enum.TryParse<CarType>(ClassComboBox.SelectedValue?.ToString(), out selectedClass) ? selectedClass : CarType.Economy;
+            selectedBrand = isBrandSelected ? selectedBrand : Brand.None;
+            selectedClass = isCarTypeSelected ? selectedClass : CarType.None;
             selectedPrice = PriceComboBox.SelectedValue?.ToString();
 
             carGrid.Children.Clear();
 
-            if (isBrandSelected && !isCarTypeSelected && !isPriceSelected)
+            List<Car> searchedCars = carParkManager.availableCarsList.cars;
+
+            if (isBrandSelected)
             {
-                List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.Brand == selectedBrand).ToList();
-                ShowSearchedCars(carGrid, searchedCars);
+                searchedCars = searchedCars.Where(car => car.Brand == selectedBrand).ToList();
             }
 
-            else if (!isBrandSelected && isCarTypeSelected && !isPriceSelected)
+            if (isCarTypeSelected)
             {
-                List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.CarType == selectedClass).ToList();
-                ShowSearchedCars(carGrid, searchedCars);
+                searchedCars = searchedCars.Where(car => car.CarType == selectedClass).ToList();
             }
-            else if (!isBrandSelected && !isCarTypeSelected && isPriceSelected)
-            {
-                List<Car> searchedCars = carParkManager.availableCarsList.cars;
 
-                if (selectedPrice == "Cheap first")
+            if (isPriceSelected)
+            {
+                if (selectedPrice == "Дешевые сначала")
                 {
                     searchedCars = searchedCars.OrderBy(car => car.HourPrice).ToList();
-                    ShowSearchedCars(carGrid, searchedCars);
                 }
                 else
                 {
                     searchedCars = searchedCars.OrderByDescending(car => car.HourPrice).ToList();
-                    ShowSearchedCars(carGrid, searchedCars);
                 }
             }
-            else if (isBrandSelected && isCarTypeSelected && !isPriceSelected)
-            {
-                List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.Brand == selectedBrand && car.CarType == selectedClass).ToList();
-                ShowSearchedCars(carGrid, searchedCars);
-            }
-            else if (isBrandSelected && !isCarTypeSelected && isPriceSelected)
-            {
-                List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.Brand == selectedBrand).ToList();
 
-                if (selectedPrice == "Cheap first")
-                {
-                    searchedCars.Sort();
-                    ShowSearchedCars(carGrid, searchedCars);
-                }
-                else
-                {
-                    searchedCars = searchedCars.OrderByDescending(car => car).ToList();
-                    ShowSearchedCars(carGrid, searchedCars);
-                }
-            }
-            else if (!isBrandSelected && isCarTypeSelected && isPriceSelected)
-            {
-                List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.CarType == selectedClass).ToList();
-
-                if (selectedPrice == "Cheap first")
-                {
-                    searchedCars.Sort();
-                    ShowSearchedCars(carGrid, searchedCars);
-                }
-                else
-                {
-                    searchedCars = searchedCars.OrderByDescending(car => car).ToList();
-                    ShowSearchedCars(carGrid, searchedCars);
-                }
-            }
-            else if (isBrandSelected && isCarTypeSelected && isPriceSelected)
-            {
-                List<Car> searchedCars = carParkManager.availableCarsList.cars.Where(car => car.Brand == selectedBrand && car.CarType == selectedClass).ToList();
-
-                if (selectedPrice == "Cheap first")
-                {
-                    searchedCars.Sort();
-                    ShowSearchedCars(carGrid, searchedCars);
-                }
-                else
-                {
-                    searchedCars = searchedCars.OrderByDescending(car => car).ToList();
-                    ShowSearchedCars(carGrid, searchedCars);
-                }
-            }
-            else
-            {
-                ShowCars(carGrid, carParkManager);
-            }
+            ShowSearchedCars(carGrid, searchedCars);
         }
 
 
@@ -386,19 +331,15 @@ namespace CourseWork_CarSharing.Admin
         {
             List<string> carTypes = new List<string> { "Economy",
             "Business",
-            "SUVs",
-            "CargoMinibus",
             "Coupe",
-            "Limousine",
-            "Minibus",
-            "Motorcycle"};
+            "Limousine"};
             ClassComboBox.ItemsSource = carTypes;
             ApplyChanges();
         }
 
         private void PriceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            List<string> sortBy = new List<string> { "Cheap first", "Expensive first" };
+            List<string> sortBy = new List<string> { "Дешевые сначала", "Дорогие сначала" };
             PriceComboBox.ItemsSource = sortBy;
             ApplyChanges();
         }

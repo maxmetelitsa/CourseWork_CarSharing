@@ -38,7 +38,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
-            <Border Width="512" Height="592" VerticalAlignment="Top" HorizontalAlignment="Left" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,22,0,0">
+            <Border Width="512" Height="592" VerticalAlignment="Top" HorizontalAlignment="Left" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="6,22,0,0">
                 <StackPanel Margin="0,-18,-22,-22">
                     <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Личные данные" HorizontalAlignment="Center"/>
                     <Grid>
@@ -91,7 +91,7 @@
                     <!--Password TextBox-->
                     <Grid>
                         <Label x:Name="PassportNumberLabel" HorizontalAlignment="Left" Foreground="White" Content="Номер паспорта" FontFamily="Verdana" VerticalAlignment="Top" Height="24" Margin="10,-2,0,0" Width="120"/>
-                        <TextBox x:Name="PassportNumberTextBox" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="PassportNumberTextBox" MaxLength="9" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" IsReadOnly="True"/>
                         <!--<ICon:PackIconMAterial/>-->
                     </Grid>
@@ -104,7 +104,7 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="IdentificationLabel" HorizontalAlignment="Left" Foreground="White" Content="ID номер" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="10,0,0,0" Width="143"/>
 
-                        <TextBox x:Name="IdentificationTextBox" MaxLength="33" Margin="0,0,0,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="IdentificationTextBox" MaxLength="14" Margin="0,0,0,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" HorizontalAlignment="Center" Width="226" Height="24" FontSize="14" Grid.ColumnSpan="2" VerticalAlignment="Top" IsReadOnly="True"/>
                     </Grid>
                     <Label x:Name="IdentificationNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
@@ -115,7 +115,7 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="LicenseSeriesLabel" HorizontalAlignment="Left" Foreground="White" Content="Серия удостоверения" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="10,0,0,0" Width="147"/>
 
-                        <TextBox x:Name="LicenseSeriesTextBox" MaxLength="33" Margin="162,0,122,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="LicenseSeriesTextBox" MaxLength="4" Margin="162,0,122,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" Height="24" FontSize="14" Grid.ColumnSpan="2" IsReadOnly="True"/>
                     </Grid>
                     <Label x:Name="LicenseSeriesNotify" HorizontalAlignment="Right" Content="" FontSize="14" Foreground="White" Margin="0 0 92 0" Height="27"/>
@@ -126,7 +126,7 @@
                         </Grid.ColumnDefinitions>
                         <Label x:Name="LicenseNumberLabel" HorizontalAlignment="Left" Foreground="White" Content="Номер удостоверения" FontFamily="Verdana" VerticalAlignment="Center" Height="24" Margin="10,0,0,0" Width="147"/>
 
-                        <TextBox x:Name="LicenseNumberTextBox" MaxLength="33" Margin="162,0,122,0" Padding="0" Foreground="Black" 
+                        <TextBox x:Name="LicenseNumberTextBox" MaxLength="6" Margin="162,0,122,0" Padding="0" Foreground="Black" 
                             Panel.ZIndex="1" Height="24" FontSize="14" Grid.ColumnSpan="2" IsReadOnly="True"/>
                     </Grid>
                     <Label x:Name="LicenseNumberNotify" HorizontalAlignment="Left" Content="" FontSize="13" Foreground="White" Margin="196,0,0,-5" Grid.ColumnSpan="2"/>
@@ -143,14 +143,15 @@
                     </Grid>
                 </StackPanel>
             </Border>
-            <Border x:Name="InfoBorder" Width="481" Height="592" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="White" BorderThickness="2" CornerRadius="7" Padding="30" Background="#212121" Margin="0,22,10,0">
-                <StackPanel x:Name="InfoBorderPanel">
-                    <TextBlock Foreground="White" FontFamily="Verdana"  FontSize="20" Margin="0 0 0 10" Text="Договор аренды забронированного автомобиля" HorizontalAlignment="Center" Height="50"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <RichTextBox x:Name="richTextDocument" Height="440" Width="417" Loaded="richTextDocument_Loaded"/>
-                    </ScrollViewer>
-                </StackPanel>
-            </Border>
+            <ListBox x:Name="RentalsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="538,22,6,25" MouseDoubleClick="RentalsListBox_MouseDoubleClick" IsSynchronizedWithCurrentItem="True">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel x:Name="BookingStackPanel">
+                            <TextBlock x:Name="BookingTextBlock" Text="Бронирование" Foreground="Black" FontSize="16"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
 
         <!--Bottom Section-->

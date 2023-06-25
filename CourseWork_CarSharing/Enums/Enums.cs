@@ -24,12 +24,8 @@ namespace CourseWork_CarSharing.Enums
         None,
         Economy,
         Business,
-        SUV,
-        CargoMinibus,
         Coupe,
-        Limousine,
-        Minibus,
-        Motorcycle
+        Limousine
     }
     public enum Brand
     {

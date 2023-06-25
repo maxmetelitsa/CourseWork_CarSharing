@@ -24,6 +24,11 @@ using CourseWork_CarSharing.SQL_Manager;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using CourseWork_CarSharing.Authorization;
+using CourseWork_CarSharing.CarsInfo;
+using CourseWork_CarSharing.OrdersInfo;
+using CourseWork_CarSharing.UserOrders;
+using CourseWork_CarSharing.UserOrderInfo;
+using System.Diagnostics;
 
 namespace CourseWork_CarSharing.Profile
 {
@@ -34,9 +39,15 @@ namespace CourseWork_CarSharing.Profile
     {
         private bool isMaximize = false;
         public SQLiteManager manager;
+        public OrdersManager ordersManager;
+        public UserOrderManager userOrdersManager;
         public ProfileWindow()
         {
             manager = new SQLiteManager();
+            ordersManager = new OrdersManager();
+            userOrdersManager = new UserOrderManager();
+            CurrentUser currentUserData = CurrentUserManager.CurrentUser;
+            userOrdersManager.userOrdersList.GetUserOrders(currentUserData.ID);
             InitializeComponent();
             ShowInfo();
         }
@@ -88,124 +99,55 @@ namespace CourseWork_CarSharing.Profile
                     }
                 }
             }
+
+            ShowUserOrders();
             manager.CloseConnection();
         }
-
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void ShowUserOrders()
         {
-            if (e.ClickCount == 2)
+            RentalsListBox.ItemsSource = userOrdersManager.userOrdersList.currentUserOrders;
+
+            var stackPanel = FindDescendantByName<StackPanel>(RentalsListBox, "BookingStackPanel");
+            var bookingTextBlock = FindDescendantByName<TextBlock>(stackPanel, "BookingTextBlock");
+
+            if (bookingTextBlock != null)
             {
-                if (isMaximize)
+                string bookingText = "Бронирование";
+
+                foreach (UserOrder userOrder in userOrdersManager.userOrdersList.currentUserOrders)
                 {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1024;
-                    this.Height = 720;
-
-                    isMaximize = false;
+                    bookingText = $"Бронирование {userOrder.ID}";
                 }
-                else
+
+                bookingTextBlock.Text = bookingText;
+            }
+        }
+
+
+
+        public static T FindDescendantByName<T>(DependencyObject parent, string name) where T : DependencyObject
+        {
+            if (parent == null)
+                return null;
+
+            T foundChild = null;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T namedChild && (namedChild as FrameworkElement)?.Name == name)
                 {
-                    this.WindowState = WindowState.Maximized;
-                    this.Width = 1024;
-                    this.Height = 720;
-
-                    isMaximize = true;
+                    foundChild = namedChild;
+                    break;
                 }
+
+                foundChild = FindDescendantByName<T>(child, name);
+                if (foundChild != null)
+                    break;
             }
-        }
 
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                this.DragMove();
-            }
-        }
-
-        private void WindowHide_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        private void WindowOpenFull_Click(object sender, RoutedEventArgs e)
-        {
-            if (isMaximize)
-            {
-                this.WindowState = WindowState.Normal;
-                this.Width = 1024;
-                this.Height = 720;
-
-                isMaximize = false;
-            }
-            else
-            {
-                this.WindowState = WindowState.Maximized;
-                this.Width = 1024;
-                this.Height = 720;
-
-                isMaximize = true;
-            }
-        }
-
-        private void WindowClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-            Functions.Functions.TerminateProcess("CourseWork_CarSharing");
-        }
-
-        private void CarParkButton_Click(object sender, RoutedEventArgs e)
-        {
-            CarParkWindow window = new CarParkWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void RentButton_Click(object sender, RoutedEventArgs e)
-        {
-            RentWindow window = new RentWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            AboutWindow window = new AboutWindow();
-            window.Show();
-            this.Close();
-        }
-        private void SetReadAbleFields()
-        {
-            NameTextBox.IsReadOnly = true;
-            SurnameTextBox.IsReadOnly = true;
-            EmailTextBox.IsReadOnly = true;
-            PasswordTextBox.IsReadOnly = true;
-            PasswordRepeatTextBox.IsReadOnly = true;
-            PassportNumberTextBox.IsReadOnly = true;
-            IdentificationTextBox.IsReadOnly = true;
-            LicenseSeriesTextBox.IsReadOnly = true;
-            LicenseNumberTextBox.IsReadOnly = true;
-        }
-        private void SetWriteAbleFields()
-        {
-            NameTextBox.IsReadOnly = true;
-            SurnameTextBox.IsReadOnly = true;
-            EmailTextBox.IsReadOnly = true;
-            PasswordTextBox.IsReadOnly = false;
-            PasswordRepeatTextBox.IsReadOnly = false;
-            PassportNumberTextBox.IsReadOnly = false;
-            IdentificationTextBox.IsReadOnly = false;
-            LicenseSeriesTextBox.IsReadOnly = false;
-            LicenseNumberTextBox.IsReadOnly = false;
-        }
-
-        private void EditProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetWriteAbleFields();
+            return foundChild;
         }
 
         public void UpdateUserInfo(string name, string surname, string email, string password, string passportNumber, string identificationNumber, string licenseSeries, string licenseNumber)
@@ -292,10 +234,127 @@ namespace CourseWork_CarSharing.Profile
             }
             return true;
         }
-
+        private void SetReadAbleFields()
+        {
+            NameTextBox.IsReadOnly = true;
+            SurnameTextBox.IsReadOnly = true;
+            EmailTextBox.IsReadOnly = true;
+            PasswordTextBox.IsReadOnly = true;
+            PasswordRepeatTextBox.IsReadOnly = true;
+            PassportNumberTextBox.IsReadOnly = true;
+            IdentificationTextBox.IsReadOnly = true;
+            LicenseSeriesTextBox.IsReadOnly = true;
+            LicenseNumberTextBox.IsReadOnly = true;
+        }
+        private void SetWriteAbleFields()
+        {
+            NameTextBox.IsReadOnly = true;
+            SurnameTextBox.IsReadOnly = true;
+            EmailTextBox.IsReadOnly = true;
+            PasswordTextBox.IsReadOnly = false;
+            PasswordRepeatTextBox.IsReadOnly = false;
+            PassportNumberTextBox.IsReadOnly = false;
+            IdentificationTextBox.IsReadOnly = false;
+            LicenseSeriesTextBox.IsReadOnly = false;
+            LicenseNumberTextBox.IsReadOnly = false;
+        }
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
         private void ClearFieldsButton_Click(object sender, RoutedEventArgs e)
         {
             ClearFields();
+        }
+        private void EditProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetWriteAbleFields();
+        }
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                if (isMaximize)
+                {
+                    this.WindowState = WindowState.Normal;
+                    this.Width = 1024;
+                    this.Height = 720;
+
+                    isMaximize = false;
+                }
+                else
+                {
+                    this.WindowState = WindowState.Maximized;
+                    this.Width = 1024;
+                    this.Height = 720;
+
+                    isMaximize = true;
+                }
+            }
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void WindowHide_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void WindowOpenFull_Click(object sender, RoutedEventArgs e)
+        {
+            if (isMaximize)
+            {
+                this.WindowState = WindowState.Normal;
+                this.Width = 1024;
+                this.Height = 720;
+
+                isMaximize = false;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+                this.Width = 1024;
+                this.Height = 720;
+
+                isMaximize = true;
+            }
+        }
+
+        private void WindowClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            Functions.Functions.TerminateProcess("CourseWork_CarSharing");
+        }
+
+        private void CarParkButton_Click(object sender, RoutedEventArgs e)
+        {
+            CarParkWindow window = new CarParkWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void RentButton_Click(object sender, RoutedEventArgs e)
+        {
+            RentWindow window = new RentWindow();
+            window.Show();
+            this.Close();
+        }
+
+        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutWindow window = new AboutWindow();
+            window.Show();
+            this.Close();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -305,9 +364,32 @@ namespace CourseWork_CarSharing.Profile
             this.Hide();
         }
 
-        private void richTextDocument_Loaded(object sender, RoutedEventArgs e)
+        private void RentalsListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            var selectedItem = RentalsListBox.SelectedItem as UserOrder;
 
+            if (selectedItem != null)
+            {
+                string filePath = $"C:\\Лабораторные работы C#\\CourseWork_CarSharing\\CourseWork_CarSharing\\UserRentals\\user_order{selectedItem.ID}.docx";
+
+                try
+                {
+                    // Получить информацию о каталоге
+                    string directoryPath = System.IO.Path.GetDirectoryName(filePath);
+                    System.IO.DirectoryInfo directoryInfo = new System.IO.DirectoryInfo(directoryPath);
+
+                    // Обновить содержимое каталога
+                    directoryInfo.Refresh();
+
+                    // Открыть документ
+                    Process.Start(filePath);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Ошибка при открытии файла: " + ex.Message);
+                }
+            }
         }
+
     }
 }

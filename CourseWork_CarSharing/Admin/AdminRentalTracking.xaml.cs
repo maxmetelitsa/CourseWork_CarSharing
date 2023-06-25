@@ -66,6 +66,7 @@ namespace CourseWork_CarSharing.Admin
                 if (rowView != null)
                 {
                     // Получение необходимых данных из выбранной строки в ordersGrid
+                    Int64 ID = Convert.ToInt64(rowView["ID"]);
                     Int64 userID = Convert.ToInt64(rowView["UserID"]);
                     Int64 carID = Convert.ToInt64(rowView["CarID"]);
 
@@ -83,7 +84,7 @@ namespace CourseWork_CarSharing.Admin
                         OrdersInfo.Order selectedOrder = new OrdersInfo.Order((int)userID, (int)carID, startDate, endDate, totalPrice);
 
                         // Удаление заказа
-                        ordersManager.RemoveOrder(selectedOrder);
+                        ordersManager.RemoveOrder(selectedOrder, (int)ID);
 
                         // Обновление отображения в ordersGrid
                         ShowOrdersInDataGrid(ordersGrid, ordersManager);

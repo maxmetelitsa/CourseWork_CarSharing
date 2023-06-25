@@ -48,6 +48,7 @@ namespace CourseWork_CarSharing.CarPark
 
                     while (reader.Read())
                     {
+                        Int64 id = reader.GetInt64(reader.GetOrdinal("ID"));
                         string name = reader.GetString(reader.GetOrdinal("Name"));
                         Fuel fuelType = (Fuel)reader.GetInt32(reader.GetOrdinal("FuelType"));
                         Transmission transmission = (Transmission)reader.GetInt32(reader.GetOrdinal("TransmissionType"));
@@ -59,7 +60,7 @@ namespace CourseWork_CarSharing.CarPark
                         int imageID = reader.GetInt32(reader.GetOrdinal("ImageID"));
                         double hourPrice = reader.GetDouble(reader.GetOrdinal("HourPrice"));
 
-                        Car car = new Car(name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID, hourPrice);
+                        Car car = new Car((int)id, name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID, hourPrice);
 
                         //if (lastId == 0)
                         //{
@@ -78,34 +79,6 @@ namespace CourseWork_CarSharing.CarPark
 
             manager.CloseConnection();
 
-        }
-        public void UpdateAllCars()
-        {
-            manager.OpenConnection();
-
-            foreach (Car car in carsList.cars)
-            {
-                string updateQuery = $"UPDATE Cars SET Name = @Name, FuelType = @FuelType, TransmissionType = @TransmissionType, CarType = @CarType, Brand = @Brand, Colour = @Colour, YearOfManufacture = @YearOfManufacture, Number = @Number, ImageID = @ImageID HourPrice = @HourPrice WHERE ID = @ID";
-
-                using (SQLiteCommand command = new SQLiteCommand(updateQuery, manager.Connection))
-                {
-                    command.Parameters.AddWithValue("@Name", car.Name);
-                    command.Parameters.AddWithValue("@FuelType", (int)car.FuelType);
-                    command.Parameters.AddWithValue("@TransmissionType", (int)car.TransmissionType);
-                    command.Parameters.AddWithValue("@CarType", (int)car.CarType);
-                    command.Parameters.AddWithValue("@Brand", (int)car.Brand);
-                    command.Parameters.AddWithValue("@Colour", car.Colour);
-                    command.Parameters.AddWithValue("@YearOfManufacture", car.YearOfManufacture);
-                    command.Parameters.AddWithValue("@Number", car.Number);
-                    command.Parameters.AddWithValue("@ImageID", car.ImageID);
-                    command.Parameters.AddWithValue("@ID", car.ID);
-                    command.Parameters.AddWithValue("@HourPrice", car.HourPrice);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-
-            manager.CloseConnection();
         }
 
         public void GetAllCars()
@@ -173,6 +146,61 @@ namespace CourseWork_CarSharing.CarPark
                 command.ExecuteNonQuery();
             }
 
+            // получаем CarID последнего автомобиля в Cars
+
+            string selectQuery = "SELECT ID FROM Cars ORDER BY ID DESC LIMIT 1";
+            int carId;
+
+            using (SQLiteCommand selectCommand = new SQLiteCommand(selectQuery, manager.Connection))
+            {
+                using (SQLiteDataReader reader = selectCommand.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        carId = reader.GetInt32(0);
+                    }
+                    else
+                    {
+                        // Обработка ситуации, если в таблице "cars" нет записей
+                        // Например, выбрать значение по умолчанию или сгенерировать ошибку
+                        carId = 0; // Пример значения по умолчанию
+                    }
+                }
+            }
+
+            string carClass = "";
+
+            if (carType == CarType.Economy)
+            {
+                carClass = "EconomyClass";
+            }
+            else if (carType == CarType.Business)
+            {
+                carClass = "BusinessClass";
+            }
+            else if (carType == CarType.Coupe)
+            {
+                carClass = "CoupeClass";
+            }
+            else if (carType == CarType.Limousine)
+            {
+                carClass = "LimousineClass";
+            }
+
+            string insertQuery2 = $"INSERT INTO {carClass} (CarID, FuelType, TransmissionType, Brand, Colour, Number) VALUES (@CarID, @FuelType, @TransmissionType, @Brand, @Colour, @Number)";
+
+            using (SQLiteCommand insertCommand = new SQLiteCommand(insertQuery2, manager.Connection))
+            {
+                insertCommand.Parameters.AddWithValue("@CarID", carId);
+                insertCommand.Parameters.AddWithValue("@FuelType", (int)fuelType);
+                insertCommand.Parameters.AddWithValue("@TransmissionType", (int)transmission);
+                insertCommand.Parameters.AddWithValue("@Brand", (int)brand);
+                insertCommand.Parameters.AddWithValue("@Colour", colour);
+                insertCommand.Parameters.AddWithValue("@Number", number);
+
+                insertCommand.ExecuteNonQuery();
+            }
+
             manager.CloseConnection();
 
             carsList.cars.Add(new Car(name, fuelType, transmission, carType, brand, colour, yearOfManufacture, number, imageID, hourPrice));
@@ -182,6 +210,38 @@ namespace CourseWork_CarSharing.CarPark
         public void RemoveCar(Car car)
         {
             manager.OpenConnection();
+
+            string selectQuery = "SELECT ID FROM Cars WHERE Name = @Name AND FuelType = @FuelType AND TransmissionType = @TransmissionType AND CarType = @CarType AND Brand = @Brand AND Colour = @Colour AND YearOfManufacture = @YearOfManufacture AND Number = @Number AND ImageID = @ImageID AND HourPrice = @HourPrice";
+
+            int carId;
+
+            using (SQLiteCommand selectCommand = new SQLiteCommand(selectQuery, manager.Connection))
+            {
+                selectCommand.Parameters.AddWithValue("@Name", car.Name);
+                selectCommand.Parameters.AddWithValue("@FuelType", (int)car.FuelType);
+                selectCommand.Parameters.AddWithValue("@TransmissionType", (int)car.TransmissionType);
+                selectCommand.Parameters.AddWithValue("@CarType", (int)car.CarType);
+                selectCommand.Parameters.AddWithValue("@Brand", (int)car.Brand);
+                selectCommand.Parameters.AddWithValue("@Colour", car.Colour);
+                selectCommand.Parameters.AddWithValue("@YearOfManufacture", car.YearOfManufacture);
+                selectCommand.Parameters.AddWithValue("@Number", car.Number);
+                selectCommand.Parameters.AddWithValue("@ImageID", car.ImageID);
+                selectCommand.Parameters.AddWithValue("@HourPrice", car.HourPrice);
+
+                using (SQLiteDataReader reader = selectCommand.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        carId = reader.GetInt32(0);
+                    }
+                    else
+                    {
+                        // Обработка ситуации, если в таблице "cars" нет записей
+                        // Например, выбрать значение по умолчанию или сгенерировать ошибку
+                        carId = 0; // Пример значения по умолчанию
+                    }
+                }
+            }
 
             string deleteQuery = "DELETE FROM Cars WHERE Name = @Name AND FuelType = @FuelType AND TransmissionType = @TransmissionType AND CarType = @CarType AND Brand = @Brand AND Colour = @Colour AND YearOfManufacture = @YearOfManufacture AND Number = @Number AND ImageID = @ImageID AND HourPrice = @HourPrice";
 
@@ -198,6 +258,33 @@ namespace CourseWork_CarSharing.CarPark
                 command.Parameters.AddWithValue("@ImageID", car.ImageID);
                 command.Parameters.AddWithValue("@HourPrice", car.HourPrice);
 
+                command.ExecuteNonQuery();
+            }
+
+
+            string carClass = "";
+
+            if (car.CarType == CarType.Economy)
+            {
+                carClass = "EconomyClass";
+            }
+            else if (car.CarType == CarType.Business)
+            {
+                carClass = "BusinessClass";
+            }
+            else if (car.CarType == CarType.Coupe)
+            {
+                carClass = "CoupeClass";
+            }
+            else if (car.CarType == CarType.Limousine)
+            {
+                carClass = "LimousineClass";
+            }
+
+            string deleteCarFromClass = $"DELETE FROM {carClass} WHERE CarID = {carId}";
+
+            using (SQLiteCommand command = new SQLiteCommand(deleteCarFromClass, manager.Connection))
+            {
                 command.ExecuteNonQuery();
             }
 

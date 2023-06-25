@@ -71,7 +71,7 @@
                     <Label x:Name="TextBoxPasswordNotify" HorizontalAlignment="Right" FontFamily="Verdana" Content="" Margin="0 0 80 0" Foreground="White" Height="25"/>
 
 
-                    <CheckBox x:Name="CheckBoxSession" Style="{DynamicResource CheckBoxStyle1}" FontFamily="Verdana" Content="Remember me" Margin="20 10 0 5" IsChecked="True" Foreground="White"/>
+                    <!--<CheckBox x:Name="CheckBoxSession" Style="{DynamicResource CheckBoxStyle1}" FontFamily="Verdana" Content="Remember me" Margin="20 10 0 5" IsChecked="True" Foreground="White"/>-->
 
                     <!--Buttons-->
                     <Grid Margin="0 10 0 0">

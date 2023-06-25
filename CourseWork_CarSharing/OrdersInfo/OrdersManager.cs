@@ -100,7 +100,7 @@ namespace CourseWork_CarSharing.OrdersInfo
 
             manager.CloseConnection();
         }
-        public void RemoveOrder(Order order)
+        public void RemoveOrder(Order order, int ID)
         {
             manager.OpenConnection();
 
@@ -108,7 +108,7 @@ namespace CourseWork_CarSharing.OrdersInfo
 
             using (SQLiteCommand command = new SQLiteCommand(deleteQuery, manager.Connection))
             {
-                command.Parameters.AddWithValue("@ID", order.ID);
+                command.Parameters.AddWithValue("@ID", ID);
                 command.ExecuteNonQuery();
             }
 
