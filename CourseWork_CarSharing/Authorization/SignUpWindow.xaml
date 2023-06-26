@@ -25,9 +25,6 @@
 
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="24"/>
 
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
-                    <Button Style="{StaticResource topButton}" Content="Settings"/>
-                </StackPanel>
             </Grid>
         </Border>
 

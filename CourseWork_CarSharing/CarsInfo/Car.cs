@@ -102,25 +102,5 @@ namespace CourseWork_CarSharing.CarsInfo
             ImageID = imageId;
             HourPrice = hourPrice;
         }
-        public static List<Car> CreateListOfUsers()
-        {
-            List<Car> users = new List<Car>();
-            return users;
-        }
-        public void AddCar(List<Car> cars, Car user)
-        {
-            if (user != null)
-            {
-                cars.Add(user);
-            }
-        }
-
-        public void RemoveCar(List<Car> cars, Car user)
-        {
-            if (user != null)
-            {
-                cars.Remove(user);
-            }
-        }
     }
 }

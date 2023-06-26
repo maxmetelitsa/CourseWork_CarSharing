@@ -21,10 +21,10 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="130 0 20 0">
-                <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarParkButton_Click"/>
-                <Button x:Name="CarParkEditingButton" Style="{StaticResource topButtonsPanel}" Content="Car Park Editing" Click="CarParkEditingButton_Click" Width="135"/>
-                <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="RentButton_Click"/>
-                <Button x:Name="RentalTrackingButton" Style="{StaticResource topButtonsPanel}" Content="Rental Tracking" Click="RentalTrackingButton_Click" Width="127"/>
+                <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Автопарк" Click="CarParkButton_Click" Width="86"/>
+                <Button x:Name="CarParkEditingButton" Style="{StaticResource topButtonsPanel}" Content="Учет автопарка" Click="CarParkEditingButton_Click" Width="135"/>
+                <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Арендовать" Click="RentButton_Click" Width="105"/>
+                <Button x:Name="RentalTrackingButton" Style="{StaticResource topButtonsPanel}" Content="Учет аренд" Click="RentalTrackingButton_Click" Width="127"/>
             </StackPanel>
 
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="22" Margin="10"/>

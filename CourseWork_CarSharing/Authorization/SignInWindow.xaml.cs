@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using CourseWork_CarSharing.Main;
 using static CourseWork_CarSharing.Functions.Functions;
 using CourseWork_CarSharing.SQL_Manager;
 using System.Windows.Documents;
@@ -91,7 +90,7 @@ namespace CourseWork_CarSharing.Authorization
                 {
                     if (usersList.ValidateUser(manager, TextBoxEmail.Text, TextBoxPassword.Text) == 1)
                     {
-                        WelcomeWindow window = new WelcomeWindow();
+                        CarParkWindow window = new CarParkWindow();
                         window.Show();
                         this.Close();
                     }

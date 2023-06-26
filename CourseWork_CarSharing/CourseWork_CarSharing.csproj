@@ -104,9 +104,6 @@
     <Compile Include="CarsInfo\Cars.cs" />
     <Compile Include="CompanyInfo\Company.cs" />
     <Compile Include="Enums\Enums.cs" />
-    <Compile Include="Main\WelcomeWindow.xaml.cs">
-      <DependentUpon>WelcomeWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="About\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -118,9 +115,6 @@
     </Compile>
     <Compile Include="Rent\RentCarWindow.xaml.cs">
       <DependentUpon>RentCarWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserOrderInfo\UserOrderInfoWindow.xaml.cs">
-      <DependentUpon>UserOrderInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserOrders\UserOrder.cs" />
     <Compile Include="UserOrders\UserOrderManager.cs" />
@@ -176,10 +170,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Main\WelcomeWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="About\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,10 +183,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Rent\RentWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserOrderInfo\UserOrderInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

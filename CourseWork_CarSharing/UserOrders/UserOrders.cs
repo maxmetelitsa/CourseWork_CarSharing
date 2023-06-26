@@ -60,7 +60,7 @@ namespace CourseWork_CarSharing.UserOrders
                 {
                     command.Parameters.AddWithValue("@OrderID", userOrder.OrderID);
                     command.Parameters.AddWithValue("@UserID", userOrder.UserID);
-                     command.Parameters.AddWithValue("@RentalСontractNumber", userOrder.RentalContractNumber);
+                    command.Parameters.AddWithValue("@RentalСontractNumber", userOrder.RentalContractNumber);
 
                     command.ExecuteNonQuery();
                 }

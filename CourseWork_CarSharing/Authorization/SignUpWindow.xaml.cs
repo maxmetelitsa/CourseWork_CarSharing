@@ -15,7 +15,6 @@ using System.Windows.Media;
 using System.Xml.Linq;
 using static CourseWork_CarSharing.Functions.Functions;
 using CourseWork_CarSharing.UsersInfo;
-using CourseWork_CarSharing.Main;
 using CourseWork_CarSharing.Profile;
 
 namespace CourseWork_CarSharing.Authorization
