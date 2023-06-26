@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Height="720" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Icon="/img/Stellar.png">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -21,7 +21,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="130 0 20 0">
-                <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Автопарк" Click="CarParkButton_Click" Width="86"/>
+                <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Автопарк" Click="CarParkButton_Click" Width="103"/>
                 <Button x:Name="CarParkEditingButton" Style="{StaticResource topButtonsPanel}" Content="Учет автопарка" Click="CarParkEditingButton_Click" Width="135"/>
                 <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Арендовать" Click="RentButton_Click" Width="105"/>
                 <Button x:Name="RentalTrackingButton" Style="{StaticResource topButtonsPanel}" Content="Учет аренд" Click="RentalTrackingButton_Click" Width="127"/>

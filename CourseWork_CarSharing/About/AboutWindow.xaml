@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Height="720" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Icon="/img/Stellar.png">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,10 +22,10 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="130 0 20 0">
-                <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Car Park" Click="CarParkButton_Click"/>
-                <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Rent" Click="RentButton_Click"/>
-                <Button x:Name="ProfileButton" Style="{StaticResource topButtonsPanel}" Content="Profile" Click="ProfileButton_Click"/>
-                <Button x:Name="AboutButton" Style="{StaticResource topButtonsPanel}" Content="About" Click="AboutButton_Click"/>
+                <Button x:Name="CarParkButton" Style="{StaticResource topButtonsPanel}" Content="Автопарк" Click="CarParkButton_Click" Width="94"/>
+                <Button x:Name="RentButton" Style="{StaticResource topButtonsPanel}" Content="Арендовать" Click="RentButton_Click" Width="108"/>
+                <Button x:Name="ProfileButton" Style="{StaticResource topButtonsPanel}" Content="Профиль" Click="ProfileButton_Click" Width="85"/>
+                <Button x:Name="About" Style="{StaticResource topButtonsPanel}" Content="О компании" Click="AboutButton_Click" Width="109"/>
             </StackPanel>
 
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="CarHouse" Foreground="White" FontFamily="Verdana" FontSize="22" Margin="10"/>
@@ -38,7 +38,6 @@
             <Grid.Background>
                 <SolidColorBrush Color="#212121"/>
             </Grid.Background>
-            <Image Source="C:\Лабораторные работы C#\CourseWork_CarSharing\CourseWork_CarSharing\img\Pic1.jpg" Margin="544,34,52,294" />
             <TextBlock x:Name="AboutCompanyTextBlock" Text="" Foreground="White" FontSize="16" Loaded="AboutCompany_Loaded"/>
         </Grid>
         <!--Bottom Section-->

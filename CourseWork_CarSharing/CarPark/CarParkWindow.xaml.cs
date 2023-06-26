@@ -254,9 +254,9 @@ namespace CourseWork_CarSharing.CarPark
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            AboutWindow window = new AboutWindow();
-            window.Show();
-            this.Close();
+            //AboutWindow window = new AboutWindow();
+            //window.Show();
+            //this.Close();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

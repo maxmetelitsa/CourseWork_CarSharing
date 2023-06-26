@@ -215,12 +215,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\Pic1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\Stellar.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Authorization\64385.jpg" />
   </ItemGroup>
   <ItemGroup />

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Height="807" Width="1024" Background="Transparent" ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Icon="/img/Stellar.png">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True">
 
     <Grid>
         <Grid.RowDefinitions>
