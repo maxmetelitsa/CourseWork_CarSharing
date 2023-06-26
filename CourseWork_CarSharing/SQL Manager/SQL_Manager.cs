@@ -13,7 +13,7 @@ namespace CourseWork_CarSharing.SQL_Manager
 
         public SQLiteManager()
         {
-            string connectionString = "Data Source='C:\\DataBases\\CarHouse.db';Version=3;";
+            string connectionString = "Data Source='C:\\Лабораторные работы C#\\CourseWork_CarSharing\\CourseWork_CarSharing\\CarHouse.db';Version=3;";
             connection = new SQLiteConnection(connectionString);
         }
         public SQLiteConnection Connection
